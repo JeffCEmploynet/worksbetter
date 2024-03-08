@@ -8,7 +8,7 @@ export default function Footer(){
           <Link href={"https://ewm.employnet.com/"}>EWM.employnet.com</Link>
         </div>
         <div className="w-1/3 flex justify-center">
-          <Link href={"/Privacy"}>Privacy</Link>
+          <Link href={"/privacy"}>Privacy</Link>
         </div>
         <div className="w-1/3 flex justify-center">
           <p>App Version: 0.0.0.1</p>

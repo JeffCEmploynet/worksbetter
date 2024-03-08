@@ -10,7 +10,7 @@ import LogoutButton from "../buttons/LogoutButton";
 
 export default function Header(){
   return (
-    <div className="bg-background-match m-3 flex p-2 justify-between">
+    <header className="bg-gray-50 mb-3 flex p-4  justify-between top-0 sticky w-full">
       <Link href={"/"}>
         <Image 
           src="/logo.png"
@@ -68,6 +68,6 @@ export default function Header(){
         
         <LogoutButton linkName={"Logout"}/>
       </div>
-    </div>
+    </header>
   )
 }
