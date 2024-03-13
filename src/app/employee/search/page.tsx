@@ -18,7 +18,7 @@ export default function EmployeeSearch(){
           <input className="m-1 p-1" type="text" placeholder="Employee ID"/>
           <input className="m-1 p-1" type="text" placeholder="Assignment ID"/>
         </form>
-        <button className="m-1 p-1">Submit</button>
+        <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex">Submit</button>
       </div>
     }/>
     </>

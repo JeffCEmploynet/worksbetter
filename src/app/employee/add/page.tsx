@@ -30,7 +30,7 @@ export default function EmployeeAdd(){
             <label className="m-1 p-1" htmlFor="rParser">Parse Resume</label>
             <input className="m-1 p-1" type="file" id="rParser"/>
           </div>
-          <button className="m-1 p-1">Submit</button>
+          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex">Submit</button>
         </form>
       </div>
     }/>

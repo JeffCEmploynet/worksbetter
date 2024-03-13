@@ -14,11 +14,13 @@ export default function Home() {
       {isLoggedIn&&<HomePage />}
       {!isLoggedIn&&<BlueCard
         content = {
-        <form onSubmit={(e)=>auth!.login(e)}>
-          <input className="m-1 p-1" type="text" name="userName" placeholder="User Name" required />
-          <input className="m-1 p-1" type="password" name="password" placeholder="Password" required />
-          <button className="m-1 p-1" type="submit">Login</button>
-        </form> }
+          <div className="flex flex-row align-middle justify-center">
+            <form onSubmit={(e)=>auth!.login(e)}>
+              <input className="m-1 p-1" type="text" name="userName" placeholder="User Name" required />
+              <input className="m-1 p-1" type="password" name="password" placeholder="Password" required />
+              <button className="m-2 p-1 pl-3 pr-3 rounded bg-sky-950 text-white" type="submit">Login</button>
+            </form> 
+          </div>}
       />}
     </>
   );

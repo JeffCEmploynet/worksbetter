@@ -18,7 +18,7 @@ export default function CustomerSearch(){
             <input className="m-1 p-1" type="text" placeholder="Customer ID"/>
             <input className="m-1 p-1" type="text" placeholder="Department ID"/>
           </form>
-          <button className="m-1 p-1">Submit</button>
+          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex">Submit</button>
         </div>
       }/>
     </>
