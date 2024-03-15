@@ -25,6 +25,7 @@ export default function EmployeeAdd(){
             <input className="m-1 p-1" type="text" placeholder="Phone 1"/>
             <input className="m-1 p-1" type="text" placeholder="Phone 2"/>
             <input className="m-1 p-1" type="text" placeholder="Email"/>
+            <input className="m-1 p-1" type="text" placeholder="Branch" />
           </div>
           <div>
             <label className="m-1 p-1" htmlFor="rParser">Parse Resume</label>
