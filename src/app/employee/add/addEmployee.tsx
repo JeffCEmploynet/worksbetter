@@ -1,7 +1,10 @@
 'use client'
+import { useEffect, useState } from "react";
 import { PostEmployee } from "@/app/api";
 
 export default function AddEmployee(event: any){
+  const [employeeId, setEmployeeId] = useState();
+
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);

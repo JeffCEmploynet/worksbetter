@@ -2,7 +2,7 @@
 var count = 0;
 
 function CallApi(
-  url: string, callType: string, data: string
+  url: string, callType: string, data?: string
 ){
   const abortController = new AbortController();
   console.log(data);
@@ -22,7 +22,7 @@ function CallApi(
         setTimeout(() => {
           count++
           if (count < 3)
-            RetryFetch(url, callType, data)
+            RetryFetch(url, callType, data!)
           else
             throw new Error('Data did not update')
         }, 1000)
@@ -33,7 +33,7 @@ function CallApi(
             setTimeout(() => {
               count++
               if (count < 3)
-                RetryFetch(url, callType, data)
+                RetryFetch(url, callType, data!)
               else
                 throw Error(result.statusText)
             })
@@ -57,4 +57,10 @@ export function PostEmployee(data: string){
   const url = 'https://localhost:7151/api/Employees';
   const callType = 'POST';
   return CallApi(url, callType, data);
+}
+
+export function GetEmployee(id: Number, firstName: string, lastName: string){
+  const url = `https://localhost:7151/api/Employees?id=${id}&firstName=${firstName}&lastName=${lastName}`;
+  const callType = 'GET';
+  return CallApi(url, callType);
 }
