@@ -1,3 +1,5 @@
+'use client'
+
 import BlueCard from "@/app/components/cards/BlueCard";
 import AddEmployee from "./addEmployee";
 
