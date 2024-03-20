@@ -5,12 +5,13 @@ function CallApi(
   url: string, callType: string, data: string
 ){
   const abortController = new AbortController();
+  console.log(data);
 
   return fetch(url, {
     signal: abortController.signal,
       method: callType,
       headers: { 'Content-Type': 'application/json' },
-      body: callType === 'PATCH' ? JSON.stringify(data) : null,
+      body: callType === 'POST' ? data : null,
     })
     .then(result => {
       if (result.status === 200) {
