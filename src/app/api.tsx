@@ -5,7 +5,6 @@ function CallApi(
   url: string, callType: string, data?: string
 ){
   const abortController = new AbortController();
-  console.log(data);
 
   return fetch(url, {
     signal: abortController.signal,
@@ -59,7 +58,10 @@ export function PostEmployee(data: string){
   return CallApi(url, callType, data);
 }
 
-export function GetEmployee(id: Number, firstName: string, lastName: string){
+export function GetEmployee(id?: Number, firstName?: string, lastName?: string){
+  console.log(id);
+  console.log(firstName);
+  console.log(lastName);
   const url = `https://localhost:7151/api/Employees?id=${id}&firstName=${firstName}&lastName=${lastName}`;
   const callType = 'GET';
   return CallApi(url, callType);
