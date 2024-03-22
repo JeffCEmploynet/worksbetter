@@ -66,3 +66,9 @@ export function GetEmployee(id?: Number, firstName?: string, lastName?: string){
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function LoadEmployee(id: number){
+  const url = `https://localhost:7151/api/Employees/${id}`;
+  const callType = 'GET';
+  return CallApi(url, callType);
+}

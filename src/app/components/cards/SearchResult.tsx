@@ -6,11 +6,13 @@ export function SearchResult(
 ){
   return (
     <Link href={url}>
-      <div className="flex justify-between border m-1 border-white p-1 hover:bg-white">
-        <p>{id}</p>
-        <p>{lastName}</p>
-        <p>{firstName}</p>
-        <p>{branch}</p>
+      <div className="flex flex-col w-full">
+        <div className="grid justify-items-center p-1 grid-flow-col border m-1 border-white hover:bg-white">
+          <p>{id}</p>
+          <p>{lastName}</p>
+          <p>{firstName}</p>
+          <p>{branch}</p>
+        </div>
       </div>
     </Link>
   )
@@ -27,9 +29,11 @@ export function ResultsDiv({searchResultList} : {searchResultList: Array<any>}){
     <BlueCard
       content={
         <ul className="flex flex-col w-full">
-          <div className="flex justify-between m-1 p-2 bg-white">
-            <p>Name</p>
+          <div className="grid justify-items-center m-1 p-1 bg-white grid-flow-col">
             <p>Id</p>
+            <p>Last Name</p>
+            <p>First Name</p>
+            <p>Branch</p>
           </div>
           {allResults}
         </ul>
