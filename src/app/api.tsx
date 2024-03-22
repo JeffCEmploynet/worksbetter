@@ -72,3 +72,9 @@ export function LoadEmployee(id: number){
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function PostCustomer(data: string){
+  const url = 'https://localhost:7151/api/Customers';
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
