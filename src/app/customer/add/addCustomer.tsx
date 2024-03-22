@@ -6,7 +6,7 @@ export default function AddCustomer(event: any){
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
-  const customerName = formData.get('firstName');
+  const customerName = formData.get('customer');
   const department = formData.get('department');
   const mainContact = formData.get('contact');
   const phone = formData.get('phone');
