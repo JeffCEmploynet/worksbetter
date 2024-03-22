@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import FindEmployee from "./findEmployee";
 import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
