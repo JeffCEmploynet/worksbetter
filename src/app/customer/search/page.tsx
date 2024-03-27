@@ -9,6 +9,7 @@ export default function CustomerSearch(){
   const [searchResults, setSearchResults] = useState<any>();
   const [displayList, setDisplayList] = useState<any>([]);
   const [showResults, setShowResults] = useState<Boolean>(false);
+  const [customerHeaders, setCustomerHeaders] = useState<any>();
   let resultList: Array<any> = [];
 
   useEffect(()=>{
@@ -23,8 +24,8 @@ export default function CustomerSearch(){
         resultList.push(
           <SearchResult
             id={id}
-            firstName={customerName}
-            lastName={department}
+            nameCol={customerName}
+            secondaryCol={department}
             branch={branch}
             url={url}
           />
@@ -35,6 +36,13 @@ export default function CustomerSearch(){
 
   useEffect(()=>{
     if(resultList&&resultList.length){
+      let headerObj = {
+        idHeader: "Customer Id",
+        nameHeader: "Customer",
+        secondaryHeader: "Department",
+        branchHeader: "Branch",
+      }
+      setCustomerHeaders(headerObj);
       setDisplayList(resultList);
       console.log(resultList);
     }
@@ -62,7 +70,7 @@ export default function CustomerSearch(){
           </form>
         </div>
       }/>
-      {showResults&&<ResultsDiv searchResultList={displayList}/>}
+      {showResults&&<ResultsDiv searchResultList={displayList} headers={customerHeaders}/>}
     </>
   )
 }

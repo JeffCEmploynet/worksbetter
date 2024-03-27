@@ -7,6 +7,7 @@ import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
 export default function EmployeeSearch()
 {
   const [searchResults, setSearchResults] = useState<any>([]);
+  const [employeeHeaders, setEmployeeHeaders] = useState<any>();
   const [displayList, setDisplayList] = useState<any>([]);
   const [showResults, setShowResults] = useState<Boolean>(false);
   let resultList: Array<any> = [];
@@ -23,8 +24,8 @@ export default function EmployeeSearch()
         resultList.push(
           <SearchResult
             id={id}
-            lastName={lastName}
-            firstName={firstName}
+            nameCol={lastName}
+            secondaryCol={firstName}
             branch={branch}
             url={url}
           />
@@ -35,6 +36,13 @@ export default function EmployeeSearch()
 
   useEffect(()=>{
     if(resultList&&resultList.length){
+      let headerObj = {
+        idHeader: "Employee Id",
+        nameHeader: "Last Name",
+        secondaryHeader: "First Name",
+        branchHeader: "Branch",
+      }
+      setEmployeeHeaders(headerObj)
       setDisplayList(resultList);
       console.log(resultList);
     }
@@ -65,7 +73,7 @@ export default function EmployeeSearch()
           </form>
         </div>
       }/>
-      {showResults&&<ResultsDiv searchResultList={displayList}/>}
+      {showResults&&<ResultsDiv searchResultList={displayList} headers={employeeHeaders}/>}
     </>
   )
 }

@@ -13,6 +13,7 @@ export default function Customer({params}: {params: {id: Number}}){
   const [branch, setBranch] = useState<String>();
 
   const [ordersDisplayList, setOrdersDisplayList] = useState<any>([]);
+  const [ordersHeaders, setOrdersHeaders] = useState<any>();
   const [showCustomer, setShowCustomer] = useState<Boolean>(false);
   const [showOrders, setShowOrders] = useState<Boolean>(false);
 
@@ -53,14 +54,13 @@ export default function Customer({params}: {params: {id: Number}}){
         ordersList.push(
           <SearchResult
             id={id}
-            firstName={jobTitle}
-            lastName={payRate}
+            nameCol={jobTitle}
+            secondaryCol={payRate}
             branch={branch}
             url={url}
           />
         );
       });
-
       console.log(ordersList);
     }
   } ,[orderData]);
@@ -68,6 +68,13 @@ export default function Customer({params}: {params: {id: Number}}){
 
   useEffect(()=>{
     if(ordersList&&ordersList.length){
+      let headerObj = {
+        idHeader: "Order Id",
+        nameHeader: "Job Title",
+        secondaryHeader: "Pay Rate",
+        branchHeader: "Branch",
+      }
+      setOrdersHeaders(headerObj);
       setOrdersDisplayList(ordersList);
     }
   },[ordersList]);
@@ -87,7 +94,7 @@ export default function Customer({params}: {params: {id: Number}}){
         <p>Branch: {branch}</p>
       </div>
     }/>}
-    {showOrders&&<ResultsDiv searchResultList={ordersDisplayList}/>}
+    {showOrders&&<ResultsDiv searchResultList={ordersDisplayList} headers={ordersHeaders}/>}
     </>
   )
 }
