@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import CustomerLoad from "./customerLoad";
+import LoadCustomerOrders from "../orders/loadCustomerOrders";
 import BlueCard from "@/app/components/cards/BlueCard"
 
 export default function Customer({params}: {params: {id: Number}}){
@@ -14,11 +15,29 @@ export default function Customer({params}: {params: {id: Number}}){
     CustomerLoad(params.id, setCustomerData);
   },[]);
 
+  useEffect(()=>{
+    if(customerData){
+      setCustomerName(customerData.customerName);
+      setCuId(customerData.id);
+      setBranch(customerData.branch);
+    }
+  }, [customerData]);
+
+  useEffect(()=>{
+    if(customerName){
+      setShowCustomer(true);
+    }
+  },[customerName]);
+
   return(
-    <BlueCard content={
+    <>
+    {showCustomer&&<BlueCard content={
       <div>
-        <h3>You've reached the page for a specific customer!</h3>
+        <h3 className="font-bold">{customerName}</h3>
+        <p>Id: {cuId?.toString()}</p>
+        <p>Branch: {branch}</p>
       </div>
-    }/>
+    }/>}
+    </>
   )
 }

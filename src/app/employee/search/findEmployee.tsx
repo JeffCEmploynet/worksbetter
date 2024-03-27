@@ -8,8 +8,6 @@ export default function FindEmployee(event: any, setSearchResults: any){
   const firstName = formData.get("firstName")?.toString();
   const lastName = formData.get("lastName")?.toString();
 
-  console.log(firstName);
-
   GetEmployee(id, firstName, lastName).then(results => {
     setSearchResults(results);
   });
