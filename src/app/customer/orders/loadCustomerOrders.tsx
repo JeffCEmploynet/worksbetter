@@ -1,7 +1,7 @@
-import { GetOrders } from "@/app/api";
+import { LoadOrdersByCustomer } from "@/app/api";
 
 export default function LoadCustomerOrders(id: Number, setSearchResults: any){
-  GetOrders(id).then(results => {
+  LoadOrdersByCustomer(id).then(results => {
     setSearchResults(results);
   });
 }

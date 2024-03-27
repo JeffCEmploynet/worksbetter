@@ -4,6 +4,7 @@ import BlueCard from "./BlueCard";
 export function SearchResult(
   {id, lastName, firstName, branch, url} : {id: any, lastName: string, firstName: string, branch: string, url: string}
 ){
+  console.log(id);
   return (
     <Link href={url}>
       <div className="flex flex-col w-full">

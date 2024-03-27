@@ -90,7 +90,16 @@ export function LoadCustomer(id: number){
 }
 
 export function GetOrders(customerId?: Number, customerName?: string, jobTitle?: string, orderId?: Number, branch?: string){
-  const url = `https://localhost:7151/api/JobOrders?customerName=${customerName}&customerId=${customerId}&jobTitle=${jobTitle}&orderId=${orderId}&branch=${branch}`
+  const isOrderSearch = orderId ? true : false;
+
+  const url = isOrderSearch ? `https://localhost:7151/api/JobOrders?orderId=${orderId}`
+  : `https://localhost:7151/api/JobOrders?customerName=${customerName}&customerId=${customerId}&jobTitle=${jobTitle}&branch=${branch}`;
+  const callType = 'GET';
+  return CallApi(url, callType);
+}
+
+export function LoadOrdersByCustomer(customerId?: Number){
+  const url = `https://localhost:7151/api/JobOrders?customerId=${customerId}`;
   const callType = 'GET';
   return CallApi(url, callType);
 }
