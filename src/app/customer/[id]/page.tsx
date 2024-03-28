@@ -94,6 +94,11 @@ export default function Customer({params}: {params: {id: Number}}){
     setShowAddModal(false);
   };
 
+  const openModal = () => {
+    setShowOrders(false);
+    setShowAddModal(true);
+  }
+
   return(
     <>
     {showCustomer&&<BlueCard content={
@@ -111,7 +116,7 @@ export default function Customer({params}: {params: {id: Number}}){
             <h3 className="font-bold mx-2">Orders</h3>
             <OverlayTrigger overlay={<Tooltip
             style={{position:"fixed", color:"black"}}>Add Order</Tooltip>}>
-              <button onClick={()=>{setShowAddModal(true)}}>
+              <button onClick={()=>{openModal()}}>
                 <MdOutlinePostAdd />
               </button>
             </OverlayTrigger>
@@ -128,7 +133,7 @@ export default function Customer({params}: {params: {id: Number}}){
         customerId={cuId!}
         customerName={customerName!}
         branch={branch!}
-        show={showAddModal}
+        showModal={showAddModal}
         onHide={hideOrderModal}
     />}
     </>

@@ -109,3 +109,9 @@ export function LoadOrder(id: Number){
   const callType = 'GET';
   return CallApi(url, callType); 
 }
+
+export function PostOrder(data: string){
+  const url = 'https://localhost:7151/api/JobOrders';
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
