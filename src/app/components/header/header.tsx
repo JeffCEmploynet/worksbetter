@@ -5,6 +5,7 @@ import { BsSearch, BsPersonAdd, BsBuildingAdd } from "react-icons/bs";
 import { GiPayMoney, GiReceiveMoney  } from "react-icons/gi";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineFileSearch } from "react-icons/ai";
+import { SiGooglesearchconsole } from "react-icons/si";
 import LinkContainer from "../buttons/LinkContainer";
 import LogoutButton from "../buttons/LogoutButton";
 
@@ -32,6 +33,10 @@ export default function Header(){
           linkName2="Add Employee"
           linkRef2="/employee/add"
           linkIcon2={<BsPersonAdd />}
+
+          linkName3="Assignment Search"
+          linkRef3="/assignment/search"
+          linkIcon3={<SiGooglesearchconsole />}
         />
 
         <LinkContainer
