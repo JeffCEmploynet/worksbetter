@@ -103,3 +103,9 @@ export function LoadOrdersByCustomer(customerId?: Number){
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function LoadOrder(id: Number){
+  const url = `https://localhost:7151/api/JobOrders/${id}`;
+  const callType = 'GET';
+  return CallApi(url, callType); 
+}

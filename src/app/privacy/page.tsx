@@ -1,6 +1,9 @@
+import BlueCard from "../components/cards/BlueCard"
+
 export default function Privacy(){
   return (
-    <div>
+    <BlueCard content={
+    <div className="p-b-2">
       <h2>Privacy Policy</h2>
       <p>
           This Privacy Policy applies to (1) job candidates and recipients of Employnet Workforce Management (EWM) services; (2) EWM associates who are sourced or placed on assignment with an EWM client; (3) independent contractor candidates identified by EWM clients who may access this website; (4) users of the EWM website; (5) representatives of EWM business partners, clients, and vendors. 
@@ -227,6 +230,10 @@ export default function Privacy(){
       Monterey, CA 93940 <br />
       Ph: (877) EWM-TEMP
       </p>
-    </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+    </div>}/>
   )
 }
