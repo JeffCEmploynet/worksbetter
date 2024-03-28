@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import OrderLoad from "./OrderLoad";
+import OrderLoad from "./orderLoad";
 import BlueCard from "@/app/components/cards/BlueCard";
 
 export default function Order({params}:{params:{id:Number}}){
@@ -83,7 +83,6 @@ export default function Order({params}:{params:{id:Number}}){
           <p>Need: {countNeed?.toString()}</p>
         </div>
       </div>
-      
     }/>}
     </>
   )

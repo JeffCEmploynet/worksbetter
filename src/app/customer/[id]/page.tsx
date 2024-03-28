@@ -1,9 +1,12 @@
 'use client'
 import { useEffect, useState } from "react";
+import { MdOutlinePostAdd } from "react-icons/md";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import CustomerLoad from "./customerLoad";
 import LoadCustomerOrders from "../orders/loadCustomerOrders";
 import BlueCard from "@/app/components/cards/BlueCard"
 import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
+import AddOrderModal from "../orders/addOrderModal";
 
 export default function Customer({params}: {params: {id: Number}}){
   const [customerData, setCustomerData] = useState<any>()
@@ -16,6 +19,8 @@ export default function Customer({params}: {params: {id: Number}}){
   const [ordersHeaders, setOrdersHeaders] = useState<any>();
   const [showCustomer, setShowCustomer] = useState<Boolean>(false);
   const [showOrders, setShowOrders] = useState<Boolean>(false);
+
+  const [showAddModal, setShowAddModal] = useState<Boolean>(false);
 
   let ordersList: Array<any> = [];
 
@@ -83,18 +88,49 @@ export default function Customer({params}: {params: {id: Number}}){
     if(ordersDisplayList&&ordersDisplayList.length){
       setShowOrders(true);
     }
-  }, [ordersDisplayList])
+  }, [ordersDisplayList]);
+
+  const hideOrderModal = () => {
+    setShowAddModal(false);
+  };
 
   return(
     <>
     {showCustomer&&<BlueCard content={
       <div>
-        <h3 className="font-bold">{customerName}</h3>
+        <h2 className="font-bold">{customerName}</h2>
         <p>Id: {cuId?.toString()}</p>
         <p>Branch: {branch}</p>
       </div>
     }/>}
-    {showOrders&&<ResultsDiv searchResultList={ordersDisplayList} headers={ordersHeaders}/>}
+    {showOrders&&
+    <div>
+      <BlueCard content={
+        <div className="flex flex-col w-full">
+          <div className="flex flex-row w-full">
+            <h3 className="font-bold mx-2">Orders</h3>
+            <OverlayTrigger overlay={<Tooltip
+            style={{position:"fixed", color:"black"}}>Add Order</Tooltip>}>
+              <button onClick={()=>{setShowAddModal(true)}}>
+                <MdOutlinePostAdd />
+              </button>
+            </OverlayTrigger>
+          </div>
+          <div>
+            <ResultsDiv searchResultList={ordersDisplayList} headers={ordersHeaders}/>
+          </div>
+        </div>
+        }/>
+    </div>
+    }
+    {showAddModal&&
+      <AddOrderModal 
+        customerId={cuId!}
+        customerName={customerName!}
+        branch={branch!}
+        show={showAddModal}
+        onHide={hideOrderModal}
+    />}
     </>
   )
 }

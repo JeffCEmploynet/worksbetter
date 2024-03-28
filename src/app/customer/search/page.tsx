@@ -4,7 +4,6 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import FindCustomer from "./findCustomer";
 import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
 
-
 export default function CustomerSearch(){
   const [searchResults, setSearchResults] = useState<any>();
   const [displayList, setDisplayList] = useState<any>([]);

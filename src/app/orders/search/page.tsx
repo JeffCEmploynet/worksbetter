@@ -6,23 +6,21 @@ import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
 
 export default function OrderSearch(){
   const [orderSearchResults, setOrderSearchResults] = useState<any>([]);
-  const [orderHeaders, setOrderHeaders] = useState<any>();
-  const [ordersList, setOrdersList] = useState<any>([]);
+  const [ordersDisplayList, setOrdersDisplayList] = useState<any>([]);
   const [showOrders, setShowOrders] = useState<Boolean>(false);
-
-  let resultList: Array<any> = [];
+  const [orderHeaders, setOrderHeaders] = useState<any>();
+  let ordersResultList: Array<any> = [];
 
   useEffect(()=>{
     if(orderSearchResults&&orderSearchResults.length){
       orderSearchResults.forEach((result: any)=> {
         let jobTitle = result.jobTitle;
         let id = result.jobOrdersId;
-        console.log(id);
         let payRate = result.payRate.toString();
         let branch = result.branch;
         let url = `http://localhost:3000/orders/${id}`;
 
-        ordersList.push(
+        ordersResultList.push(
           <SearchResult
             id={id}
             nameCol={jobTitle}
@@ -36,7 +34,7 @@ export default function OrderSearch(){
   },[orderSearchResults]);
 
   useEffect(()=>{
-    if(resultList&&resultList.length){
+    if(ordersResultList&&ordersResultList.length){
       let headerObj = {
         idHeader: "Order Id",
         nameHeader: "Job Title",
@@ -44,15 +42,17 @@ export default function OrderSearch(){
         branchHeader: "Branch",
       }
       setOrderHeaders(headerObj);
-      setOrdersList(resultList);
+      setOrdersDisplayList(ordersResultList);
+      console.log(ordersResultList);
     }
-  },[ordersList]);
+  },[ordersResultList]);
 
   useEffect(()=>{
-    if(ordersList&&ordersList.length){
+    if(ordersDisplayList&&ordersDisplayList.length){
+      console.log(ordersDisplayList);
       setShowOrders(true);
     }
-  },[ordersList]);
+  },[ordersDisplayList]);
 
   return(
     <>
@@ -74,7 +74,7 @@ export default function OrderSearch(){
           </form>
         </div>
       }/>
-      {showOrders&&<ResultsDiv searchResultList={ordersList} headers={orderHeaders}/>}
+      {showOrders&&<ResultsDiv searchResultList={ordersDisplayList} headers={orderHeaders}/>}
     </>
   )
 }

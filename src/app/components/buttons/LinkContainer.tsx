@@ -5,7 +5,7 @@ import LinkButton from "./LinkButton";
 import { AuthContext } from "@/app/auth";
 
 export default function LinkContainer(
-  {labelName, linkName1, linkRef1, linkIcon1, linkName2, linkRef2, linkIcon2}:
+  {labelName, linkName1, linkRef1, linkIcon1, linkName2, linkRef2, linkIcon2, linkName3, linkRef3, linkIcon3}:
   {
     labelName: string | null,
     linkName1: string,
@@ -13,7 +13,10 @@ export default function LinkContainer(
     linkIcon1: any,
     linkName2: string | null,
     linkRef2: string | null,
-    linkIcon2: any
+    linkIcon2: any,
+    linkName3?: string | null,
+    linkRef3?: string | null,
+    linkIcon3?: any | null
   }
 ){
   const auth = useContext(AuthContext)
@@ -27,6 +30,8 @@ export default function LinkContainer(
         <LinkButton linkRef={linkRef1} linkName={linkName1} linkIcon={linkIcon1}/>
         {linkName2&&
         <LinkButton linkRef={linkRef2!} linkName={linkName2} linkIcon={linkIcon2}/>}
+        {linkName3&&
+        <LinkButton linkRef={linkRef3!} linkName={linkName3!} linkIcon={linkIcon3!}/>}
       </div>
       }
     </>

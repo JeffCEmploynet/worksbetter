@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BsSearch, BsPersonAdd, BsBuildingAdd } from "react-icons/bs";
 import { GiPayMoney, GiReceiveMoney  } from "react-icons/gi";
 import { TbReportAnalytics } from "react-icons/tb";
+import { AiOutlineFileSearch } from "react-icons/ai";
 import LinkContainer from "../buttons/LinkContainer";
 import LogoutButton from "../buttons/LogoutButton";
 
@@ -42,6 +43,10 @@ export default function Header(){
           linkName2="Add Customers"
           linkRef2="/customer/add"
           linkIcon2={<BsBuildingAdd />}
+
+          linkName3="Orders Search"
+          linkRef3="/orders/search"
+          linkIcon3={<AiOutlineFileSearch />}
         />
 
         <LinkContainer
