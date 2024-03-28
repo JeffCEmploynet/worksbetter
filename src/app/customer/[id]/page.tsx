@@ -68,7 +68,7 @@ export default function Customer({params}: {params: {id: Number}}){
       });
       console.log(ordersList);
     }
-  } ,[orderData]);
+  },[orderData]);
 
 
   useEffect(()=>{
@@ -92,6 +92,7 @@ export default function Customer({params}: {params: {id: Number}}){
 
   const hideOrderModal = () => {
     setShowAddModal(false);
+    LoadCustomerOrders(params.id, setOrderData);
   };
 
   const openModal = () => {

@@ -44,6 +44,7 @@ export default function AddOrder(event: any, customerName: String, customerId: N
 
   let data = JSON.stringify(dataObj);
 
-  return PostOrder(data);
+  PostOrder(data);
+  onHide();
 }
 
