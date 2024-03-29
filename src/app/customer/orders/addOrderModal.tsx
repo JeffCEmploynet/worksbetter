@@ -4,7 +4,8 @@ import { Modal } from "react-bootstrap";
 import AddOrder from "./addOrder";
 
 export default function AddOrderModal({customerId, customerName, branch, showModal, onHide}:
-  {customerId: Number, customerName: String, branch: String, showModal: any, onHide: any}){
+  {customerId: Number, customerName: String, branch: String, showModal: any, onHide: any}
+){
   return(
     <Modal show={showModal} onHide={onHide}>
       <Modal.Header>Add Order</Modal.Header>

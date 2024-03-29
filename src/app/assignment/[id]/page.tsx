@@ -69,7 +69,7 @@ export default function Assignment({params}: {params: {id: Number}}){
     <>
     {showAssignment&&<BlueCard content={
       <div>
-        <h3 className="font-bold">{lastName} ,{firstName}  Employee Id: {employeeId?.toString()}  Assignment ID:{assignmentId?.toString()}  Status:{status}</h3>
+        <h3 className="font-bold">{lastName}, {firstName}  Employee Id: {employeeId?.toString()}  Assignment ID:{assignmentId?.toString()}  Status:{status}</h3>
         <p>{jobTitle} Start Date:{startDate?.toString()}  EndDate:{endDate?.toString()}  Expiry Date:{expiryDate?.toString()}</p>
         <p>Pay:{payRate?.toString()}  Bill:{billRate?.toString()}  W2:{w2?.toString()}  Salary:{salary?.toString()}</p>
         <p>Customer: {customerName}:{customerId?.toString()}  Branch:{branch}  Order:{orderId?.toString()}</p>
