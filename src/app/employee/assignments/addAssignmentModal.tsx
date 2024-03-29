@@ -1,10 +1,16 @@
 'use client'
+import { useState } from "react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import { Modal } from "react-bootstrap";
+import CustomersDropdown from "./customersDropdown";
+import OrdersDropdown from "./ordersDropdown";
 
 export default function AddAssignmentModal({firstName, lastName, employeeId}:
   {firstName: String, lastName: String, employeeId: Number}
 ){
+  const [selectedCustomer, setSelectedCustomer] = useState<any>();
+  const [selectedOrder, setSelectedOrder] = useState<any>();
+
   return(
     <Modal>
       <Modal.Header>
@@ -17,7 +23,8 @@ export default function AddAssignmentModal({firstName, lastName, employeeId}:
             <div className="flex h-fit">
               <div className="w-1/3 h-full border-white p-1 rounded mr-1">
                 <h3 className="p-1 rounded m-1 bg-white text-sky-950">Customer & Order Select</h3>
-                {/*add select for customer and order populated by api*/}
+                <CustomersDropdown selectedCustomer={selectedCustomer} setSelectedCustomer={setSelectedCustomer}/>
+                <OrdersDropdown customerId={selectedCustomer.value} selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} />
               </div>
               <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
                 <h3 className="p-1 rounded m-1 bg-white text-sky-950">Shift Info</h3>

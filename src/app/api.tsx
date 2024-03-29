@@ -78,10 +78,16 @@ export function PostCustomer(data: string){
 }
 
 export function GetCustomer(id?: Number, customerName?: string){
-  const url = `https://localhost:7151/api/Customers?customerName=${customerName}&customerId=${id}`;
+  const url = `https://localhost:7151/api/Customers/search?customerName=${customerName}&customerId=${id}`;
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function GetAllCustomers(){{
+  const url = 'https://localhost:7151/api/Customers';
+  const callType = 'GET';
+  return CallApi(url, callType);
+}}
 
 export function LoadCustomer(id: number){
   const url = `https://localhost:7151/api/Customers/${id}`;
