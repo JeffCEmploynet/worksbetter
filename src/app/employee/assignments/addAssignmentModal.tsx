@@ -1,18 +1,35 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import { Modal } from "react-bootstrap";
 import CustomersDropdown from "./customersDropdown";
 import OrdersDropdown from "./ordersDropdown";
+import { GetAllCustomers, LoadOrdersByCustomer } from "@/app/api";
 
-export default function AddAssignmentModal({fullName, employeeId}:
-  {fullName: String, employeeId: Number}
+export default function AddAssignmentModal({fullName, employeeId, showAddModal, onHide}:
+  {fullName: String, employeeId: Number, showAddModal: any, onHide: any}
 ){
   const [selectedCustomer, setSelectedCustomer] = useState<any>();
   const [selectedOrder, setSelectedOrder] = useState<any>();
+  const [customerList, setCustomerList] = useState<any>();
+  const [orderList, setOrderList] = useState<any>();
+
+  useEffect(()=> {
+    GetAllCustomers().then(results => {
+      setCustomerList(results);
+    })
+  },[]);
+
+  useEffect(()=> {
+    if(selectedCustomer&&selectedCustomer.length){
+      LoadOrdersByCustomer(selectedCustomer.id).then(results => {
+        setOrderList(results);
+      })
+    }
+  },[selectedCustomer]);
 
   return(
-    <Modal>
+    <Modal show={showAddModal} onHide={onHide}>
       <Modal.Header>
         Assign Employee 
         <p>{fullName} {employeeId?.toString()}</p>
@@ -23,8 +40,8 @@ export default function AddAssignmentModal({fullName, employeeId}:
             <div className="flex h-fit">
               <div className="w-1/3 h-full border-white p-1 rounded mr-1">
                 <h3 className="p-1 rounded m-1 bg-white text-sky-950">Customer & Order Select</h3>
-                <CustomersDropdown selectedCustomer={selectedCustomer} setSelectedCustomer={setSelectedCustomer}/>
-                <OrdersDropdown customerId={selectedCustomer.value} selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} />
+                {customerList&&customerList.length&&<CustomersDropdown selectedCustomer={selectedCustomer} setSelectedCustomer={setSelectedCustomer} customerList={customerList}/>}
+                {orderList&&orderList.length&&<OrdersDropdown selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} orderList={orderList}/>}
               </div>
               <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
                 <h3 className="p-1 rounded m-1 bg-white text-sky-950">Shift Info</h3>

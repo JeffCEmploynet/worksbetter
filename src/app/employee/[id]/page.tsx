@@ -70,7 +70,7 @@ export default function Employee({params}: {params: {id: Number}}){
   useEffect(()=>{
     if(assignmentsList&&assignmentsList.length){
       let headerObj = {
-        idHead: "Assignment Id",
+        idHeader: "Assignment Id",
         nameHeader: "Customer Name",
         secondaryHeader: "Job Title",
         branchHeader: "Branch"
@@ -110,7 +110,7 @@ export default function Employee({params}: {params: {id: Number}}){
       <BlueCard content={
         <div className="flex flex-col w-full">
           <div className="flex flex-row w-full">
-            <h3 className="font-bold mx-2">Orders</h3>
+            <h3 className="font-bold mx-2">Assignments</h3>
             <OverlayTrigger overlay={<Tooltip
             style={{position:"fixed", color:"black"}}>Add Assignment</Tooltip>}>
               <button onClick={()=>{openModal()}}>
@@ -128,6 +128,8 @@ export default function Employee({params}: {params: {id: Number}}){
       <AddAssignmentModal
         fullName={fullName!}
         employeeId={params.id}
+        showAddModal={showAddModal}
+        onHide={hideAssignmentsModal}
     />}
     </>
   )

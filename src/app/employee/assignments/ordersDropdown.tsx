@@ -1,19 +1,9 @@
 'use client'
-import { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { LoadOrdersByCustomer } from '@/app/api';
 
-export default function OrdersDropdown({customerId, selectedOrder, setSelectedOrder}:
-  {customerId:Number, selectedOrder: any, setSelectedOrder: any}
+export default function OrdersDropdown({selectedOrder, setSelectedOrder, orderList}:
+  {selectedOrder: any, setSelectedOrder: any, orderList: any}
 ){
-  const [orderList, setOrderList] = useState<any>();
-
-  useEffect(()=>{
-    LoadOrdersByCustomer(customerId).then(results=>{
-      setOrderList(results);
-    })
-  },[]);
-
   return(
     <>
       {orderList&&<Select

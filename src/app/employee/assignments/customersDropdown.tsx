@@ -1,19 +1,9 @@
 'use client'
-import { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { GetAllCustomers } from '@/app/api';
 
-export default function CustomersDropdown({selectedCustomer, setSelectedCustomer}:
-  {selectedCustomer: any, setSelectedCustomer: any}
+export default function CustomersDropdown({selectedCustomer, setSelectedCustomer, customerList}:
+  {selectedCustomer: any, setSelectedCustomer: any, customerList: any}
 ){
-  const [customerList, setCustomerList] = useState<any>();
-
-  useEffect(()=>{
-    GetAllCustomers().then(results => {
-      setCustomerList(results);
-    })
-  },[]);
-
   const onSelectCustomer = (e: { customerName: String; id: Number; }) => {
     let customerName = e.customerName;
     let customerId = e.id;
@@ -24,7 +14,7 @@ export default function CustomersDropdown({selectedCustomer, setSelectedCustomer
     <>
       {customerList&&<Select
         options={customerList}
-        value={selectedCustomer.label}
+        value={selectedCustomer}
         placeholder='Please Select a Customer'
         onChange={(e)=>onSelectCustomer(e!)}
       />}
