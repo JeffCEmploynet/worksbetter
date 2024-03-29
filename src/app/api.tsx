@@ -115,3 +115,15 @@ export function PostOrder(data: string){
   const callType = 'POST';
   return CallApi(url, callType, data);
 }
+
+export function PostAssignment(data: string){
+  const url = 'https://localhost:7151/api/Assignments';
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
+
+export function GetAssignments(assignmentId?: Number, lastName?: string, firstName?: string, customerId?: Number, customerName?: string, jobTitle?: string, orderId?: Number, branch?: string){
+  const url = `https://localhost:7151/api/Assignments?firstName=${firstName}&lastName=${lastName}&assignmentId=${assignmentId}&customerName=${customerName}&customerId=${customerId}&jobTitle=${jobTitle}&orderId=${orderId}&branch=${branch}`
+  const callType = 'GET';
+  return CallApi(url, callType);
+}
