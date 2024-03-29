@@ -52,13 +52,13 @@ export default function Order({params}:{params:{id:Number}}){
       setStatus(foundOrder.status);
       setCloseDate(foundOrder.closeDate);
     }
-  },[foundOrder])
+  },[foundOrder]);
 
   useEffect(()=>{
     if(jobTitle){
       setShowOrder(true);
     }
-  },[jobTitle])
+  },[jobTitle]);
 
 
   return(

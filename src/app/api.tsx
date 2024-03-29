@@ -127,3 +127,9 @@ export function GetAssignments(assignmentId?: Number, lastName?: string, firstNa
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function LoadAssignment(id: Number){
+  const url = `https://localhost:7151/api/Assignments/${id}`;
+  const callType = 'GET';
+  return CallApi(url, callType); 
+}
