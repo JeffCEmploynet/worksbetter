@@ -66,6 +66,7 @@ export default function AssignmentSearch(){
             <input className="m-1 p-1" type="text" name="last" placeholder="Last Name"/>
             <input className="m-1 p-1" type="text" name="first" placeholder="First Name"/>
             <input className="m-1 p-1" type="text" name="assnid" placeholder="Assignment ID"/>
+            <input className="m-1 p-1" type="text" name="eeid" placeholder="Employee Id"/>
             <input className="m-1 p-1" type="text" name="customerId" placeholder="Customer ID"/>
             <input className="m-1 p-1" type="text" name="customer" placeholder="Customer Name"/>
             <input className="m-1 p-1" type="text" name="order" placeholder="Order ID"/>

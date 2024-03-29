@@ -5,8 +5,8 @@ import { Modal } from "react-bootstrap";
 import CustomersDropdown from "./customersDropdown";
 import OrdersDropdown from "./ordersDropdown";
 
-export default function AddAssignmentModal({firstName, lastName, employeeId}:
-  {firstName: String, lastName: String, employeeId: Number}
+export default function AddAssignmentModal({fullName, employeeId}:
+  {fullName: String, employeeId: Number}
 ){
   const [selectedCustomer, setSelectedCustomer] = useState<any>();
   const [selectedOrder, setSelectedOrder] = useState<any>();
@@ -15,7 +15,7 @@ export default function AddAssignmentModal({firstName, lastName, employeeId}:
     <Modal>
       <Modal.Header>
         Assign Employee 
-        <p>{lastName}, {firstName} {employeeId?.toString()}</p>
+        <p>{fullName} {employeeId?.toString()}</p>
       </Modal.Header>
       <Modal.Body>
         <BlueCard content={

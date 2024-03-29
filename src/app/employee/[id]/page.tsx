@@ -5,9 +5,12 @@ import { MdAssignmentAdd } from "react-icons/md";
 import EmployeeLoad from "./employeeLoad";
 import BlueCard from "@/app/components/cards/BlueCard";
 import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
+import LoadEmployeeAssignments from "../assignments/loadEmployeeAssignemnts";
+import AddAssignmentModal from "../assignments/addAssignmentModal";
 
 export default function Employee({params}: {params: {id: Number}}){
   const [employeeData, setEmployeeData] = useState<any>();
+  const [assignmentData, setAssignmentData] = useState<any>();
   const [eeId, setEeId] = useState<Number>();
   const [fullName, setFullName] = useState<String>();
   const [branch, setBranch] = useState<String>();
@@ -18,8 +21,11 @@ export default function Employee({params}: {params: {id: Number}}){
   const [showAssignments, setShowAssignments] = useState<Boolean>();
   const [showAddModal, setShowAddModal] = useState<Boolean>();
 
+  let assignmentsList: Array<any> = [];
+
   useEffect(()=>{
     EmployeeLoad(params.id, setEmployeeData);
+    LoadEmployeeAssignments(params.id, setAssignmentData);
   },[]);
 
   useEffect(()=>{
@@ -37,6 +43,54 @@ export default function Employee({params}: {params: {id: Number}}){
     }
   },[fullName]);
 
+  useEffect(()=>{
+    if(assignmentData&&assignmentData.length){
+      console.log(assignmentData);
+      assignmentData.forEach((result: any) => {
+        console.log(result);
+        let assignmentId = result.id;
+        let customerName = result.customerName;
+        let jobTitle = result.jobTitle;
+        let branch = result.branch;
+        let url = `http://localhost:3000/assignments/${assignmentId}`;
+
+        assignmentsList.push(
+          <SearchResult
+            id={assignmentId}
+            nameCol={customerName}
+            secondaryCol={jobTitle}
+            branch={branch}
+            url={url}
+          />
+        );
+      });
+    }
+  },[assignmentData]);
+
+  useEffect(()=>{
+    if(assignmentsList&&assignmentsList.length){
+      let headerObj = {
+        idHead: "Assignment Id",
+        nameHeader: "Customer Name",
+        secondaryHeader: "Job Title",
+        branchHeader: "Branch"
+      }
+      setAssignmentsHeaders(headerObj);
+      setAssignmentsDisplayList(assignmentsList);
+    }
+  },[assignmentsList]);
+
+  useEffect(()=>{
+    if(assignmentsDisplayList&&assignmentsDisplayList.length){
+      setShowAssignments(true);
+    }
+  },[assignmentsDisplayList]);
+
+  const hideAssignmentsModal = () => {
+    setShowAddModal(false);
+    LoadEmployeeAssignments(params.id, setAssignmentData);
+  }
+
   const openModal = () => {
     setShowAssignments(false);
     setShowAddModal(true);
@@ -51,13 +105,14 @@ export default function Employee({params}: {params: {id: Number}}){
           <p>Branch: {branch}</p>
         </div>
       }/>}
+      {showAssignments&&
       <div>
       <BlueCard content={
         <div className="flex flex-col w-full">
           <div className="flex flex-row w-full">
             <h3 className="font-bold mx-2">Orders</h3>
             <OverlayTrigger overlay={<Tooltip
-            style={{position:"fixed", color:"black"}}>Add Order</Tooltip>}>
+            style={{position:"fixed", color:"black"}}>Add Assignment</Tooltip>}>
               <button onClick={()=>{openModal()}}>
                 <MdAssignmentAdd />
               </button>
@@ -67,8 +122,13 @@ export default function Employee({params}: {params: {id: Number}}){
             <ResultsDiv searchResultList={assignmentsDisplayList} headers={assignmentsHeaders}/>
           </div>
         </div>
-        }/>
-    </div>
+      }/>
+    </div>}
+    {showAddModal&&
+      <AddAssignmentModal
+        fullName={fullName!}
+        employeeId={params.id}
+    />}
     </>
   )
 }

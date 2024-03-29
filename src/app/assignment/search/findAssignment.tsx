@@ -5,6 +5,7 @@ export default function FindAssignment(event: any, setSearchResults: any){
 
   const formData = new FormData(event.currentTarget);
   const assignmentId = Number(formData.get("assnid"));
+  const employeeId = Number(formData.get("eeid"));
   const lastName = formData.get("last")?.toString();
   const firstName = formData.get("first")?.toString();
   const customerName = formData.get("customer")?.toString();
@@ -14,7 +15,7 @@ export default function FindAssignment(event: any, setSearchResults: any){
   const branch = formData.get("branch")?.toString();
 
 
-  GetAssignments(assignmentId, lastName, firstName, customerId, customerName, jobTitle, orderId, branch).then(results => {
+  GetAssignments(employeeId, assignmentId, lastName, firstName, customerId, customerName, jobTitle, orderId, branch).then(results => {
     setSearchResults(results);
   });
 }

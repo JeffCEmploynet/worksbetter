@@ -14,6 +14,7 @@ export default function EmployeeSearch()
 
   useEffect(()=>{
     if(searchResults&&searchResults.length){
+      console.log(searchResults);
       searchResults.forEach((result: any) => {
         let lastName = result.lastName;
         let firstName = result.firstName;
