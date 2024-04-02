@@ -13,6 +13,8 @@ export default function Employee({params}: {params: {id: Number}}){
   const [assignmentData, setAssignmentData] = useState<any>();
   const [eeId, setEeId] = useState<Number>();
   const [fullName, setFullName] = useState<String>();
+  const [lastName, setLastName] = useState<String>();
+  const [firstName, setFirstName] = useState<String>();
   const [branch, setBranch] = useState<String>();
   const [showEmployee, setShowEmployee] = useState<Boolean>(false);
 
@@ -32,6 +34,8 @@ export default function Employee({params}: {params: {id: Number}}){
     if(employeeData){
       let name = employeeData.firstName + ' ' + employeeData.lastName;
       setFullName(name);
+      setFirstName(employeeData.firstName);
+      setLastName(employeeData.lastName);
       setEeId(employeeData.id);
       setBranch(employeeData.branch);
     }
@@ -105,7 +109,6 @@ export default function Employee({params}: {params: {id: Number}}){
           <p>Branch: {branch}</p>
         </div>
       }/>}
-      {showAssignments&&
       <div>
       <BlueCard content={
         <div className="flex flex-col w-full">
@@ -118,15 +121,17 @@ export default function Employee({params}: {params: {id: Number}}){
               </button>
             </OverlayTrigger>
           </div>
-          <div>
+          {showAssignments&&<div>
             <ResultsDiv searchResultList={assignmentsDisplayList} headers={assignmentsHeaders}/>
-          </div>
-        </div>
-      }/>
-    </div>}
+          </div>}
+        </div>}
+      />
+    </div>
     {showAddModal&&
       <AddAssignmentModal
         fullName={fullName!}
+        lastName={lastName!}
+        firstName={firstName!}
         employeeId={params.id}
         showAddModal={showAddModal}
         onHide={hideAssignmentsModal}
