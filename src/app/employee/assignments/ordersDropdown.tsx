@@ -8,9 +8,9 @@ export default function OrdersDropdown({selectedOrder, setSelectedOrder, orderLi
     <>
       {orderList&&<Select
         options={orderList}
-        value={selectedOrder.jobTitle}
+        value={selectedOrder}
         placeholder="Please Select an Order"
-        onChange={(e)=>setSelectedOrder(e!)}
+        onChange={(e)=>setSelectedOrder(e)}
       />}
     </>
   );

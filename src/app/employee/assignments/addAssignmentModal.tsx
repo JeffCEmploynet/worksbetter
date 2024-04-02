@@ -13,20 +13,45 @@ export default function AddAssignmentModal({fullName, employeeId, showAddModal, 
   const [selectedOrder, setSelectedOrder] = useState<any>();
   const [customerList, setCustomerList] = useState<any>();
   const [orderList, setOrderList] = useState<any>();
+  const [showOrdersList, setShowOrdersList] = useState<Boolean>();
 
   useEffect(()=> {
     GetAllCustomers().then(results => {
-      setCustomerList(results);
+      let dropList: Array<any> = [];
+      results.forEach((result: any)=>{
+        let item = {
+          label: result.customerName,
+          value: result.id
+        };
+        dropList.push(item);
+      })
+      setCustomerList(dropList);
     })
   },[]);
 
   useEffect(()=> {
-    if(selectedCustomer&&selectedCustomer.length){
-      LoadOrdersByCustomer(selectedCustomer.id).then(results => {
-        setOrderList(results);
+    if(selectedCustomer){
+      console.log(selectedCustomer);
+      LoadOrdersByCustomer(selectedCustomer.value).then(results => {
+        let dropList: Array<any> = [];
+        results.forEach((result: any)=>{
+          let item = {
+            label: result.jobTitle,
+            value: result
+          }
+          dropList.push(item);
+        });
+        setOrderList(dropList);
       })
     }
   },[selectedCustomer]);
+
+  useEffect(()=>{
+    if(orderList&&orderList.length){
+      console.log(orderList);
+      setShowOrdersList(true);
+    }
+  },[orderList]);
 
   return(
     <Modal show={showAddModal} onHide={onHide}>
@@ -37,11 +62,11 @@ export default function AddAssignmentModal({fullName, employeeId, showAddModal, 
       <Modal.Body>
         <BlueCard content={
           <form>
-            <div className="flex h-fit">
+            <div className="flex h-fit text-sky-950">
               <div className="w-1/3 h-full border-white p-1 rounded mr-1">
-                <h3 className="p-1 rounded m-1 bg-white text-sky-950">Customer & Order Select</h3>
+                <h3 className="p-1 rounded m-1 bg-white">Customer & Order Select</h3>
                 {customerList&&customerList.length&&<CustomersDropdown selectedCustomer={selectedCustomer} setSelectedCustomer={setSelectedCustomer} customerList={customerList}/>}
-                {orderList&&orderList.length&&<OrdersDropdown selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} orderList={orderList}/>}
+                {showOrdersList&&<OrdersDropdown selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} orderList={orderList}/>}
               </div>
               <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
                 <h3 className="p-1 rounded m-1 bg-white text-sky-950">Shift Info</h3>
@@ -52,8 +77,8 @@ export default function AddAssignmentModal({fullName, employeeId, showAddModal, 
               </div>
               <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
                 <h3 className="p-1 rounded m-1 bg-white text-sky-950">Pay & Bill</h3>
-                <input className="m-1 pl-1" type="text" name="payRate" placeholder="Pay Rate"/>
-                <input className="m-1 pl-1" type="text" name="billRate" placeholder="Bill Rate"/>
+                <input className="m-1 pl-1" type="text" name="payRate" placeholder="Pay Rate" value={selectedOrder ? selectedOrder.value.payRate : ""}/>
+                <input className="m-1 pl-1" type="text" name="billRate" placeholder="Bill Rate" value={selectedOrder ? selectedOrder.value.billRate : ""}/>
                 <input className="m-1 pl-1" type="text" name="salary" placeholder="Salary"/>
                 <input className="m-1 pl-1" type="text" name="isW2" placeholder="yes" />
               </div>
