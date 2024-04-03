@@ -31,9 +31,11 @@ export default function CreateAssignment(event: any, postAddData: any, onHide: a
 
 function UpdateOrder(jobOrdersId: Number, orderData: any){
   let updatedFill = orderData.countFilled + 1;
+  let updatedStatus = updatedFill === orderData.countNeed || updatedFill > orderData.countNeed ?
+    "Filled" : orderData.status;
   
   let updatedOrder = {
-    ...orderData, countFilled: updatedFill
+    ...orderData, countFilled: updatedFill, status: updatedStatus
   };
 
   let updatedOrderData = JSON.stringify(updatedOrder)
