@@ -9,6 +9,7 @@ export default function OrdersDropdown({selectedOrder, setSelectedOrder, orderLi
       {orderList&&<Select
         options={orderList}
         value={selectedOrder}
+        isOptionDisabled={(option)=>option.disabled}
         placeholder="Please Select an Order"
         onChange={(e)=>setSelectedOrder(e)}
       />}

@@ -56,7 +56,7 @@ export default function Employee({params}: {params: {id: Number}}){
         let customerName = result.customerName;
         let jobTitle = result.jobTitle;
         let branch = result.branch;
-        let url = `http://localhost:3000/assignments/${assignmentId}`;
+        let url = `http://localhost:3000/assignment/${assignmentId}`;
 
         assignmentsList.push(
           <SearchResult

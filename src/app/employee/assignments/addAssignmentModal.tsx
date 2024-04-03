@@ -41,7 +41,8 @@ export default function AddAssignmentModal({fullName, lastName, firstName, emplo
         results.forEach((result: any)=>{
           let item = {
             label: result.jobTitle,
-            value: result
+            value: result,
+            disabled: result.countFilled >= result.countNeed
           }
           dropList.push(item);
         });
