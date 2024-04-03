@@ -11,7 +11,7 @@ function CallApi(
     signal: abortController.signal,
       method: callType,
       headers: { 'Content-Type': 'application/json' },
-      body: callType === 'POST' ? data : null,
+      body: callType === 'POST' || callType === 'PUT' ? data : null,
     })
     .then(result => {
       if (result.status === 200) {
@@ -144,4 +144,10 @@ export function LoadAssignmentsByEmployee(employeeId: Number){
   const url = `https://localhost:7151/api/Assignments?employeeId=${employeeId}`;
   const callType = 'GET';
   return CallApi(url, callType);
+}
+
+export function UpdateJobOrder(orderId: Number, data: any){
+  const url = `https://localhost:7151/api/JobOrders/${orderId}`;
+  const callType = 'PUT';
+  return CallApi(url, callType, data);
 }
