@@ -10,11 +10,12 @@ export default function CreateTimecards(setBlankTimecards: any){
       PayCode: "Reg",
       WeekEndingDate: GetSundayDate()
     }));
-
+    console.log(timecards);
     setBlankTimecards(timecards);
     
     timecards.forEach((timecard: any) => {
-      PostTimecard(timecard);
+      let toPost = JSON.stringify(timecard);
+      PostTimecard(toPost);
     });
   });
 }

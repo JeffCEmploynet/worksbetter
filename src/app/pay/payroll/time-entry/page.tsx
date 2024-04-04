@@ -6,6 +6,8 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import CreateTimecards from "./createTimecards";
 import LoadTimecardData from './loadTimecardData';
 import { GetAllTimecards } from "@/app/api";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
 
 export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
@@ -59,6 +61,10 @@ export default function TimeEntry(){
     }
   },[timecardRowData]);
 
+  const onFirstDataRendered = (params: any) => { 
+    params.columnApi.autoSizeAllColumns();
+  };
+
   return(
     <>
       <BlueCard content={
@@ -66,7 +72,7 @@ export default function TimeEntry(){
       }/>
       <BlueCard content={
         <>
-        <button onClick={()=>CreateTimecards(setBlankTimecards)}>Create Timecards</button>
+        <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(setBlankTimecards)}>Create Timecards</button>
         <form onSubmit={(e)=>LoadTimecardData(e, selectedFilter.value, setTimecardRowData)}>
           <FilterTypeDropdown selectedFilter={selectedFilter} setSeletctedFilter={setSeletctedFilter} />
           <input className="m-1 p-1" type="text" name="searchParam" placeholder={selectedFilter ? selectedFilter.label : "Search Parameter"} />
@@ -74,8 +80,14 @@ export default function TimeEntry(){
         </form>
         </>
       }/>
-      {timecardRowData&&timecardRowData.length&&<div>
-        <AgGridReact />  
+      {timecardRowData&&timecardRowData.length&&
+      <div className="ag-theme-quartz" style={{height: 500}}>
+        <AgGridReact
+          rowData={timecardRowData}
+          columnDefs={timecardColDefs}
+          defaultColDef={defaultColDef}
+          onFirstDataRendered={onFirstDataRendered}
+        />  
       </div>}
     </>
   )
