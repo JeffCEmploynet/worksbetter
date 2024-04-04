@@ -1,4 +1,4 @@
-import {GetAssignments} from '../../../api'
+import {GetTimecards} from '../../../api'
 
 export default function LoadTimecardData(event, filterValue, setTimecardRowData){
   event.preventDefault();
@@ -10,26 +10,9 @@ export default function LoadTimecardData(event, filterValue, setTimecardRowData)
   const assignmentId = filterValue === "assignmentId" ? Number(formData.get("searchParam")) : 0;
   const customerName = filterValue === "customerName" ? formData.get("searchParam")?.toString() : null;
   const customerId = filterValue === "customerId" ? Number(formData.get("searchParam")) : 0;
-  const branch = filterValue === "branch" ? formData.get("searchParam")?.toString() : null;
 
-
-  GetAssignments(employeeId, assignmentId, lastName, firstName, customerId, customerName, jobTitle, orderId, branch).then(results => {
-    
-
-    
-    let rowData = results.map(row => ({...row, 
-      RHours: 0, 
-      OHours: 0,
-      DHours: 0,
-      PayCode: "Reg",
-      WeekEndingDate: GetSundayDate()
-    }))
-    setTimecardRowData(rowData);
+  GetTimecards(employeeId, assignmentId, lastName, firstName, customerId, customerName).then(results => {
+    setTimecardRowData(results);
   });
 }
 
-function GetSundayDate(){
-  let today = new Date();
-  let day = today.getDay();
-  return today.setDate(today.getDate() + (7 - day) % 7);
-}

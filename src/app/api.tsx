@@ -129,7 +129,7 @@ export function PostAssignment(data: string){
 }
 
 export function GetAssignments(employeeId?: Number, assignmentId?: Number, lastName?: string, firstName?: string, customerId?: Number, customerName?: string, jobTitle?: string, orderId?: Number, branch?: string){
-  const url = `https://localhost:7151/api/Assignments?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&assignmentId=${assignmentId}&customerName=${customerName}&customerId=${customerId}&jobTitle=${jobTitle}&orderId=${orderId}&branch=${branch}`
+  const url = `https://localhost:7151/api/Assignments/search?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&assignmentId=${assignmentId}&customerName=${customerName}&customerId=${customerId}&jobTitle=${jobTitle}&orderId=${orderId}&branch=${branch}`
   const callType = 'GET';
   return CallApi(url, callType);
 }
@@ -141,7 +141,13 @@ export function LoadAssignment(id: Number){
 }
 
 export function LoadAssignmentsByEmployee(employeeId: Number){
-  const url = `https://localhost:7151/api/Assignments?employeeId=${employeeId}`;
+  const url = `https://localhost:7151/api/Assignments/search?employeeId=${employeeId}`;
+  const callType = 'GET';
+  return CallApi(url, callType);
+}
+
+export function GetAllAssignments(){
+  const url = `https://localhost:7151/api/Assignments`;
   const callType = 'GET';
   return CallApi(url, callType);
 }
@@ -150,4 +156,22 @@ export function UpdateJobOrder(orderId: Number, data: any){
   const url = `https://localhost:7151/api/JobOrders/${orderId}`;
   const callType = 'PUT';
   return CallApi(url, callType, data);
+}
+
+export function PostTimecard(data: any){
+  const url = `https://localhost:7151/api/Timecards`;
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
+
+export function GetAllTimecards(){
+  const url = `https://localhost:7151/api/Timecards`;
+  const callType = 'GET';
+  return CallApi(url, callType);
+}
+
+export function GetTimecards(employeeId?: Number, assignmentId?: Number, lastName?: string, firstName?: string, customerId?: Number, customerName?: string){
+  const url = `https://localhost:7151/api/Timecards/search?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&assignmentId=${assignmentId}&customerName=${customerName}&customerId=${customerId}`
+  const callType = 'GET';
+  return CallApi(url, callType);
 }
