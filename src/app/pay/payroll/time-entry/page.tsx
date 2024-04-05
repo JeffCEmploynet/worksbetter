@@ -45,7 +45,6 @@ export default function TimeEntry(){
         {field: "AssignmentId"},
         {field: "EmployeeId"},
         {field: "CustomerId"},
-        {field: "BranchId"},
         {field: "RHours", editable: true},
         {field: "OHours", editable: true},
         {field: "DHours", editable: true},
@@ -71,14 +70,14 @@ export default function TimeEntry(){
         <h3>Time Entry</h3>
       }/>
       <BlueCard content={
-        <>
-        <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(setBlankTimecards)}>Create Timecards</button>
-        <form onSubmit={(e)=>LoadTimecardData(e, selectedFilter.value, setTimecardRowData)}>
-          <FilterTypeDropdown selectedFilter={selectedFilter} setSeletctedFilter={setSeletctedFilter} />
-          <input className="m-1 p-1" type="text" name="searchParam" placeholder={selectedFilter ? selectedFilter.label : "Search Parameter"} />
-          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
-        </form>
-        </>
+        <div className="flex flex-row align-middle">
+          <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(setBlankTimecards)}>Create Timecards</button>
+          <form className="flex flex-row align-middle justify-center" onSubmit={(e)=>LoadTimecardData(e, selectedFilter.value, setTimecardRowData)}>
+            <FilterTypeDropdown selectedFilter={selectedFilter} setSeletctedFilter={setSeletctedFilter} />
+            <input className="m-1 p-1" type="text" name="searchParam" placeholder={selectedFilter ? selectedFilter.label : "Search Parameter"} />
+            <button className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
+          </form>
+        </div>
       }/>
       {timecardRowData&&timecardRowData.length&&
       <div className="ag-theme-quartz" style={{height: 500}}>

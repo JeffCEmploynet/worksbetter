@@ -4,11 +4,14 @@ export default function CreateTimecards(setBlankTimecards: any){
   GetAllAssignments().then(assignments => {
     let timecards = assignments.map((assignment:any) => ({
       ...assignment,
+      AssignmentId: assignment.id,
       RHours: 0, 
       OHours: 0,
       DHours: 0,
       PayCode: "Reg",
-      WeekEndingDate: GetSundayDate()
+      WeekEndingDate: GetSundayDate(),
+      OTPayRate: assignment.payRate * 1.5,
+      DTPayRate: assignment.payRate * 2
     }));
     console.log(timecards);
     setBlankTimecards(timecards);

@@ -2,49 +2,36 @@
 
 import { PostOrder } from "@/app/api";
 
-export default function AddOrder(event: any, customerName: String, customerId: Number, branch: String, onHide: any){
+export default function AddOrder(event: any, customerName: String, customerId: Number, branch: String, branchId: Number, onHide: any){
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
-  const jobTitle = formData.get("job");
-  const worksiteState = formData.get("state");
-  const worksiteCity = formData.get("city");
-  const worksiteZip = formData.get("zip");
-
-  const payRate = formData.get("pay");
-  const billRate = formData.get("bill");
-  const billCalc = formData.get("billCalc");
-  const otBillCalc = formData.get("otBillCalc");
-  const dtBillCalc = formData.get("dtBillCalc");
   
-  const openDate = formData.get("openDate");
-  const countNeed = formData.get("need");
-  const jobDescription = formData.get("description");
-  
-
   let dataObj = {
     customerName,
     customerId,
-    jobTitle,
-    jobDescription,
-    worksiteCity,
-    worksiteState,
-    worksiteZip,
-    payRate,
-    billRate,
-    billCalc,
-    otBillCalc,
-    dtBillCalc,
-    countNeed,
+    jobTitle: formData.get("job"),
+    jobDescription: formData.get("description"),
+    worksiteCity: formData.get("city"),
+    worksiteState: formData.get("state"),
+    worksiteZip: formData.get("zip"),
+    payRate: formData.get("pay"),
+    billRate: formData.get("bill"),
+    billCalc: formData.get("billCalc"),
+    otBillCalc: formData.get("otBillCalc"),
+    dtBillCalc: formData.get("dtBillCalc"),
+    countNeed: formData.get("need"),
     countFilled: 0,
     branch,
-    openDate,
+    branchId,
+    openDate: formData.get("openDate"),
     status: "Active - Need Fills"
   };
+  
+  console.log(dataObj);
 
   let data = JSON.stringify(dataObj);
 
   PostOrder(data);
   onHide();
 }
-

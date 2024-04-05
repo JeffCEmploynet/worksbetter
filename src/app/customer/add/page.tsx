@@ -1,8 +1,43 @@
 'use client'
-import AddCustomer from "./addCustomer"
-import BlueCard from "@/app/components/cards/BlueCard"
+import { useEffect, useState } from "react"
+import { GetAllBranches } from "@/app/api";
+import AddCustomer from "./addCustomer";
+import BlueCard from "@/app/components/cards/BlueCard";
+import BranchDropdown from "../../components/dropdowns/branchDropdown";
 
 export default function CustomerAdd(){
+  const [branchList, setBranchList] = useState<any>();
+  const [selectedBranch, setSelectedBranch] = useState<any>();
+  const [branchId, setBranchId] = useState<Number>();
+  const [branch, setBranch] = useState<String>();
+  const [canSubmit, setCanSubmit] = useState<Boolean>(false);
+
+  useEffect(()=>{
+    GetAllBranches().then(branches=>{
+      let branchOptList: Array<any> = [];
+      branches.forEach((branch: any)=>{
+        let branchItem = {
+        value: branch.id,
+        label: branch.branchName
+        };
+        branchOptList.push(branchItem);
+      })
+      setBranchList(branchOptList);
+    })
+  },[])
+  
+  useEffect(()=>{
+    if(selectedBranch){
+      setBranchId(selectedBranch.value);
+      setBranch(selectedBranch.label);
+    }
+  },[selectedBranch]);
+
+  useEffect(()=>{
+    if(branch&&branchId){
+      setCanSubmit(true);
+    }
+  },[branch, branchId]);
 
   return(
     <>
@@ -12,7 +47,7 @@ export default function CustomerAdd(){
         </div>}
       />
       <BlueCard content={
-      <form onSubmit={(e)=>AddCustomer(e)}>
+      <form onSubmit={(e)=>AddCustomer(e, branch!, branchId!)}>
         <div className="flex h-fit">
           <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
             <h3 className="p-1 rounded m-1 bg-white text-sky-950">Basic Info</h3>
@@ -33,7 +68,7 @@ export default function CustomerAdd(){
           <div className="w-1/3 h-full border border-white p-1 rounded">
             <h3 className="p-1 rounded m-1 bg-white text-sky-950">Sales Info</h3>
             <input className="m-1 pl-1" type="text" name="accManager" placeholder="Account Manager"/>
-            <input className="m-1 pl-1" type="text" name="branch" placeholder="Branch"/>
+            {branchList&&branchList.length&&<BranchDropdown selectedBranch={selectedBranch} setSelectedBranch={setSelectedBranch} branchList={branchList}/>}
             <input className="m-1 pl-1" type="text" name="team" placeholder="Sales Team"/>
             <input className="m-1 pl-1" type="date" name="activeDate" placeholder="Active Date"/>
             <input className="m-1 pl-1" type="text" name="terms" placeholder="Terms"/>
@@ -41,7 +76,7 @@ export default function CustomerAdd(){
           </div>
         </div>
         <div className="flex w-full justify-center">
-          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
+          {canSubmit&&<button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>}
         </div>
       </form>}
       /> 

@@ -1,41 +1,29 @@
 'use client'
 import { PostEmployee } from "@/app/api";
 
-export default function AddEmployee(event: any){
+export default function AddEmployee(event: any, state: String, branch: String, branchId: Number){
 
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
-  const firstName = formData.get('firstName');
-  const initial = formData.get('initial');
-  const lastName = formData.get('lastName');
-  const ssn = formData.get('ssn');
-
-  const street = formData.get('street');
-  const streetTwo = formData.get('lasstreetTwotName');
-  const city = formData.get('city');
-  const zip = formData.get('zip');
-
-  const phone = formData.get('phone');
-  const phoneTwo = formData.get('phoneTwo');
-  const email = formData.get('email');
-  const branch = formData.get('branch');
 
   let dataObj = {
-    firstName,
-    initial,
-    lastName,
-    ssn,
+    firstName: formData.get('firstName'),
+    middleInitial: formData.get('initial'),
+    lastName: formData.get('lastName'),
+    ssn: formData.get('ssn'),
 
-    street,
-    streetTwo,
-    city,
-    zip,
+    street: formData.get('street'),
+    streetTwo: formData.get('lasstreetTwotName'),
+    city: formData.get('city'),
+    state,
+    zip: formData.get('zip'),
 
-    phone,
-    phoneTwo,
-    email,
-    branch
+    phone: formData.get('phone'),
+    phoneTwo: formData.get('phoneTwo'),
+    email: formData.get('email'),
+    branch,
+    branchId
   };
 
   let data = JSON.stringify(dataObj);

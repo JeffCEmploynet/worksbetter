@@ -175,3 +175,9 @@ export function GetTimecards(employeeId?: Number, assignmentId?: Number, lastNam
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function GetAllBranches(){
+  const url = 'https://localhost:7151/api/Branches';
+  const callType = 'GET';
+  return CallApi(url, callType);
+}

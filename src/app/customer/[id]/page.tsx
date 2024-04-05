@@ -14,6 +14,7 @@ export default function Customer({params}: {params: {id: Number}}){
   const [cuId, setCuId] = useState<Number>();
   const [customerName, setCustomerName] = useState<String>();
   const [branch, setBranch] = useState<String>();
+  const [branchId, setBranchId] = useState<Number>();
 
   const [ordersDisplayList, setOrdersDisplayList] = useState<any>([]);
   const [ordersHeaders, setOrdersHeaders] = useState<any>();
@@ -32,9 +33,12 @@ export default function Customer({params}: {params: {id: Number}}){
   
   useEffect(()=>{
     if(customerData){
+      console.log(customerData);
+      console.log(customerData.branchId);
       setCustomerName(customerData.customerName);
       setCuId(customerData.id);
       setBranch(customerData.branch);
+      setBranchId(customerData.branchId);
     }
   }, [customerData]);
 
@@ -109,7 +113,7 @@ export default function Customer({params}: {params: {id: Number}}){
         <p>Branch: {branch}</p>
       </div>
     }/>}
-    {showOrders&&
+    
     <div>
       <BlueCard content={
         <div className="flex flex-col w-full">
@@ -122,18 +126,19 @@ export default function Customer({params}: {params: {id: Number}}){
               </button>
             </OverlayTrigger>
           </div>
-          <div>
+          {showOrders&&<div>
             <ResultsDiv searchResultList={ordersDisplayList} headers={ordersHeaders}/>
-          </div>
+          </div>}
         </div>
         }/>
     </div>
-    }
+    
     {showAddModal&&
       <AddOrderModal 
         customerId={cuId!}
         customerName={customerName!}
         branch={branch!}
+        branchId={branchId!}
         showModal={showAddModal}
         onHide={hideOrderModal}
     />}

@@ -3,15 +3,15 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import { Modal } from "react-bootstrap";
 import AddOrder from "./addOrder";
 
-export default function AddOrderModal({customerId, customerName, branch, showModal, onHide}:
-  {customerId: Number, customerName: String, branch: String, showModal: any, onHide: any}
+export default function AddOrderModal({customerId, customerName, branch, branchId, showModal, onHide}:
+  {customerId: Number, customerName: String, branch: String, branchId: Number, showModal: any, onHide: any}
 ){
   return(
     <Modal show={showModal} onHide={onHide}>
       <Modal.Header>Add Order</Modal.Header>
       <Modal.Body>
         <BlueCard content={
-          <form onSubmit={(e)=>AddOrder(e, customerName, customerId, branch, onHide)}>
+          <form onSubmit={(e)=>AddOrder(e, customerName, customerId, branch, branchId, onHide)}>
             <div className="flex h-fit">
             <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
               <h3 className="p-1 rounded m-1 bg-white text-sky-950">Basic Info</h3>
