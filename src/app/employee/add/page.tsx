@@ -53,24 +53,26 @@ export default function EmployeeAdd(){
       <div>
         <h3>Welcome! You have reached the Employee Add Page!</h3>
         <form onSubmit={(e)=>AddEmployee(e, employeeState!, branch!, branchId!)}>
-          <div>
-            <input className="m-1 p-1" type="text" name="firstName" placeholder="First Name"/>
-            <input className="m-1 p-1" type="text" name="initial" placeholder="Initial"/>
-            <input className="m-1 p-1" type="text" name="lastName" placeholder="Last Name"/>
-            <input className="m-1 p-1" type="text" name="ssn" placeholder="SSN"/>
-          </div>
-          <div>
-            <input className="m-1 p-1" type="text" name="street" placeholder="Street"/>
-            <input className="m-1 p-1" type="text" name="streetTwo" placeholder="Street 2"/>
-            <input className="m-1 p-1" type="text" name="city" placeholder="City"/>
-            <StatesDropdown selectedState={selectedState} setSelectedState={setSelectedState} />
-            <input className="m-1 p-1" type="text" name="zip" placeholder="Zip"/>
-          </div>
-          <div>
-            <input className="m-1 p-1" type="text" name="phone" placeholder="Phone 1"/>
-            <input className="m-1 p-1" type="text" name="phoneTwo" placeholder="Phone 2"/>
-            <input className="m-1 p-1" type="text" name="email" placeholder="Email"/>
-            <BranchDropdown selectedBranch={selectedBranch} setSelectedBranch={setSelectedBranch} branchList={branchList} />
+          <div className="flex h-fit">
+            <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
+              <input className="m-1 p-1" type="text" name="firstName" placeholder="First Name"/>
+              <input className="m-1 p-1" type="text" name="initial" placeholder="Initial"/>
+              <input className="m-1 p-1" type="text" name="lastName" placeholder="Last Name"/>
+              <input className="m-1 p-1" type="text" name="ssn" placeholder="SSN"/>
+            </div>
+            <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
+              <input className="m-1 p-1" type="text" name="street" placeholder="Street"/>
+              <input className="m-1 p-1" type="text" name="streetTwo" placeholder="Street 2"/>
+              <input className="m-1 p-1" type="text" name="city" placeholder="City"/>
+              <StatesDropdown selectedState={selectedState} setSelectedState={setSelectedState} />
+              <input className="m-1 p-1" type="text" name="zip" placeholder="Zip"/>
+            </div>
+            <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
+              <input className="m-1 p-1" type="text" name="phone" placeholder="Phone 1"/>
+              <input className="m-1 p-1" type="text" name="phoneTwo" placeholder="Phone 2"/>
+              <input className="m-1 p-1" type="text" name="email" placeholder="Email"/>
+              <BranchDropdown selectedBranch={selectedBranch} setSelectedBranch={setSelectedBranch} branchList={branchList} />
+            </div>
           </div>
           <div>
             <label className="m-1 p-1" htmlFor="rParser">Parse Resume</label>

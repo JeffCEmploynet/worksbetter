@@ -5,13 +5,15 @@ export default function CreateAssignment(event: any, postAddData: any, onHide: a
   event.preventDefault();
   console.log(orderData);
 
-  //const formData = new FormData(event.currentTarget);
+  const formData = new FormData(event.currentTarget);
+  const startDate = formData.get("startDate");
   const salary = 0; // future use
   const isW2 = 1; //future use
   const jobOrdersId: Number = postAddData.orderId;
 
   let dataObj = {
     ...postAddData,
+    startDate,
     salary,
     isW2
   };

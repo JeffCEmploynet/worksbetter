@@ -69,9 +69,12 @@ export default function AddAssignmentModal({fullName, lastName, firstName, emplo
         customerId: selectedOrder.value.customerId,
         customerName: selectedOrder.value.customerName,
         branch: selectedOrder.value.branch,
+        branchId: selectedOrder.value.branchId,
         status: 'Active - Open',
         payRate: selectedOrder.value.payRate,
         billRate: selectedOrder.value.billRate,
+        otBillRate: (selectedOrder.value.payRate * 1.5) * selectedOrder.value.otBillCalc,
+        dtBillRate: (selectedOrder.value.payRate * 2) * selectedOrder.value.dtBillCalc
       }
       setPostAddData(addedData);
       setOrderData(selectedOrder.value);
@@ -100,6 +103,7 @@ export default function AddAssignmentModal({fullName, lastName, firstName, emplo
                 <input className="m-1 pl-1" type="text" name="billRate" placeholder="Bill Rate" defaultValue={selectedOrder ? selectedOrder.value.billRate : ""}/>
                 {/* <input className="m-1 pl-1" type="text" name="salary" placeholder="Salary"/>
                 <input className="m-1 pl-1" type="text" name="isW2" placeholder="yes" /> */}
+                <input className="m-1 pl-1" type="date" name="startDate"/>
               </div>
             </div>
             <div className="flex w-full justify-center">

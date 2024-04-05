@@ -1,6 +1,6 @@
 import {GetTimecards} from '../../../api'
 
-export default function LoadTimecardData(event, filterValue, setTimecardRowData){
+export default function LoadTimecardData(event: any, filterValue: any, setTimecardRowData: any){
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
@@ -11,7 +11,9 @@ export default function LoadTimecardData(event, filterValue, setTimecardRowData)
   const customerName = filterValue === "customerName" ? formData.get("searchParam")?.toString() : null;
   const customerId = filterValue === "customerId" ? Number(formData.get("searchParam")) : 0;
 
-  GetTimecards(employeeId, assignmentId, lastName, firstName, customerId, customerName).then(results => {
+  console.log(firstName);
+
+  GetTimecards(employeeId, assignmentId, lastName!, firstName!, customerId, customerName!).then(results => {
     setTimecardRowData(results);
   });
 }

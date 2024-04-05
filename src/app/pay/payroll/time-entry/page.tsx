@@ -23,6 +23,7 @@ export default function TimeEntry(){
 
   useEffect(()=>{
     GetAllTimecards().then(timecards =>{
+      console.log(timecards);
       setTimecardRowData(timecards);
     });
   },[]);
@@ -39,29 +40,30 @@ export default function TimeEntry(){
 
   useEffect(()=>{
     if(timecardRowData&&timecardRowData.length){
+      console.log(timecardRowData);
       setTimecardColDefs([
-        {field: "LastName"},
-        {field: "FirstName"},
-        {field: "AssignmentId"},
-        {field: "EmployeeId"},
-        {field: "CustomerId"},
-        {field: "RHours", editable: true},
-        {field: "OHours", editable: true},
-        {field: "DHours", editable: true},
-        {field: "PayCode", editable: true},
-        {field: "WeekEndingDate", editable: true},
-        {field: "PayRate", editable: true},
-        {field: "OTPayRate", editable: true},
-        {field: "DTPayRate", editable: true},
-        {field: "BillRate", editable: true},
-        {field: "OTBillRate", editable: true},
-        {field: "DTBillRate", editable: true}
+        {field: "lastName"},
+        {field: "firstName"},
+        {field: "assignmentId"},
+        {field: "employeeId"},
+        {field: "customerId"},
+        {field: "rHours", editable: true},
+        {field: "oHours", editable: true},
+        {field: "dHours", editable: true},
+        {field: "payCode", editable: true},
+        {field: "weekEndingDate", editable: true},
+        {field: "payRate", editable: true},
+        {field: "otPayRate", editable: true},
+        {field: "dtPayRate", editable: true},
+        {field: "billRate", editable: true},
+        {field: "otBillRate", editable: true},
+        {field: "dtBillRate", editable: true}
       ]);
     }
   },[timecardRowData]);
 
   const onFirstDataRendered = (params: any) => { 
-    params.columnApi.autoSizeAllColumns();
+    params.api.autoSizeAllColumns();
   };
 
   return(
