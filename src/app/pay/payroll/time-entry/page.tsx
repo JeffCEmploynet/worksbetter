@@ -5,16 +5,20 @@ import FilterTypeDropdown from "./filterTypeDropdown";
 import BlueCard from "@/app/components/cards/BlueCard";
 import CreateTimecards from "./createTimecards";
 import LoadTimecardData from './loadTimecardData';
-import SaveTimecards from "./saveTimecards";
+import { SaveTimecards, DeleteTimecards } from "./timecardAdjust";
 import { GetAllTimecards } from "@/app/api";
+import { TfiSave } from "react-icons/tfi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-quartz.css";
+import "ag-grid-community/styles/ag-theme-balham.css";
 
 export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
   const [blankTimecards, setBlankTimecards] = useState<any>();
   const [timecardRowData, setTimecardRowData] = useState<any>();
   const [timecardColDefs, setTimecardColDefs] = useState<any>();
+  const [gridApi, setGridApi] = useState<any>();
 
   const [defaultColDef] = useState<any>({
     sortable: true,
@@ -64,6 +68,7 @@ export default function TimeEntry(){
   },[timecardRowData]);
 
   const onFirstDataRendered = (params: any) => { 
+    setGridApi(params.api);
     params.api.autoSizeAllColumns();
   };
 
@@ -82,13 +87,26 @@ export default function TimeEntry(){
               <button className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
             </form>
           </div>
-          <div>
-            <button className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" onClick={()=>SaveTimecards(timecardRowData)}>Save</button>
+          <div className="flex flex-row align-middle">
+            <OverlayTrigger overlay={<Tooltip 
+              style={{position:"fixed", color:"black"}}>Save</Tooltip>}>
+              <button 
+                className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+                onClick={()=>SaveTimecards(timecardRowData)}
+              ><TfiSave /></button>
+            </OverlayTrigger>
+            <OverlayTrigger overlay={<Tooltip 
+              style={{position:"fixed", color:"black"}}>Delete</Tooltip>}>
+              <button 
+                className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+                onClick={()=>DeleteTimecards(gridApi)}
+              ><RiDeleteBin6Line /></button>
+            </OverlayTrigger>
           </div>
         </div>
       }/>
       {timecardRowData&&timecardRowData.length&&
-        <div className="ag-theme-quartz m-1 p-1" style={{height: 500}}>
+        <div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
           <AgGridReact
             rowData={timecardRowData}
             columnDefs={timecardColDefs}

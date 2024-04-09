@@ -187,3 +187,9 @@ export function UpdateTimecard(id: Number, data: any){
   const callType = 'PUT';
   return CallApi(url, callType, data);
 }
+
+export function DeleteTimecard(id: Number){
+  const url = `https://localhost:7151/api/Timecards/${id}`;
+  const callType = 'DELETE';
+  return CallApi(url, callType);
+}
