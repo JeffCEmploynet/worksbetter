@@ -5,6 +5,7 @@ import FilterTypeDropdown from "./filterTypeDropdown";
 import BlueCard from "@/app/components/cards/BlueCard";
 import CreateTimecards from "./createTimecards";
 import LoadTimecardData from './loadTimecardData';
+import SaveTimecards from "./saveTimecards";
 import { GetAllTimecards } from "@/app/api";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -42,7 +43,7 @@ export default function TimeEntry(){
     if(timecardRowData&&timecardRowData.length){
       console.log(timecardRowData);
       setTimecardColDefs([
-        {field: "lastName"},
+        {field: "lastName", checkboxSelection: true, headerCheckboxSelection: true},
         {field: "firstName"},
         {field: "assignmentId"},
         {field: "employeeId"},
@@ -69,26 +70,32 @@ export default function TimeEntry(){
   return(
     <>
       <BlueCard content={
-        <h3>Time Entry</h3>
+        <h3 className="font-bold">Time Entry</h3>
       }/>
       <BlueCard content={
-        <div className="flex flex-row align-middle">
-          <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(setBlankTimecards)}>Create Timecards</button>
-          <form className="flex flex-row align-middle justify-center" onSubmit={(e)=>LoadTimecardData(e, selectedFilter.value, setTimecardRowData)}>
-            <FilterTypeDropdown selectedFilter={selectedFilter} setSeletctedFilter={setSeletctedFilter} />
-            <input className="m-1 p-1" type="text" name="searchParam" placeholder={selectedFilter ? selectedFilter.label : "Search Parameter"} />
-            <button className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
-          </form>
+        <div className="flex flex-row justify-between w-full">
+          <div className="flex flex-row align-middle">
+            <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(setBlankTimecards)}>Create Timecards</button>
+            <form className="flex flex-row align-middle justify-center" onSubmit={(e)=>LoadTimecardData(e, selectedFilter.value, setTimecardRowData)}>
+              <FilterTypeDropdown selectedFilter={selectedFilter} setSeletctedFilter={setSeletctedFilter} />
+              <input className="m-1 p-1" type="text" name="searchParam" placeholder={selectedFilter ? selectedFilter.label : "Search Parameter"} />
+              <button className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
+            </form>
+          </div>
+          <div>
+            <button className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" onClick={()=>SaveTimecards(timecardRowData)}>Save</button>
+          </div>
         </div>
       }/>
       {timecardRowData&&timecardRowData.length&&
-      <div className="ag-theme-quartz" style={{height: 500}}>
-        <AgGridReact
-          rowData={timecardRowData}
-          columnDefs={timecardColDefs}
-          defaultColDef={defaultColDef}
-          onFirstDataRendered={onFirstDataRendered}
-        />  
+        <div className="ag-theme-quartz m-1 p-1" style={{height: 500}}>
+          <AgGridReact
+            rowData={timecardRowData}
+            columnDefs={timecardColDefs}
+            defaultColDef={defaultColDef}
+            onFirstDataRendered={onFirstDataRendered}
+            rowSelection="multiple"
+          />  
       </div>}
     </>
   )

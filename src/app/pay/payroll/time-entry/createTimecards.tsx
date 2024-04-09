@@ -1,29 +1,29 @@
 import { GetAllAssignments, PostTimecard } from "@/app/api";
 
 export default function CreateTimecards(setBlankTimecards: any){
-  let WeekEndingDate: Date = new Date(GetSundayDate());
+  let weekEndingDate: Date = new Date(GetSundayDate());
 
   GetAllAssignments().then(assignments => {
     let timecards = assignments.map((assignment:any) => ({
-      LastName: assignment.lastName,
-      FirstName: assignment.firstName,
-      AssignmentId: assignment.id,
-      EmployeeId: assignment.employeeId,
-      CustomerId: assignment.customerId,
-      CustomerName: assignment.customerName,
-      Branch: assignment.branch,
-      BranchId: assignment.branchId,
-      RHours: 0, 
-      OHours: 0,
-      DHours: 0,
-      PayCode: "Reg",
-      WeekEndingDate,
-      PayRate: assignment.payRate,
-      OTPayRate: assignment.payRate * 1.5,
-      DTPayRate: assignment.payRate * 2,
-      BillRate: assignment.billRate,
-      OTBillRate: assignment.otBillRate,
-      DTBillRate: assignment.dtBillRate
+      lastName: assignment.lastName,
+      firstName: assignment.firstName,
+      assignmentId: assignment.id,
+      employeeId: assignment.employeeId,
+      customerId: assignment.customerId,
+      customerName: assignment.customerName,
+      branch: assignment.branch,
+      branchId: assignment.branchId,
+      rHours: 0, 
+      oHours: 0,
+      dHours: 0,
+      payCode: "Reg",
+      weekEndingDate,
+      payRate: assignment.payRate,
+      otPayRate: assignment.payRate * 1.5,
+      dtPayRate: assignment.payRate * 2,
+      billRate: assignment.billRate,
+      otBillRate: assignment.otBillRate,
+      dtBillRate: assignment.dtBillRate
     }));
     console.log(timecards);
     setBlankTimecards(timecards);

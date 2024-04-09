@@ -181,3 +181,9 @@ export function GetAllBranches(){
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function UpdateTimecard(id: Number, data: any){
+  const url = `https://localhost:7151/api/Timecards/${id}`;
+  const callType = 'PUT';
+  return CallApi(url, callType, data);
+}
