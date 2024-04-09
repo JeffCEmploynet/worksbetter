@@ -23,7 +23,8 @@ export default function CreateTimecards(setBlankTimecards: any){
       dtPayRate: assignment.payRate * 2,
       billRate: assignment.billRate,
       otBillRate: assignment.otBillRate,
-      dtBillRate: assignment.dtBillRate
+      dtBillRate: assignment.dtBillRate,
+      sessionId: null
     }));
     console.log(timecards);
     setBlankTimecards(timecards);

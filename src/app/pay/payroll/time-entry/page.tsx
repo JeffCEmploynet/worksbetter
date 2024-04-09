@@ -62,7 +62,8 @@ export default function TimeEntry(){
         {field: "dtPayRate", editable: true},
         {field: "billRate", editable: true},
         {field: "otBillRate", editable: true},
-        {field: "dtBillRate", editable: true}
+        {field: "dtBillRate", editable: true},
+        {filed: "sessionId"}
       ]);
     }
   },[timecardRowData]);
@@ -92,14 +93,14 @@ export default function TimeEntry(){
               style={{position:"fixed", color:"black"}}>Save</Tooltip>}>
               <button 
                 className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
-                onClick={()=>SaveTimecards(timecardRowData)}
+                onClick={()=>SaveTimecards(timecardRowData, setTimecardRowData, gridApi)}
               ><TfiSave /></button>
             </OverlayTrigger>
             <OverlayTrigger overlay={<Tooltip 
               style={{position:"fixed", color:"black"}}>Delete</Tooltip>}>
               <button 
                 className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
-                onClick={()=>DeleteTimecards(gridApi)}
+                onClick={()=>DeleteTimecards(gridApi, setTimecardRowData)}
               ><RiDeleteBin6Line /></button>
             </OverlayTrigger>
           </div>
