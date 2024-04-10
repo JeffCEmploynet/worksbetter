@@ -8,32 +8,39 @@ import { GetEmployeeTaxSetup } from "@/app/api";
 export default function AddTaxSetupModal({employeeId, showTaxesModal, onHide} : 
   {employeeId: Number, showTaxesModal: any, onHide: any}
 ){
+  const [taxSetupId, setTaxSetupId] = useState<any>(0);
   const [zipCode, setZipCode] = useState<any>();
   const [localTax, setLocalTax] = useState<any>();
   const [employeeState, setEmployeeState] = useState<any>();
   const [stateTax, setStateTax] = useState<any>();
   const [federalTax, setFederalTax] = useState<any>();
   const [withholding, setWithholding] = useState<any>();
+  const [modalLoaded, setModalLoaded] = useState<Boolean>();
 
   useEffect(()=>{
-    GetEmployeeTaxSetup(employeeId).then((results:any)=>{
-      if(results.id){
-        setZipCode(results.zip);
-        setLocalTax(results.localTax);
-        setEmployeeState(results.state);
-        setStateTax(results.stateTax);
-        setFederalTax(results.federalTax);
-        setWithholding(results.addedWithholding);
+    GetEmployeeTaxSetup(employeeId).then(results => {
+      console.log(results);
+      if(results[0].id){
+        console.log(results[0]);
+        setTaxSetupId(results[0].id);
+        setZipCode(results[0].zip);
+        setLocalTax(results[0].localTax);
+        setEmployeeState(results[0].state);
+        setStateTax(results[0].stateTax);
+        setFederalTax(results[0].federalTax);
+        setWithholding(results[0].addedWithholding);
       }
+      setModalLoaded(true);
     })
   },[]);
 
   return(
-    <Modal show={showTaxesModal} onHide={onHide}>
+    <>
+    {modalLoaded&&<Modal show={showTaxesModal} onHide={onHide}>
       <Modal.Header>Set Taxes for employee {employeeId.toString()}</Modal.Header>
       <Modal.Body>
         <BlueCard content={
-          <form onSubmit={(e)=>CreateTaxSetup(e, employeeId, onHide)}>
+          <form onSubmit={(e)=>CreateTaxSetup(e, employeeId, onHide, taxSetupId)}>
             <div className="flex h-fit text-sky-950">
               <div className="w-full h-full border-white p-1 rounded mr-1">
                 <label htmlFor="zip">Zip:</label>
@@ -59,6 +66,7 @@ export default function AddTaxSetupModal({employeeId, showTaxesModal, onHide} :
           </form>
         }/>
       </Modal.Body>
-    </Modal>
+    </Modal>}
+    </>
   )
 }

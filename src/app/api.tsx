@@ -205,3 +205,9 @@ export function GetEmployeeTaxSetup(employeeId: Number){
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function EditEmployeeTaxSetup(id: Number, data: any){
+  const url = `https://localhost:7151/api/TaxSetups/${id}`;
+  const callType = 'PUT';
+  return CallApi(url, callType, data);
+}

@@ -29,6 +29,7 @@ export default function Employee({params}: {params: {id: Number}}){
   let assignmentsList: Array<any> = [];
 
   useEffect(()=>{
+    console.log(params.id);
     EmployeeLoad(params.id, setEmployeeData);
     LoadEmployeeAssignments(params.id, setAssignmentData);
   },[]);

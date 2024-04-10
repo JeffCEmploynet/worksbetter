@@ -1,11 +1,11 @@
-import { PostTaxSetup } from "@/app/api";
+import { PostTaxSetup, EditEmployeeTaxSetup } from "@/app/api";
 
-export default function CreateTaxSetup(event: any, employeeId: Number, onHide: any){
+export default function CreateTaxSetup(event: any, employeeId: Number, onHide: any, taxSetupId: any){
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
 
-  let dataObj = {
+  let dataObj: any = {
     employeeId,
     zip: formData.get("zip"),
     localTax: formData.get("local"),
@@ -15,11 +15,21 @@ export default function CreateTaxSetup(event: any, employeeId: Number, onHide: a
     addedWithholding: formData.get("withholding")
   }
 
+  if(taxSetupId > 0){
+    dataObj["id"] = taxSetupId;
+  }
+
   let data = JSON.stringify(dataObj);
 
-  PostTaxSetup(data).then(res=>{
-    console.log(res);
-  });
+  if (taxSetupId){
+    EditEmployeeTaxSetup(taxSetupId, data).then(res=>{
+      console.log(res);
+    });
+  } else {
+    PostTaxSetup(data).then(res=>{
+      console.log(res);
+    });
+  }
 
   onHide();
 }
