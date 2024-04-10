@@ -1,13 +1,25 @@
+import { PostTaxSetup } from "@/app/api";
 
-
-export default function CreateTaxSetup(event: any, assignmentId: Number){
+export default function CreateTaxSetup(event: any, employeeId: Number, onHide: any){
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
-  const zip = formData.get("zip");
-  const localTax = formData.get("local");
-  const state = formData.get("state");
-  const stateTax = formData.get("stateTax");
-  const federalTax = formData.get("federalTax");
-  const addedWithholding = formData.get("withholding");
+
+  let dataObj = {
+    employeeId,
+    zip: formData.get("zip"),
+    localTax: formData.get("local"),
+    state: formData.get("state"),
+    stateTax: formData.get("stateTax"),
+    federalTax: formData.get("federalTax"),
+    addedWithholding: formData.get("withholding")
+  }
+
+  let data = JSON.stringify(dataObj);
+
+  PostTaxSetup(data).then(res=>{
+    console.log(res);
+  });
+
+  onHide();
 }

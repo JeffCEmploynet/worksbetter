@@ -7,6 +7,7 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
 import LoadEmployeeAssignments from "../assignments/loadEmployeeAssignemnts";
 import AddAssignmentModal from "../assignments/addAssignmentModal";
+import AddTaxSetupModal from "../taxSetup/addTaxSetupModal";
 
 export default function Employee({params}: {params: {id: Number}}){
   const [employeeData, setEmployeeData] = useState<any>();
@@ -20,8 +21,10 @@ export default function Employee({params}: {params: {id: Number}}){
 
   const [assignmentsDisplayList, setAssignmentsDisplayList] = useState<any>();
   const [assignmentsHeaders, setAssignmentsHeaders] = useState<any>();
-  const [showAssignments, setShowAssignments] = useState<Boolean>();
-  const [showAddModal, setShowAddModal] = useState<Boolean>();
+  const [showAssignments, setShowAssignments] = useState<Boolean>(false);
+  const [showAddModal, setShowAddModal] = useState<Boolean>(false);
+
+  const [showTaxModal, setShowTaxModal] = useState<Boolean>(false);
 
   let assignmentsList: Array<any> = [];
 
@@ -100,13 +103,29 @@ export default function Employee({params}: {params: {id: Number}}){
     setShowAddModal(true);
   }
 
+  const openTaxModal = () => {
+    setShowAssignments(false);
+    setShowTaxModal(true);
+  }
+
+  const hideTaxModal = () => {
+    setShowTaxModal(false);
+    LoadEmployeeAssignments(params.id, setAssignmentData);
+  }
+
   return(
     <>
       {showEmployee&&<BlueCard content={
-        <div>
-          <h3 className="font-bold">{fullName}</h3>
-          <p>Id: {eeId?.toString()}</p>
-          <p>Branch: {branch}</p>
+        <div className="flex justify-between w-full">
+          <div>
+            <h3 className="font-bold">{fullName}</h3>
+            <p>Id: {eeId?.toString()}</p>
+            <p>Branch: {branch}</p>
+          </div>
+          <button 
+            className="m-1 p-1 rounded bg-sky-950 text-white flex align-middle w-fit h-fit"
+            onClick={()=>openTaxModal()}
+          >Tax Setup</button>
         </div>
       }/>}
       <div>
@@ -136,6 +155,13 @@ export default function Employee({params}: {params: {id: Number}}){
         showAddModal={showAddModal}
         onHide={hideAssignmentsModal}
     />}
+    {showTaxModal&&
+      <AddTaxSetupModal
+        employeeId={params.id}
+        showTaxesModal={openTaxModal}
+        onHide={hideTaxModal}
+      />
+    }
     </>
   )
 }

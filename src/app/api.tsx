@@ -193,3 +193,15 @@ export function DeleteTimecard(id: Number){
   const callType = 'DELETE';
   return CallApi(url, callType);
 }
+
+export function PostTaxSetup(data: any){
+  const url = `https://localhost:7151/api/TaxSetups`;
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
+
+export function GetEmployeeTaxSetup(employeeId: Number){
+  const url = `https://localhost:7151/api/TaxSetups/EmployeeId?employeeId=${employeeId}`;
+  const callType = 'GET';
+  return CallApi(url, callType);
+}
