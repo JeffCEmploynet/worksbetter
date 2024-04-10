@@ -1,16 +1,29 @@
 'use client'
+
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
+
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { AgGridReact } from "ag-grid-react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import FindEmployee from "./findEmployee";
 import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
 
 export default function EmployeeSearch()
 {
-  const [searchResults, setSearchResults] = useState<any>([]);
   const [employeeHeaders, setEmployeeHeaders] = useState<any>();
   const [displayList, setDisplayList] = useState<any>([]);
   const [showResults, setShowResults] = useState<Boolean>(false);
   let resultList: Array<any> = [];
+
+  const [resultsColDefs, setResultsColDefs] = useState<any>();
+  const [searchResults, setSearchResults] = useState<any>([]);
+  const [defaultColDef] = useState<any>({
+    sortable: true,
+    resizable: true,
+    filter: true,      
+  });
 
   useEffect(()=>{
     if(searchResults&&searchResults.length){
@@ -31,6 +44,18 @@ export default function EmployeeSearch()
             url={url}
           />
         );
+        setResultsColDefs([
+          {field: "id", 
+            cellRenderer: () => {
+              return <Link href={`http://localhost:3000/employee/${id}`}>{id}</Link>
+            }
+          },
+          {field: "firstName"},
+          {field: "lastName"},
+          {field: "branch"},
+          {field: "phone"},
+          {field: "zip"}
+        ])
       });
     }
   },[searchResults]);
@@ -53,7 +78,11 @@ export default function EmployeeSearch()
     if(displayList&&displayList.length){
       setShowResults(true);
     }
-  },[displayList])
+  },[displayList]);
+
+  const onFirstDataRendered = (params: any) => { 
+    params.api.autoSizeAllColumns();
+  };
 
   return(
     <>
@@ -74,7 +103,14 @@ export default function EmployeeSearch()
           </form>
         </div>
       }/>
-      {showResults&&<ResultsDiv searchResultList={displayList} headers={employeeHeaders}/>}
+      {showResults&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+        <AgGridReact
+          rowData={searchResults}
+          columnDefs={resultsColDefs}
+          defaultColDef={defaultColDef}
+          onFirstDataRendered={onFirstDataRendered}
+        />  
+      </div>}
     </>
   )
 }

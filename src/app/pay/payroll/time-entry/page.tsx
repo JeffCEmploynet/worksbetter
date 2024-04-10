@@ -1,4 +1,8 @@
 'use client'
+
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-balham.css";
+
 import { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import FilterTypeDropdown from "./filterTypeDropdown";
@@ -10,8 +14,6 @@ import { GetAllTimecards } from "@/app/api";
 import { TfiSave } from "react-icons/tfi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
 
 export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
