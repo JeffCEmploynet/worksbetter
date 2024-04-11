@@ -14,7 +14,7 @@ function CallApi(
       body: callType === 'POST' || callType === 'PUT' ? data : null,
     })
     .then(result => {
-      if (result.status === 200) {
+      if (result.status === 200 || result.status ===201) {
         return result.text();
       } else if (result.status === 401) {
         window.location.reload();
@@ -52,6 +52,12 @@ function CallApi(
 function RetryFetch(url: string, callType: string, data: string) {
   CallApi(url, callType, data);
 };
+
+export function PostLogin(userName: String, password: String){
+  const url = `https://localhost:7151/api/LoginAudit?username=${userName}&password=${password}`;
+  const callType = 'POST';
+  return CallApi(url, callType);
+}
 
 export function PostEmployee(data: string){
   const url = 'https://localhost:7151/api/Employees';
