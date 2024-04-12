@@ -15,6 +15,7 @@ import { TfiSave } from "react-icons/tfi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { AuthContext } from "@/app/auth";
+import ProofTimecardsModal from "../proof/proofTimecardsModal";
 
 export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
@@ -23,6 +24,9 @@ export default function TimeEntry(){
   const [timecardColDefs, setTimecardColDefs] = useState<any>();
   const [gridApi, setGridApi] = useState<any>();
   const [sessionId, setSessionId] = useState<Number>();
+
+  const [showProofModal, setShowProofModal] = useState<Boolean>(false);
+  const [showTimecards, setShowTimecards] = useState<Boolean>(true);
 
   const [defaultColDef] = useState<any>({
     sortable: true,
@@ -86,12 +90,32 @@ export default function TimeEntry(){
     params.api.autoSizeAllColumns();
   };
 
+  const showProof = () => {
+    setShowTimecards(false);
+    setShowProofModal(true);
+  }
+
+  const hideProof = () => {
+    setShowProofModal(false);
+    setShowTimecards(true);
+  }
+
   return(
     <>
       <BlueCard content={
-        <h3 className="font-bold">Time Entry</h3>
+        <div className="flex flex-row justify-between w-full">
+          <h3 className="font-bold">Time Entry</h3>
+          {showTimecards&&<button 
+            className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit text-white m-1"
+            onClick={()=>showProof()}
+          >Proof Timecards</button>}
+          {showProofModal&&<button
+            className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit text-white m-1"
+            onClick={()=>hideProof()}
+          >Edit Timecards</button>}
+        </div>
       }/>
-      <BlueCard content={
+      {showTimecards&&<BlueCard content={
         <div className="flex flex-row justify-between w-full">
           <div className="flex flex-row align-middle">
             <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(setBlankTimecards)}>Create Timecards</button>
@@ -118,8 +142,8 @@ export default function TimeEntry(){
             </OverlayTrigger>
           </div>
         </div>
-      }/>
-      {timecardRowData&&timecardRowData.length&&
+      }/>}
+      {timecardRowData&&timecardRowData.length&&showTimecards&&
         <div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
           <AgGridReact
             rowData={timecardRowData}
@@ -129,6 +153,11 @@ export default function TimeEntry(){
             rowSelection="multiple"
           />  
       </div>}
+      {showProofModal&&<ProofTimecardsModal
+        timecardData={timecardRowData}
+        showProof={showProof}
+        hideProof={hideProof}
+      />}
     </>
   )
 }
