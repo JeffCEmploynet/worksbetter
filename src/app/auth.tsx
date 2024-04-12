@@ -15,7 +15,8 @@ export type AuthContent = {
   userType: string | undefined,
   authLevel: Number | undefined,
   branch: string | undefined,
-  branchId: Number | undefined
+  branchId: Number | undefined,
+  userId: Number | undefined
 }
 
 export const AuthContext = createContext<AuthContent | null>(null);
@@ -23,6 +24,7 @@ export const AuthContext = createContext<AuthContent | null>(null);
 export function AuthProvider({children}:{children: any}){
   const [token, setToken] = useState<string | undefined>();
   const [userName, setUserName] = useState<string | undefined>();
+  const [userId, setUserId] = useState<Number | undefined> ();
   const [firstName, setFirstName] = useState<string | undefined>();
   const [lastName, setLastName] = useState<string | undefined>();
   const [expirationDate, setExpirationDate] = useState<Date | undefined>();
@@ -40,7 +42,8 @@ export function AuthProvider({children}:{children: any}){
   
     PostLogin(username!, password!).then(myData=>{
       if(myData){
-        console.log(myData);  
+        console.log(myData);
+        setUserId(myData.userId)  
         setToken(myData.token);
         setUserName(myData.userName);
         setFirstName(myData.firstName);
@@ -55,6 +58,7 @@ export function AuthProvider({children}:{children: any}){
   }
 
   const logout = () => {
+    setUserId(undefined);
     setToken(undefined);
     setUserName(undefined);
     setFirstName(undefined);
@@ -73,6 +77,7 @@ export function AuthProvider({children}:{children: any}){
     logout,
     isLoggedIn: !!token,
     token,
+    userId,
     userName,
     firstName,
     lastName,

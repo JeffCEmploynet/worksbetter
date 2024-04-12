@@ -3,7 +3,7 @@
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-balham.css";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AgGridReact } from "ag-grid-react";
 import FilterTypeDropdown from "./filterTypeDropdown";
 import BlueCard from "@/app/components/cards/BlueCard";
@@ -14,6 +14,7 @@ import { GetAllTimecards } from "@/app/api";
 import { TfiSave } from "react-icons/tfi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { AuthContext } from "@/app/auth";
 
 export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
@@ -21,12 +22,22 @@ export default function TimeEntry(){
   const [timecardRowData, setTimecardRowData] = useState<any>();
   const [timecardColDefs, setTimecardColDefs] = useState<any>();
   const [gridApi, setGridApi] = useState<any>();
+  const [sessionId, setSessionId] = useState<Number>();
 
   const [defaultColDef] = useState<any>({
     sortable: true,
     resizable: true,
     filter: true,      
   });
+
+  const saveObj = {
+    timecardRowData,
+    setTimecardRowData,
+    gridApi,
+    auth: useContext(AuthContext),
+    sessionId,
+    setSessionId
+  }
 
   useEffect(()=>{
     GetAllTimecards().then(timecards =>{
@@ -65,7 +76,7 @@ export default function TimeEntry(){
         {field: "billRate", editable: true},
         {field: "otBillRate", editable: true},
         {field: "dtBillRate", editable: true},
-        {filed: "sessionId"}
+        {field: "sessionId"}
       ]);
     }
   },[timecardRowData]);
@@ -95,7 +106,7 @@ export default function TimeEntry(){
               style={{position:"fixed", color:"black"}}>Save</Tooltip>}>
               <button 
                 className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
-                onClick={()=>SaveTimecards(timecardRowData, setTimecardRowData, gridApi)}
+                onClick={()=>SaveTimecards(saveObj)}
               ><TfiSave /></button>
             </OverlayTrigger>
             <OverlayTrigger overlay={<Tooltip 

@@ -217,3 +217,9 @@ export function EditEmployeeTaxSetup(id: Number, data: any){
   const callType = 'PUT';
   return CallApi(url, callType, data);
 }
+
+export function CreateProofingSession(data: any){
+  const url = `https://localhost:7151/api/ProofingSessions`;
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
