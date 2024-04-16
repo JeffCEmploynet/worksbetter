@@ -15,12 +15,11 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
   const [transactionData, setTransactionData] = useState<any>();
 
   useEffect(()=>{
-    let transactions: Array<any> = [];
     payTimecards.forEach((timecard:any)=>{
       let employeeId = timecard.employeeId;
       GetEmployeeTaxSetup(employeeId).then(tax=>{
         let taxes = tax[0];
-        console.log(taxes);
+
         let taxData = {
           local: taxes.localTax,
           state: taxes.stateTax,
@@ -47,7 +46,6 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
         }
   
         let totalGross = GetGrossPay(hoursData, payData);
-        console.log(totalGross);
         let totalLocalTax = GetTax(totalGross, taxData.local);
         let totalStateTax = GetTax(totalGross, taxData.state);
         let totalFederalTax = GetTax(totalGross, taxData.federal);
@@ -82,24 +80,13 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
           federalTaxes: totalFederalTax,
           weekEndingDate: timecard.weekEndingDate
         }
-        transactions.push(fullTransaction);
-      });
-    });
-    console.log(transactions);
-    setTransactionData(transactions);
-  },[]);
-
-  useEffect(()=>{
-    if(transactionData){
-      transactionData.forEach((transaction: any)=>{
-        let postData = JSON.stringify(transaction);
+        let postData = JSON.stringify(fullTransaction);
         CreateTransaction(postData).then(res=>{
           console.log(res);
         })
-      })
-    }
-    //
-  },[transactionData]);
+      });
+    });
+  },[]);
 
   const onFirstDataRendered = (params: any) => {
     params.api.autoSizeAllColumns();

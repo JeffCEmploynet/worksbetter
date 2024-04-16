@@ -1,12 +1,7 @@
 export function GetGrossPay(hours: any, pay: any){
-  console.log(hours);
-  console.log(pay);
   let regPay = hours.reg * pay.regPay;
   let otPay = hours.ot * pay.otPay;
   let dtPay = hours.dt * pay.dtPay;
-  console.log(regPay);
-  console.log(otPay);
-  console.log(dtPay);
   return (regPay + otPay + dtPay);
 }
 
