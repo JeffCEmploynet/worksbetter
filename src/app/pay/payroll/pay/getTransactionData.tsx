@@ -1,8 +1,12 @@
 export function GetGrossPay(hours: any, pay: any){
+  console.log(hours);
+  console.log(pay);
   let regPay = hours.reg * pay.regPay;
-  let otPay = hours.oHours * pay.otPay;
-  let dtPay = hours.dHours * pay.dtPay;
-
+  let otPay = hours.ot * pay.otPay;
+  let dtPay = hours.dt * pay.dtPay;
+  console.log(regPay);
+  console.log(otPay);
+  console.log(dtPay);
   return (regPay + otPay + dtPay);
 }
 
@@ -20,8 +24,8 @@ export function GetNetPay(gross: number, taxes: number){
 
 export function GetTotalBill(hours: any, bill: any){
   let regBill = hours.reg * bill.regBill;
-  let otBill = hours.oHours * bill.otBill;
-  let dtBill = hours.dHours * bill.dtBill;
+  let otBill = hours.ot * bill.otBill;
+  let dtBill = hours.dt * bill.dtBill;
 
   return (regBill + otBill + dtBill);
 }

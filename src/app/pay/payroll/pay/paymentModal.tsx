@@ -13,19 +13,18 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
   {payTimecards: any, showPayModal: any, hidePayModal: any}
 ){
   const [transactionData, setTransactionData] = useState<any>();
-  const [checkData, setCheckData] = useState<any>();
-  const [invoiceData, setInvoiceData] = useState<any>();
-
-  const [gridApi, setGridApi] = useState<any>();
 
   useEffect(()=>{
     let transactions: Array<any> = [];
     payTimecards.forEach((timecard:any)=>{
-      GetEmployeeTaxSetup(timecard.employeeId).then(taxes=>{
+      let employeeId = timecard.employeeId;
+      GetEmployeeTaxSetup(employeeId).then(tax=>{
+        let taxes = tax[0];
+        console.log(taxes);
         let taxData = {
           local: taxes.localTax,
           state: taxes.stateTax,
-          federal: taxes.federal,
+          federal: taxes.federalTax,
           withholding: taxes.addedWithholding
         };
         
@@ -48,6 +47,7 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
         }
   
         let totalGross = GetGrossPay(hoursData, payData);
+        console.log(totalGross);
         let totalLocalTax = GetTax(totalGross, taxData.local);
         let totalStateTax = GetTax(totalGross, taxData.state);
         let totalFederalTax = GetTax(totalGross, taxData.federal);
@@ -55,37 +55,38 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
         let totalNet = GetNetPay(totalGross, totalTaxes);
         let totalBill = GetTotalBill(hoursData, billData);
   
-        let transaction = {
-          FirstName: timecard.firstName,
-          LastName: timecard.lastName,
-          AssignmentId: timecard.assignmentId,
-          EmployeeId: timecard.employeeId,
-          CustomerName: timecard.customerName,
-          CustomerId: timecard.customerId,
-          BranchName: timecard.branch,
-          BranchId: timecard.branchId,
-          PayCode: timecard.payCode,
-          RHours: timecard.rHours,
-          OHours: timecard.oHours,
-          DHours: timecard.dHours,
-          PayRate: timecard.payRate,
-          OTPayRate: timecard.otPayRate,
-          DTPayRate: timecard.dtPayRate,
-          BillRate: timecard.billRate,
-          OTBillRate: timecard.otBillRate,
-          DTBillRate: timecard.dtBillRate,
-          GrossPay: totalGross,
-          NetPay: totalNet,
-          TotalBill: totalBill,
-          LocalTaxes: totalLocalTax,
-          StateTaxes: totalStateTax,
-          FederalTaxes: totalFederalTax,
-          WeekEndingDate: timecard.weekEndingDate
+        let fullTransaction = {
+          firstName: timecard.firstName,
+          lastName: timecard.lastName,
+          assignmentId: timecard.assignmentId,
+          employeeId: timecard.employeeId,
+          customerName: timecard.customerName,
+          customerId: timecard.customerId,
+          branchName: timecard.branch,
+          branchId: timecard.branchId,
+          payCode: timecard.payCode,
+          rHours: timecard.rHours,
+          oHours: timecard.oHours,
+          dHours: timecard.dHours,
+          payRate: timecard.payRate,
+          otPayRate: timecard.otPayRate,
+          dtPayRate: timecard.dtPayRate,
+          billRate: timecard.billRate,
+          otBillRate: timecard.otBillRate,
+          dtBillRate: timecard.dtBillRate,
+          grossPay: totalGross,
+          netPay: totalNet,
+          totalBill: totalBill,
+          localTaxes: totalLocalTax,
+          stateTaxes: totalStateTax,
+          federalTaxes: totalFederalTax,
+          weekEndingDate: timecard.weekEndingDate
         }
-        transactions.push(transaction);
-        setTransactionData(transactions);
+        transactions.push(fullTransaction);
       });
     });
+    console.log(transactions);
+    setTransactionData(transactions);
   },[]);
 
   useEffect(()=>{
@@ -97,10 +98,10 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
         })
       })
     }
+    //
   },[transactionData]);
 
-  const onFirstDataRendered = (params: any) => { 
-    setGridApi(params.api);
+  const onFirstDataRendered = (params: any) => {
     params.api.autoSizeAllColumns();
   };
 

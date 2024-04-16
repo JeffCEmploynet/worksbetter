@@ -6,7 +6,8 @@ import "ag-grid-community/styles/ag-theme-balham.css";
 import { useState, useEffect, useContext } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { GetAllTimecards } from "@/app/api";
-import BlueCard from "@/app/components/cards/BlueCard"
+import BlueCard from "@/app/components/cards/BlueCard";
+import PaymentModal from "./paymentModal";
 
 export default function Pay(){
   // display session id's and count of timecards for each id
@@ -23,11 +24,14 @@ export default function Pay(){
   });
 
   const [timecardsToPay, setTimecardsToPay] = useState<any>();
+  const [allTimecards, setAllTimecards] = useState<any>();
+  const [showSessionTimecards, setShowSessionTimecards] = useState<Boolean>(false);
+  const [showTransactions, setShowTransactions] = useState<Boolean>(false);
 
   useEffect(()=>{
     let timecardCounter: Array<any> = [];
     GetAllTimecards().then((timecards: any)=>{
-      console.log(timecards);
+      setAllTimecards(timecards);
       timecards.forEach((timecard: any)=>{
         let session = timecard.sessionId;
         let foundSession = timecardCounter.find((sessionCount) => sessionCount.sessionId === session);
@@ -37,7 +41,6 @@ export default function Pay(){
           timecardCounter.push({sessionId: session, count: 1});
         }
       });
-      console.log(timecardCounter);
       setSessionTimecards(timecardCounter);
     });
   },[]);
@@ -48,8 +51,16 @@ export default function Pay(){
         {field: "sessionId", checkboxSelection: true, headerCheckboxSelection: true},
         {field: "count"}
       ]);
+      setShowSessionTimecards(true);
     }
   },[sessionTimecards]);
+
+  useEffect(()=>{
+    if(timecardsToPay){
+      setShowSessionTimecards(false);
+      setShowTransactions(true);
+    }
+  },[timecardsToPay]);
 
   const onFirstDataRendered = (params: any) => { 
     setGridApi(params.api);
@@ -58,21 +69,35 @@ export default function Pay(){
 
   const onPaySelected = () => {
     const selectedSessions = gridApi.getSelectedRows();
-    console.log(selectedSessions);
+    let payTimecards: Array<any> = [];
+    selectedSessions.forEach((session:any)=>{
+      let sessionTimecards = allTimecards.filter((timecard:any)=>timecard.sessionId === session.sessionId);
+      sessionTimecards.forEach((sessionTimecard: any)=>{
+        payTimecards.push(sessionTimecard);
+      })
+    })
+    setTimecardsToPay(payTimecards);
+  }
+
+  const onHidePayModal = () => {
+    setTimecardsToPay(false);
+    setShowSessionTimecards(true);
   }
 
   return(
     <>
     <BlueCard content={
       <div className="flex flex-row justify-between w-full align-middle">
-        <h3>Select Sessions to Pay</h3>
-        <button 
-          className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white"
-          
-        >Pay Selected Timecards</button>
+        {showSessionTimecards&&<div>
+          <h3>Select Sessions to Pay</h3>
+          <button 
+            className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white"
+            onClick={()=>onPaySelected()}
+          >Pay Selected Timecards</button>
+        </div>}
       </div>
     }/>
-    {sessionTimecards&&sessionTimecards.length&&
+    {showSessionTimecards&&
       <div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
         <AgGridReact
           rowData={sessionTimecards}
@@ -83,6 +108,11 @@ export default function Pay(){
         /> 
       </div>
     }
+    {showTransactions&&<PaymentModal
+      payTimecards={timecardsToPay}
+      showPayModal={showTransactions}
+      hidePayModal={onHidePayModal}
+    />}
     </>
   )
 }
