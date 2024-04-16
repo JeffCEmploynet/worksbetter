@@ -223,3 +223,9 @@ export function CreateProofingSession(data: any){
   const callType = 'POST';
   return CallApi(url, callType, data);
 }
+
+export function CreateTransaction(data: any){
+  const url = `https://localhost:7151/api/Transactions`;
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}

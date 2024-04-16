@@ -25,7 +25,9 @@ export function SaveTimecards(saveObj: any){
     saveObj.timecardRowData.forEach((row: any)=>{
       let id = row.id;
       row.sessionId = sessionIdentifier;
-  
+      row.sessionUser = saveObj.firstName + ' ' + saveObj.lastName;
+      row.status = "Proofing";
+
       let postObj = JSON.stringify(row);
       UpdateTimecard(id, postObj).then(()=>{});
     });

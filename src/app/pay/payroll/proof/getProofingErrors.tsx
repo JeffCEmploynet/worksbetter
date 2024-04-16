@@ -6,7 +6,7 @@ export default function GetProofingErrors(timecardData: any, setProofingErrors: 
   timecardData.forEach((timecard: any) => {
     console.log(timecard);
 
-    let uniqueListDate = timecard.weekEndgingDate + timecard.EmployeeId;
+    // let uniqueListDate = timecard.weekEndgingDate + timecard.EmployeeId;
 
     // if(!checkList.includes(uniqueListDate)){
     //   checkList.push(uniqueListDate);
