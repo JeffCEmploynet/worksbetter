@@ -1,26 +1,73 @@
-export function GetGrossPay(hours: any, pay: any){
-  let regPay = hours.reg * pay.regPay;
-  let otPay = hours.ot * pay.otPay;
-  let dtPay = hours.dt * pay.dtPay;
-  return (regPay + otPay + dtPay);
-}
+import { GetEmployeeTaxSetup } from "@/app/api";
+import { GetGrossPay, GetNetPay, GetTotalBill } from "./employeePayBill";
+import { GetEmployeeTaxTotals } from "./employeeTaxes";
 
-export function GetTax(gross: number, tax: number){
-  return gross * tax;
-}
+export default function GetTransactionData(timecard: any, setTransactionData: any){
+  GetEmployeeTaxSetup(timecard.employeeId).then(tax=>{
+    let taxes = tax[0];
 
-export function GetTotalTax(local: number, state: number, federal: number, withholding: number){
-  return local + state + federal + withholding;
-}
+    let hours = {
+      reg: timecard.rHours,
+      ot: timecard.oHours, 
+      dt: timecard.dHours
+    };
 
-export function GetNetPay(gross: number, taxes: number){
-  return gross - taxes;
-}
+    let payRates = {
+      regPayRate: timecard.payRate,
+      otPayRate: timecard.otPayRate,
+      dtPayRate: timecard.dtPayRate
+    };
 
-export function GetTotalBill(hours: any, bill: any){
-  let regBill = hours.reg * bill.regBill;
-  let otBill = hours.ot * bill.otBill;
-  let dtBill = hours.dt * bill.dtBill;
+    let gross = GetGrossPay(hours, payRates);
 
-  return (regBill + otBill + dtBill);
+    let taxData = {
+      timecardId: timecard.id,
+      employee: taxes.employeeId,
+      local: taxes.localTax,
+      state: taxes.stateTax,
+      federal: taxes.federalTax,
+      withholding: taxes.addedWithholding
+    };
+
+    console.log(taxData);
+
+    let totalTaxes = GetEmployeeTaxTotals(gross, taxData);
+    let net = GetNetPay(gross, totalTaxes.totalTax);
+
+    let transactionObj = {
+      firstName: timecard.firstName,
+      lastName: timecard.lastName,
+      assignmentId: timecard.assignmentId,
+      employeeId: timecard.employeeId,
+      customerName: timecard.customerName,
+      customerId: timecard.customerId,
+      branch: timecard.branch,
+      branchId: timecard.branchId,
+      
+      payCode: timecard.payCode,
+      rHours: timecard.rHours,
+      oHours: timecard.oHours,
+      dHours: timecard.dHours,
+      
+      payRate: timecard.payRate,
+      otPayRate: timecard.otPayRate,
+      dtPayRate: timecard.dtPayRate,
+
+      billRate: timecard.billRate,
+      otBillRate: timecard.otBillRate,
+      dtBillRate: timecard.dtBillRate,
+
+      grossPay: gross,
+      netPay: net,
+      localTaxes: totalTaxes.local,
+      stateTaxes: totalTaxes.state,
+      federalTaxes: totalTaxes.federal,
+      additonalWithholding: totalTaxes.withholding,
+
+      weekEndingDate: timecard.weekEndingDate
+    };
+    console.log(transactionObj);
+
+    setTransactionData((data: any) => [...data, transactionObj]);
+  })
 }

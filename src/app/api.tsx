@@ -230,8 +230,14 @@ export function CreateTransaction(data: any){
   return CallApi(url, callType, data);
 }
 
-export function CreateCheck(data: any){
+export function CreateCheckRegister(data: any){
   const url = `https://localhost:7151/api/CheckRegisters`;
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
+
+export function CreateCheck(data: any){
+  const url = `https://localhost:7151/api/Checks`;
   const callType = 'POST';
   return CallApi(url, callType, data);
 }
