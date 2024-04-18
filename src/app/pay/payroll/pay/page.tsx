@@ -10,8 +10,8 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import PaymentModal from "./paymentModal";
 
 export default function Pay(){
-  // display session id's and count of timecards for each id
   const [sessionTimecards, setSessionTimecards] = useState<Array<any>>();
+
   // allow for selection of session to pay out
   // on selection, calculate payment
     // figure out if billing should be calculated here, or if it should only be calculated from billing tab
@@ -86,17 +86,17 @@ export default function Pay(){
 
   return(
     <>
-    <BlueCard content={
+    {showSessionTimecards&&<BlueCard content={
       <div className="flex flex-row justify-between w-full align-middle">
-        {showSessionTimecards&&<div>
+        <div>
           <h3>Select Sessions to Pay</h3>
           <button 
             className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white"
             onClick={()=>onPaySelected()}
-          >Pay Selected Timecards</button>
-        </div>}
+          >Process Selected Sessions</button>
+        </div>
       </div>
-    }/>
+    }/>}
     {showSessionTimecards&&
       <div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
         <AgGridReact

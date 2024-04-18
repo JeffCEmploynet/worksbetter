@@ -6,13 +6,24 @@ import "ag-grid-community/styles/ag-theme-balham.css";
 import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { Modal } from "react-bootstrap";
-import { CreateCheck } from "@/app/api";
+import PostChecks from "./postChecks";
+import BlueCard from "@/app/components/cards/BlueCard";
 import GetTransactionData from "./getTransactionData";
 
 export default function PaymentModal({payTimecards, showPayModal, hidePayModal} :
   {payTimecards: any, showPayModal: any, hidePayModal: any}
 ){  
+  const [gridApi, setGridApi] = useState<any>();
   const [transactionData, setTransactionData] = useState<Array<any>>([]);
+  const [previewCols, setPreviewCols] = useState<any>();
+  const [showPreview, setShowPreview] = useState<boolean>();
+  const [successMessage, setSuccessMessage] = useState<string>();
+
+  const [defaultColDef] = useState<any>({
+    sortable: true,
+    resizable: true,
+    filter: true,      
+  });
 
   useEffect(()=>{
     payTimecards.forEach((timecard: any)=> {
@@ -22,29 +33,59 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
 
   useEffect(()=>{
     if(transactionData){
-      console.log(transactionData);
+      setPreviewCols([
+        {field: "firstName", checkboxSelection: true, headerCheckboxSelection: true},
+        {field: "lastName"},
+        {field: "customerName"},
+        {field: "grossPay"},
+        {field: "netPay"}
+      ]);
     }
   },[transactionData]);
 
-  // const onFirstDataRendered = (params: any) => {
-  //   params.api.autoSizeAllColumns();
-  // };
+  useEffect(()=>{
+    if(previewCols){
+      setShowPreview(true);
+    }
+  },[previewCols])
+
+  useEffect(()=>{
+    if(successMessage){
+      setShowPreview(false);
+    }
+  },[successMessage]);
+
+  const onFirstDataRendered = (params: any) => {
+    setGridApi(params.api);
+    params.api.autoSizeAllColumns();
+  };
 
   return (
+    <>
+    <BlueCard content={
+      <>
+      {showPreview&&<button
+        className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white"
+        onClick={()=>PostChecks(gridApi, setSuccessMessage)}
+      >Pay Selected Checks</button>}
+      {!showPreview&&<p>{successMessage}</p>}
+      </>
+    }/>
     <Modal show={showPayModal} onHide={hidePayModal}>
       <Modal.Header>Transactions</Modal.Header>
       <Modal.Body>
-      <div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
-        {/* <AgGridReact
+      {showPreview&&<div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
+        <AgGridReact
           rowData={transactionData}
-          columnDefs={sessionGridCols}
+          columnDefs={previewCols}
           defaultColDef={defaultColDef}
           rowSelection="multiple"
           onFirstDataRendered={onFirstDataRendered}
-        />  */}
-      </div>
+        />
+      </div>}
       </Modal.Body>
     </Modal>
+    </>
   )
 }
 

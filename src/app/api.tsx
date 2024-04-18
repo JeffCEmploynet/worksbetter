@@ -241,3 +241,9 @@ export function CreateCheck(data: any){
   const callType = 'POST';
   return CallApi(url, callType, data);
 }
+
+export function GetCheckRegister(employeeId?: Number, firstName?: string, lastName?: string, checkId?: number, checkNumber?: number){
+  const url = `https://localhost:7151/api/CheckRegisters/search?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&checkId=${checkId}&checkNumber=${checkNumber}`;
+  const callType = 'GET';
+  return CallApi(url, callType);
+}
