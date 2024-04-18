@@ -27,6 +27,7 @@ export default function PostChecks(gridApi: any, setSuccessMessage: any){
           localTaxes: check.localTaxes,
           stateTaxes: check.stateTaxes,
           federalTaxes: check.federalTaxes,
+          addedWithholding: check.withholding,
           weekEndingDate: check.weekEndingDate,
           firstName: check.firstName,
           lastName: check.lastName,

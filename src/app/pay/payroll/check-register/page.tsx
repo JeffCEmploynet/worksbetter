@@ -26,7 +26,13 @@ export default function CheckRegister(){
         {field: "lastName"},
         {field: "grossPay"},
         {field: "netPay"},
-        {field: "weekEndingDate"}
+        {field: "weekEndingDate"},
+        {field: "localTaxes"},
+        {field: "stateTaxes"},
+        {field: "federalTaxes"},
+        {field: "rHours"},
+        {field: "oHours"},
+        {field: "dHours"}
       ])
     }
   },[searchResults]);
