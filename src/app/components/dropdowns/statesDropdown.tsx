@@ -67,7 +67,7 @@ export default function StatesDropdown({selectedState, setSelectedState}:
         <Select
           options={states}
           value={selectedState}
-          placeholder='Please Select a Branch'
+          placeholder='Please Select a State'
           onChange={(e)=>setSelectedState(e)}
         />
       </div>

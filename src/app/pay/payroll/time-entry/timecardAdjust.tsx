@@ -1,7 +1,7 @@
-import { UpdateTimecard, DeleteTimecard, GetAllTimecards } from "@/app/api";
-import { GetProofingSession } from "./getProofingSession";
+import { UpdateTimecard, DeleteTimecard, GetAllTimecards, CreateProofingSession } from "@/app/api";
 
 export function SaveTimecards(saveObj: any){
+  console.log(saveObj);
   saveObj.gridApi.showLoadingOverlay();
   let sessionIdentifier = saveObj.timecardRowData[0].sessionId;
   
@@ -15,25 +15,44 @@ export function SaveTimecards(saveObj: any){
     
     let data = JSON.stringify(dataObj);
 
-    GetProofingSession(data, saveObj.setSessionId);
-  }
-
-  sessionIdentifier = sessionIdentifier === null ? saveObj.sessionId : sessionIdentifier;
-
-  if(sessionIdentifier !== null){
-    console.log(sessionIdentifier);
-    saveObj.timecardRowData.forEach((row: any)=>{
-      let id = row.id;
-      row.sessionId = sessionIdentifier;
-      row.sessionUser = saveObj.firstName + ' ' + saveObj.lastName;
-      row.status = "Proofing";
-
-      let postObj = JSON.stringify(row);
-      UpdateTimecard(id, postObj).then(()=>{});
+    CreateProofingSession(data).then(res => {
+      let sessionId = res.id;
+      ProcessSaveTimecard(saveObj, sessionId);
     });
-    GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
+  } else {
+    ProcessSaveTimecard(saveObj, sessionIdentifier);
   }
+
+  // if(sessionIdentifier !== null){
+  //   console.log(sessionIdentifier);
+  //   saveObj.timecardRowData.forEach((row: any)=>{
+  //     let id = row.id;
+  //     row.sessionId = sessionIdentifier;
+  //     row.sessionUser = saveObj.firstName + ' ' + saveObj.lastName;
+  //     row.status = "Proofing";
+
+  //     let postObj = JSON.stringify(row);
+  //     UpdateTimecard(id, postObj).then(()=>{
+  //       GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
+  //     });
+  //   });
+  // }
 }
+
+function ProcessSaveTimecard(saveObj: any, sessionId: number){
+  saveObj.timecardRowData.forEach((row: any)=>{
+    let id = row.id;
+    row.sessionId = sessionId;
+    row.sessionUser = saveObj.firstName + ' ' + saveObj.lastName;
+    row.status = "Proofing";
+
+    let postObj = JSON.stringify(row);
+    UpdateTimecard(id, postObj).then(()=>{
+      GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
+    });
+  });
+}
+
 
 export function DeleteTimecards(gridApi: any, setTimecardRowData: any){
   gridApi.showLoadingOverlay();
@@ -41,7 +60,8 @@ export function DeleteTimecards(gridApi: any, setTimecardRowData: any){
   console.log(toDelete);
   toDelete.forEach((row: any)=>{
     let id = row.id;
-    DeleteTimecard(id);
+    DeleteTimecard(id).then(() => {
+      GetAllTimecards().then(timecards => setTimecardRowData(timecards));
+    });
   });
-  GetAllTimecards().then(timecards => setTimecardRowData(timecards));
 }

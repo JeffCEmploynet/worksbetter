@@ -20,7 +20,7 @@ export default function AddTaxSetupModal({employeeId, showTaxesModal, onHide} :
   useEffect(()=>{
     GetEmployeeTaxSetup(employeeId).then(results => {
       console.log(results);
-      if(results[0].id){
+      if(results&&results.length){
         console.log(results[0]);
         setTaxSetupId(results[0].id);
         setZipCode(results[0].zip);

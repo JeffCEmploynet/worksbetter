@@ -5,7 +5,7 @@ import { GetEmployeeTaxTotals } from "./employeeTaxes";
 export default function GetTransactionData(timecard: any, setTransactionData: any){
   GetEmployeeTaxSetup(timecard.employeeId).then(tax=>{
     let taxes = tax[0];
-
+    console.log(taxes);
     let hours = {
       reg: timecard.rHours,
       ot: timecard.oHours, 
@@ -22,7 +22,7 @@ export default function GetTransactionData(timecard: any, setTransactionData: an
 
     let taxData = {
       timecardId: timecard.id,
-      employee: taxes.employeeId,
+      employee: timecard.employeeId,
       local: taxes.localTax,
       state: taxes.stateTax,
       federal: taxes.federalTax,
