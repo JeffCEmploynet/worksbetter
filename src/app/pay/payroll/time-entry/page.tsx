@@ -63,24 +63,26 @@ export default function TimeEntry(){
   useEffect(()=>{
     if(timecardRowData&&timecardRowData.length){
       console.log(timecardRowData);
+      
       setTimecardColDefs([
         {field: "lastName", checkboxSelection: true, headerCheckboxSelection: true},
         {field: "firstName"},
         {field: "assignmentId"},
         {field: "employeeId"},
-        {field: "customerId"},
-        {field: "rHours", editable: true},
-        {field: "oHours", editable: true},
-        {field: "dHours", editable: true},
-        {field: "payCode", editable: true},
-        {field: "weekEndingDate", editable: true},
-        {field: "payRate", editable: true},
-        {field: "otPayRate", editable: true},
-        {field: "dtPayRate", editable: true},
-        {field: "billRate", editable: true},
-        {field: "otBillRate", editable: true},
-        {field: "dtBillRate", editable: true},
-        {field: "sessionId"}
+        {field: "customerName"},
+        {field: "rHours", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "oHours", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "dHours", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "payCode", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "weekEndingDate", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "payRate", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "otPayRate", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "dtPayRate", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "billRate", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "otBillRate", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "dtBillRate", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "sessionId"},
+        {field: "status"}
       ]);
     }
   },[timecardRowData]);
@@ -91,13 +93,11 @@ export default function TimeEntry(){
   };
 
   const showProof = () => {
-    setShowTimecards(false);
     setShowProofModal(true);
   }
 
   const hideProof = () => {
     setShowProofModal(false);
-    setShowTimecards(true);
   }
 
   return(
@@ -130,7 +130,7 @@ export default function TimeEntry(){
               style={{position:"fixed", color:"black"}}>Save</Tooltip>}>
               <button 
                 className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
-                onClick={()=>SaveTimecards(saveObj)}
+                onClick={()=>SaveTimecards(saveObj, "In Proof")}
               ><TfiSave /></button>
             </OverlayTrigger>
             <OverlayTrigger overlay={<Tooltip 
@@ -154,7 +154,7 @@ export default function TimeEntry(){
           />  
       </div>}
       {showProofModal&&<ProofTimecardsModal
-        timecardData={timecardRowData}
+        saveObj={saveObj}
         showProof={showProof}
         hideProof={hideProof}
       />}

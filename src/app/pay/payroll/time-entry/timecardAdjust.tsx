@@ -1,50 +1,36 @@
 import { UpdateTimecard, DeleteTimecard, GetAllTimecards, CreateProofingSession } from "@/app/api";
 
-export function SaveTimecards(saveObj: any){
+export function SaveTimecards(saveObj: any, timecardStatus: string){
   console.log(saveObj);
   saveObj.gridApi.showLoadingOverlay();
   let sessionIdentifier = saveObj.timecardRowData[0].sessionId;
   
   if(sessionIdentifier === null){
     let dataObj = {
-      userId: saveObj.auth!.userId,
-      firstName: saveObj.auth!.firstName,
-      lastName: saveObj.auth!.lastName,
+      userId: saveObj.auth.userId,
+      firstName: saveObj.auth.firstName,
+      lastName: saveObj.auth.lastName,
       status: "Open",
     }
     
-    let data = JSON.stringify(dataObj);
+    let data = JSON.stringify(dataObj);9
 
     CreateProofingSession(data).then(res => {
       let sessionId = res.id;
-      ProcessSaveTimecard(saveObj, sessionId);
+      ProcessSaveTimecard(saveObj, sessionId, "Proofing");
     });
   } else {
-    ProcessSaveTimecard(saveObj, sessionIdentifier);
+    ProcessSaveTimecard(saveObj, sessionIdentifier, timecardStatus);
   }
-
-  // if(sessionIdentifier !== null){
-  //   console.log(sessionIdentifier);
-  //   saveObj.timecardRowData.forEach((row: any)=>{
-  //     let id = row.id;
-  //     row.sessionId = sessionIdentifier;
-  //     row.sessionUser = saveObj.firstName + ' ' + saveObj.lastName;
-  //     row.status = "Proofing";
-
-  //     let postObj = JSON.stringify(row);
-  //     UpdateTimecard(id, postObj).then(()=>{
-  //       GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
-  //     });
-  //   });
-  // }
 }
 
-function ProcessSaveTimecard(saveObj: any, sessionId: number){
+function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardStatus: string){
   saveObj.timecardRowData.forEach((row: any)=>{
+    console.log(row);
     let id = row.id;
     row.sessionId = sessionId;
-    row.sessionUser = saveObj.firstName + ' ' + saveObj.lastName;
-    row.status = "Proofing";
+    row.sessionUser = saveObj.auth.firstName + ' ' + saveObj.auth.lastName;
+    row.status = timecardStatus;
 
     let postObj = JSON.stringify(row);
     UpdateTimecard(id, postObj).then(()=>{

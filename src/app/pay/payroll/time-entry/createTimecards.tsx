@@ -2,7 +2,6 @@ import { GetAllAssignments, PostTimecard } from "@/app/api";
 
 export default function CreateTimecards(setBlankTimecards: any, gridApi: any){
   let weekEndingDate: Date = new Date(GetSundayDate());
-  gridApi.showLoadingOverlay();
 
   GetAllAssignments().then(assignments => {
     let timecards = assignments.map((assignment:any) => ({
@@ -25,7 +24,7 @@ export default function CreateTimecards(setBlankTimecards: any, gridApi: any){
       billRate: assignment.billRate,
       otBillRate: assignment.otBillRate,
       dtBillRate: assignment.dtBillRate,
-      sessionId: null
+      status: "Open"
     }));
     console.log(timecards);
     
@@ -35,7 +34,6 @@ export default function CreateTimecards(setBlankTimecards: any, gridApi: any){
       console.log(toPost);
       PostTimecard(toPost).then(res=>{
         setBlankTimecards(res);
-        gridApi.hideOverlay();
       });
     });
   });
