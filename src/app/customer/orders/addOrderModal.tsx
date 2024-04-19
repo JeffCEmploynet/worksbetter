@@ -8,7 +8,7 @@ export default function AddOrderModal({customerId, customerName, branch, branchI
 ){
   return(
     <Modal show={showModal} onHide={onHide}>
-      <Modal.Header>Add Order</Modal.Header>
+      <Modal.Header closeButton>Add Order</Modal.Header>
       <Modal.Body>
         <BlueCard content={
           <form onSubmit={(e)=>AddOrder(e, customerName, customerId, branch, branchId, onHide)}>

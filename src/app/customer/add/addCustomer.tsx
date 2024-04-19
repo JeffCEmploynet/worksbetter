@@ -1,8 +1,8 @@
 'use client'
+
 import { PostCustomer } from "@/app/api";
 
-export default function AddCustomer(event: any, branch: String, branchId: Number){
-
+export default function AddCustomer(event: any, branch: String, branchId: Number, setNewCustomerLink: any){
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
@@ -32,5 +32,8 @@ export default function AddCustomer(event: any, branch: String, branchId: Number
 
   let data = JSON.stringify(dataObj);
   
-  return PostCustomer(data);
+  PostCustomer(data).then(res=>{
+    console.log(res);
+    setNewCustomerLink(`/customer/${res.id}`)
+  });
 }

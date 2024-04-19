@@ -1,6 +1,6 @@
 import { LoadEmployee, CreateCheck, CreateCheckRegister } from "@/app/api";
 
-export default function PostChecks(gridApi: any, setSuccessMessage: any){
+export default function PostChecks(gridApi: any, setSuccessMessage: any, hidePayModal: any){
   const selectedChecks = gridApi.getSelectedRows();
   console.log(selectedChecks);
   selectedChecks.forEach((check:any)=>{
@@ -40,7 +40,8 @@ export default function PostChecks(gridApi: any, setSuccessMessage: any){
         };
         let registerObj = JSON.stringify(registerData);
         CreateCheckRegister(registerObj).then(res=>{
-          setSuccessMessage("Checks Successfully Paid!")
+          setSuccessMessage("Checks Successfully Paid!");
+          hidePayModal();
         });
       });
     });

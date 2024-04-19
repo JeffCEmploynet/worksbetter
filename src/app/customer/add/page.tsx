@@ -4,13 +4,17 @@ import { GetAllBranches } from "@/app/api";
 import AddCustomer from "./addCustomer";
 import BlueCard from "@/app/components/cards/BlueCard";
 import BranchDropdown from "../../components/dropdowns/branchDropdown";
+import Link from "next/link";
 
 export default function CustomerAdd(){
   const [branchList, setBranchList] = useState<any>();
   const [selectedBranch, setSelectedBranch] = useState<any>();
   const [branchId, setBranchId] = useState<Number>();
-  const [branch, setBranch] = useState<String>();
+  const [branch, setBranch] = useState<string>();
   const [canSubmit, setCanSubmit] = useState<Boolean>(false);
+
+  const [newCustomerLink, setNewCustomerLink] = useState<string>();
+  const [showLinks, setShowLinks] = useState<boolean>(false);
 
   useEffect(()=>{
     GetAllBranches().then(branches=>{
@@ -39,15 +43,42 @@ export default function CustomerAdd(){
     }
   },[branch, branchId]);
 
+  useEffect(()=>{
+    if(newCustomerLink){
+      setShowLinks(true);
+    }
+  },[newCustomerLink]);
+
+  const clearForm = () => {
+    let form = document.getElementById("addCustomerForm") as HTMLFormElement;
+    form.reset();
+    setNewCustomerLink(undefined);
+  }
+
   return(
     <>
       <BlueCard content={
-        <div className="flex justify-center w-full">
+        <>
+        {showLinks&&<div>
+          <Link 
+            href={newCustomerLink!} 
+            className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit text-white m-1"
+          >Go To CustomerPage</Link>
+          <button
+            type="reset"
+            className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit text-white m-1"
+            onClick={()=>clearForm()}
+          >Add Another Customer</button>
+        </div>
+        }
+        {!showLinks&&<div className="flex justify-center w-full">
           <h2 className="font-bold text-lg flex justify-center">Please fill out the form below to add a customer</h2>
         </div>}
+        </>
+        }
       />
       <BlueCard content={
-      <form onSubmit={(e)=>AddCustomer(e, branch!, branchId!)}>
+      <form id="addCustomerForm" onSubmit={(e)=>AddCustomer(e, branch!, branchId!, setNewCustomerLink)}>
         <div className="flex h-fit">
           <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
             <h3 className="p-1 rounded m-1 bg-white text-sky-950">Basic Info</h3>

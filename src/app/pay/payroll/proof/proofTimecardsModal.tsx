@@ -28,7 +28,7 @@ export default function ProofTimecardsModal({saveObj, showProof, hideProof} :
   useEffect(() => {
     if(proofingErrors){
       let errorText: Array<any> = [];
-      // if(proofingErrors.length){
+      if(proofingErrors.length){
         proofingErrors.forEach((error: any)=>{
           let errorObj = {
             ProofingError: error.text,
@@ -36,7 +36,7 @@ export default function ProofTimecardsModal({saveObj, showProof, hideProof} :
           };
           errorText.push(errorObj);
         });
-      // }
+      }
       setErrorData(errorText);
     }
   },[proofingErrors]);
@@ -69,7 +69,7 @@ export default function ProofTimecardsModal({saveObj, showProof, hideProof} :
   }
 
   return (
-    <Modal show={showProof} onHide={hideProof}>
+    <Modal show={showProof} onHide={hideProof} className="text-sky-950">
       <Modal.Header closeButton>
         <div className="flex flex-row w-full justify-around">
           <h3>Proof Timecards</h3>

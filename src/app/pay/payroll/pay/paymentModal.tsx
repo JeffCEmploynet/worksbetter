@@ -64,15 +64,18 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
     <>
     <BlueCard content={
       <>
-      {showPreview&&<button
-        className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white"
-        onClick={()=>PostChecks(gridApi, setSuccessMessage)}
-      >Pay Selected Checks</button>}
       {!showPreview&&<p>{successMessage}</p>}
       </>
     }/>
     <Modal show={showPayModal} onHide={hidePayModal}>
-      <Modal.Header>Transactions</Modal.Header>
+      <Modal.Header closeButton>
+        <div className="flex flex-row justify-between align-middle text-sky-950">
+          <button
+            className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white"
+            onClick={()=>PostChecks(gridApi, setSuccessMessage, hidePayModal)}
+          >Pay Selected Checks</button>
+        </div>
+      </Modal.Header>
       <Modal.Body>
       {showPreview&&<div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
         <AgGridReact

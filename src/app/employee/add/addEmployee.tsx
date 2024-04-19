@@ -28,5 +28,7 @@ export default function AddEmployee(event: any, state: String, branch: String, b
 
   let data = JSON.stringify(dataObj);
   
-  return PostEmployee(data);
+  PostEmployee(data).then(res=>{
+    console.log(res);
+  });
 }
