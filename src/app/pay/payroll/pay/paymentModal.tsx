@@ -6,6 +6,8 @@ import "ag-grid-community/styles/ag-theme-balham.css";
 import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { Modal } from "react-bootstrap";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { FaWindowClose } from "react-icons/fa";
 import PostChecks from "./postChecks";
 import BlueCard from "@/app/components/cards/BlueCard";
 import GetTransactionData from "./getTransactionData";
@@ -68,12 +70,19 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
       </>
     }/>
     <Modal show={showPayModal} onHide={hidePayModal}>
-      <Modal.Header closeButton>
+      <Modal.Header>
         <div className="flex flex-row justify-between align-middle text-sky-950">
           <button
             className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white"
-            onClick={()=>PostChecks(gridApi, setSuccessMessage, hidePayModal)}
+            onClick={()=>PostChecks(gridApi, setSuccessMessage)}
           >Pay Selected Checks</button>
+          <OverlayTrigger overlay={<Tooltip 
+            style={{position:"fixed", color:"black"}}>Close</Tooltip>}>
+            <button 
+              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+              onClick={()=>hidePayModal()}
+            ><FaWindowClose /></button>
+          </OverlayTrigger>
         </div>
       </Modal.Header>
       <Modal.Body>

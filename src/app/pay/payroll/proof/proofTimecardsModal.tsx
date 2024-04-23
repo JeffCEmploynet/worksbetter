@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { FaWindowClose } from "react-icons/fa";
 import GetProofingErrors from "./getProofingErrors";
 import { AgGridReact } from "ag-grid-react";
 import { Modal } from "react-bootstrap";
@@ -42,7 +44,7 @@ export default function ProofTimecardsModal({saveObj, showProof, hideProof} :
   },[proofingErrors]);
 
   useEffect(()=>{
-    if(errorData){
+    if(errorData&&errorData.length){
       setErrorColDefs([
         {field: "ProofingError", checkboxSelection: true, headerCheckboxSelection: true},
         {field: "identifier", hide: true}
@@ -70,9 +72,9 @@ export default function ProofTimecardsModal({saveObj, showProof, hideProof} :
 
   return (
     <Modal show={showProof} onHide={hideProof} className="text-sky-950">
-      <Modal.Header closeButton>
+      <Modal.Header>
         <div className="flex flex-row w-full justify-around">
-          <h3>Proof Timecards</h3>
+          <h3 className="m-1 p-1" >Proof Timecards</h3>
           <button  className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex"
             onClick={()=>approveErrors()}
           >Approve Errors</button>
@@ -80,6 +82,13 @@ export default function ProofTimecardsModal({saveObj, showProof, hideProof} :
           <button  className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex"
           
           >Go to Timecard</button>
+          <OverlayTrigger overlay={<Tooltip 
+            style={{position:"fixed", color:"black"}}>Close</Tooltip>}>
+            <button 
+              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+              onClick={()=>hideProof()}
+            ><FaWindowClose /></button>
+          </OverlayTrigger>
         </div>
       </Modal.Header>
       <Modal.Body>

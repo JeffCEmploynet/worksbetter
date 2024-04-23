@@ -1,17 +1,30 @@
 'use client'
 import BlueCard from "@/app/components/cards/BlueCard";
 import { Modal } from "react-bootstrap";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { FaWindowClose } from "react-icons/fa";
 import AddOrder from "./addOrder";
 
 export default function AddOrderModal({customerId, customerName, branch, branchId, showModal, onHide}:
   {customerId: Number, customerName: String, branch: String, branchId: Number, showModal: any, onHide: any}
 ){
   return(
-    <Modal show={showModal} onHide={onHide}>
-      <Modal.Header closeButton>Add Order</Modal.Header>
+    <Modal show={showModal} onHide={onHide} size="lg">
+      <Modal.Header className="text-sky-950">
+      <div className="flex flex-row w-full justify-between">
+          <h3 className="m-1 p-1" >Add Order</h3>
+          <OverlayTrigger overlay={<Tooltip 
+            style={{position:"fixed", color:"black"}}>Close</Tooltip>}>
+            <button 
+              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+              onClick={()=>onHide()}
+            ><FaWindowClose /></button>
+          </OverlayTrigger>
+        </div>
+      </Modal.Header>
       <Modal.Body>
         <BlueCard content={
-          <form onSubmit={(e)=>AddOrder(e, customerName, customerId, branch, branchId, onHide)}>
+          <form className="w-full" onSubmit={(e)=>AddOrder(e, customerName, customerId, branch, branchId, onHide)}>
             <div className="flex h-fit">
             <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
               <h3 className="p-1 rounded m-1 bg-white text-sky-950">Basic Info</h3>

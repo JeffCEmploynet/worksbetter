@@ -57,7 +57,6 @@ export default function Pay(){
 
   useEffect(()=>{
     if(timecardsToPay){
-      setShowSessionTimecards(false);
       setShowTransactions(true);
     }
   },[timecardsToPay]);
@@ -80,8 +79,7 @@ export default function Pay(){
   }
 
   const onHidePayModal = () => {
-    setTimecardsToPay(false);
-    setShowSessionTimecards(true);
+    setShowTransactions(false);
   }
 
   return(
