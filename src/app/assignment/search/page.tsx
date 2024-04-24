@@ -2,62 +2,57 @@
 import { useState, useEffect } from "react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import FindAssignment from "./findAssignment";
-import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
+import Link from "next/link";
+import { AgGridReact } from "ag-grid-react";
 
 export default function AssignmentSearch(){
-  const [searchResults, setSearchResults] = useState<any>();
-  const [displayList, setDisplayList] = useState<any>([]);
   const [showResults, setShowResults] = useState<Boolean>(false);
-  const [customerHeaders, setCustomerHeaders] = useState<any>();
-  let resultList: Array<any> = [];
+  const [resultsColDefs, setResultsColDefs] = useState<any>();
+  const [searchResults, setSearchResults] = useState<any>([]);
+  const [defaultColDef] = useState<any>({
+    sortable: true,
+    resizable: true,
+    filter: true,      
+  });
 
   useEffect(()=>{
     if(searchResults&&searchResults.length){
-      searchResults.forEach((result: any)=>{
-        let id = result.id;
-        let employeeName = result.lastname + ", " + result.firstName;
-        let jobTitle = result.jobTitle;
-        let branch = result.branch;
-        let url = `http://localhost:3000/assignment/${id}`;
-
-        resultList.push(
-          <SearchResult
-            id={id}
-            nameCol={employeeName}
-            secondaryCol={jobTitle}
-            branch={branch}
-            url={url}
-          />
-        );
-      });
+      console.log(searchResults);
+      setResultsColDefs([
+        {field: "id", 
+          cellRenderer: getIdLink
+        },
+        {field: "lastName"},
+        {field: "firstName"},
+        {field: "employeeId"},
+        {field: "jobTitle"},
+        {field: "payRate"},
+        {field: "branch"},
+        {field: "customerName"}
+      ])
     }
   },[searchResults]);
 
   useEffect(()=>{
-    if(resultList&&resultList.length){
-      let headerObj = {
-        idHeader: "Assignment Id",
-        nameHeader: "Employee",
-        secondaryHeader: "Job Title",
-        branchHeader: "Branch",
-      }
-      setCustomerHeaders(headerObj);
-      setDisplayList(resultList);
-      console.log(resultList);
-    }
-  },[resultList]);
-
-  useEffect(()=>{
-    if(displayList&&displayList.length){
+    if(resultsColDefs){
       setShowResults(true);
     }
-  },[displayList]);
+  },[resultsColDefs]);
+
+  const getIdLink = (e:any) => {
+    let id = e.data.id;
+    return <Link className="underline text-blue-700" href={`http://localhost:3000/assignment/${id}`}>{id}</Link>
+  }
+
+  const onFirstDataRendered = (params: any) => { 
+    params.api.autoSizeAllColumns();
+  };
 
   return(
     <>
       <BlueCard content={
         <div>
-          <h3>Customer Search</h3>
+          <h3 className="font-bold">Assignment Search</h3>
         </div>
       }/>
       <BlueCard content={
@@ -76,7 +71,14 @@ export default function AssignmentSearch(){
           </form>
         </div>
       }/>
-      {showResults&&<ResultsDiv searchResultList={displayList} headers={customerHeaders}/>}
+      {showResults&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+        <AgGridReact
+          rowData={searchResults}
+          columnDefs={resultsColDefs}
+          defaultColDef={defaultColDef}
+          onFirstDataRendered={onFirstDataRendered}
+        />  
+      </div>}
     </>
   )
 }

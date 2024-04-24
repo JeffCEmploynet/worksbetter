@@ -8,15 +8,10 @@ import Link from "next/link";
 import { AgGridReact } from "ag-grid-react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import FindEmployee from "./findEmployee";
-import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
 
 export default function EmployeeSearch()
 {
-  const [employeeHeaders, setEmployeeHeaders] = useState<any>();
-  const [displayList, setDisplayList] = useState<any>([]);
   const [showResults, setShowResults] = useState<Boolean>(false);
-  let resultList: Array<any> = [];
-
   const [resultsColDefs, setResultsColDefs] = useState<any>();
   const [searchResults, setSearchResults] = useState<any>([]);
   const [defaultColDef] = useState<any>({
@@ -28,57 +23,29 @@ export default function EmployeeSearch()
   useEffect(()=>{
     if(searchResults&&searchResults.length){
       console.log(searchResults);
-      searchResults.forEach((result: any) => {
-        let lastName = result.lastName;
-        let firstName = result.firstName;
-        let id = result.id;
-        let branch = result.branch;
-        let url = `http://localhost:3000/employee/${id}`;
-
-        resultList.push(
-          <SearchResult
-            id={id}
-            nameCol={lastName}
-            secondaryCol={firstName}
-            branch={branch}
-            url={url}
-          />
-        );
-        setResultsColDefs([
-          {field: "id", 
-            cellRenderer: () => {
-              return <Link href={`http://localhost:3000/employee/${id}`}>{id}</Link>
-            }
-          },
-          {field: "firstName"},
-          {field: "lastName"},
-          {field: "branch"},
-          {field: "phone"},
-          {field: "zip"}
-        ])
-      });
+      setResultsColDefs([
+        {field: "id", 
+          cellRenderer: getIdLink
+        },
+        {field: "firstName"},
+        {field: "lastName"},
+        {field: "branch"},
+        {field: "phone"},
+        {field: "zip"}
+      ]);
     }
   },[searchResults]);
 
   useEffect(()=>{
-    if(resultList&&resultList.length){
-      let headerObj = {
-        idHeader: "Employee Id",
-        nameHeader: "Last Name",
-        secondaryHeader: "First Name",
-        branchHeader: "Branch",
-      }
-      setEmployeeHeaders(headerObj)
-      setDisplayList(resultList);
-      console.log(resultList);
-    }
-  },[resultList]);
-
-  useEffect(()=>{
-    if(displayList&&displayList.length){
+    if(resultsColDefs){
       setShowResults(true);
     }
-  },[displayList]);
+  },[resultsColDefs]);
+
+  const getIdLink = (e:any) => {
+    let id = e.data.id;
+    return <Link className="underline text-blue-700" href={`http://localhost:3000/employee/${id}`}>{id}</Link>
+  }
 
   const onFirstDataRendered = (params: any) => { 
     params.api.autoSizeAllColumns();

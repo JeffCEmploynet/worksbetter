@@ -2,57 +2,50 @@
 import { useState, useEffect } from "react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import LoadSearchOrders from "./LoadSearchOrders";
-import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
+import Link from "next/link";
+import { AgGridReact } from "ag-grid-react";
 
 export default function OrderSearch(){
   const [orderSearchResults, setOrderSearchResults] = useState<any>([]);
-  const [ordersDisplayList, setOrdersDisplayList] = useState<any>([]);
+  const [orderColDefs, setOrderColDefs] = useState<any>([]);
   const [showOrders, setShowOrders] = useState<Boolean>(false);
-  const [orderHeaders, setOrderHeaders] = useState<any>();
-  let ordersResultList: Array<any> = [];
+  const [defaultColDef] = useState<any>({
+    sortable: true,
+    resizable: true,
+    filter: true,      
+  });
 
   useEffect(()=>{
     if(orderSearchResults&&orderSearchResults.length){
-      orderSearchResults.forEach((result: any)=> {
-        let jobTitle = result.jobTitle;
-        let id = result.jobOrdersId;
-        let payRate = result.payRate.toString();
-        let branch = result.branch;
-        let url = `http://localhost:3000/orders/${id}`;
-
-        ordersResultList.push(
-          <SearchResult
-            id={id}
-            nameCol={jobTitle}
-            secondaryCol={payRate}
-            branch={branch}
-            url={url}
-          />
-        );
-      });
+      setOrderColDefs([
+        {field: "id",
+          cellRenderer: getIdLink,
+          headerName: "Order Id"
+        },
+        {field: "jobTitle"},
+        {field: "payRate"},
+        {field: "branch"},
+        {field: "worksiteCity"},
+        {field: "worksiteState"},
+        {field: "status"}
+      ]);
     }
   },[orderSearchResults]);
 
   useEffect(()=>{
-    if(ordersResultList&&ordersResultList.length){
-      let headerObj = {
-        idHeader: "Order Id",
-        nameHeader: "Job Title",
-        secondaryHeader: "Pay Rate",
-        branchHeader: "Branch",
-      }
-      setOrderHeaders(headerObj);
-      setOrdersDisplayList(ordersResultList);
-      console.log(ordersResultList);
-    }
-  },[ordersResultList]);
-
-  useEffect(()=>{
-    if(ordersDisplayList&&ordersDisplayList.length){
-      console.log(ordersDisplayList);
+    if(orderColDefs){
       setShowOrders(true);
     }
-  },[ordersDisplayList]);
+  },[orderColDefs]);
+
+  const getIdLink = (e:any) => {
+    let id = e.data.jobOrdersId;
+    return <Link className="underline text-blue-700" href={`http://localhost:3000/orders/${id}`}>{id}</Link>
+  }
+
+  const onFirstDataRendered = (params: any) => { 
+    params.api.autoSizeAllColumns();
+  };
 
   return(
     <>
@@ -74,7 +67,14 @@ export default function OrderSearch(){
           </form>
         </div>
       }/>
-      {showOrders&&<ResultsDiv searchResultList={ordersDisplayList} headers={orderHeaders}/>}
+      {showOrders&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+        <AgGridReact
+          rowData={orderSearchResults}
+          columnDefs={orderColDefs}
+          defaultColDef={defaultColDef}
+          onFirstDataRendered={onFirstDataRendered}
+        />  
+      </div>}
     </>
   )
 }

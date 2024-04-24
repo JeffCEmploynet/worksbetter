@@ -1,29 +1,34 @@
 'use client'
+
 import { useEffect, useState } from "react";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import CustomerLoad from "./customerLoad";
 import LoadCustomerOrders from "../orders/loadCustomerOrders";
-import BlueCard from "@/app/components/cards/BlueCard"
-import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
+import Link from "next/link";
+import { AgGridReact } from "ag-grid-react";
+import BlueCard from "@/app/components/cards/BlueCard";
 import AddOrderModal from "../orders/addOrderModal";
 
 export default function Customer({params}: {params: {id: Number}}){
   const [customerData, setCustomerData] = useState<any>()
-  const [orderData, setOrderData] = useState<any>();
+
   const [cuId, setCuId] = useState<Number>();
   const [customerName, setCustomerName] = useState<String>();
   const [branch, setBranch] = useState<String>();
   const [branchId, setBranchId] = useState<Number>();
 
-  const [ordersDisplayList, setOrdersDisplayList] = useState<any>([]);
-  const [ordersHeaders, setOrdersHeaders] = useState<any>();
   const [showCustomer, setShowCustomer] = useState<Boolean>(false);
   const [showOrders, setShowOrders] = useState<Boolean>(false);
 
   const [showAddModal, setShowAddModal] = useState<Boolean>(false);
-
-  let ordersList: Array<any> = [];
+  const [orderData, setOrderData] = useState<any>();
+  const [orderColDefs, setOrderColDefs] = useState<any>();
+  const [defaultColDef] = useState<any>({
+    sortable: true,
+    resizable: true,
+    filter: true,      
+  });
 
   useEffect(()=>{
     CustomerLoad(params.id, setCustomerData);
@@ -51,48 +56,32 @@ export default function Customer({params}: {params: {id: Number}}){
   useEffect(()=>{
     if(orderData&&orderData.length){
       console.log(orderData);
-      orderData.forEach((result: any) => {
-        console.log(result);
-        let jobTitle = result.jobTitle;
-        let id = result.jobOrdersId;
-        console.log(id);
-        let payRate = result.payRate.toString();
-        let branch = result.branch;
-        let url = `http://localhost:3000/orders/${id}`;
-
-        ordersList.push(
-          <SearchResult
-            id={id}
-            nameCol={jobTitle}
-            secondaryCol={payRate}
-            branch={branch}
-            url={url}
-          />
-        );
-      });
-      console.log(ordersList);
+      setOrderColDefs([
+        {field: "id",
+          cellRenderer: getIdLink,
+          headerName: "Order Id"
+        },
+        {field: "jobTitle"},
+        {field: "payRate"},
+        {field: "branch"},
+        {field: "worksiteCity"},
+        {field: "worksiteState"},
+        {field: "status"}
+      ]);
     }
   },[orderData]);
 
 
   useEffect(()=>{
-    if(ordersList&&ordersList.length){
-      let headerObj = {
-        idHeader: "Order Id",
-        nameHeader: "Job Title",
-        secondaryHeader: "Pay Rate",
-        branchHeader: "Branch",
-      }
-      setOrdersHeaders(headerObj);
-      setOrdersDisplayList(ordersList);
-    }
-  },[ordersList]);
-
-  useEffect(()=>{
-    if(ordersDisplayList&&ordersDisplayList.length){
+    if(orderColDefs){
       setShowOrders(true);
     }
-  }, [ordersDisplayList]);
+  }, [orderColDefs]);
+
+  const getIdLink = (e:any) => {
+    let id = e.data.jobOrdersId;
+    return <Link className="underline text-blue-700" href={`http://localhost:3000/orders/${id}`}>{id}</Link>
+  }
 
   const hideOrderModal = () => {
     setShowAddModal(false);
@@ -103,6 +92,10 @@ export default function Customer({params}: {params: {id: Number}}){
     setShowOrders(false);
     setShowAddModal(true);
   }
+
+  const onFirstDataRendered = (params: any) => { 
+    params.api.autoSizeAllColumns();
+  };
 
   return(
     <>
@@ -126,12 +119,18 @@ export default function Customer({params}: {params: {id: Number}}){
               </button>
             </OverlayTrigger>
           </div>
-          {showOrders&&<div>
-            <ResultsDiv searchResultList={ordersDisplayList} headers={ordersHeaders}/>
-          </div>}
         </div>
         }/>
     </div>
+
+    {showOrders&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+        <AgGridReact
+          rowData={orderData}
+          columnDefs={orderColDefs}
+          defaultColDef={defaultColDef}
+          onFirstDataRendered={onFirstDataRendered}
+        />  
+      </div>}
     
     {showAddModal&&
       <AddOrderModal 

@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { MdAssignmentAdd } from "react-icons/md";
+import Link from "next/link";
+import { AgGridReact } from "ag-grid-react";
 import EmployeeLoad from "./employeeLoad";
 import BlueCard from "@/app/components/cards/BlueCard";
-import { SearchResult, ResultsDiv } from "@/app/components/cards/SearchResult";
 import LoadEmployeeAssignments from "../assignments/loadEmployeeAssignemnts";
 import AddAssignmentModal from "../assignments/addAssignmentModal";
 import AddTaxSetupModal from "../taxSetup/addTaxSetupModal";
@@ -19,14 +20,18 @@ export default function Employee({params}: {params: {id: Number}}){
   const [branch, setBranch] = useState<String>();
   const [showEmployee, setShowEmployee] = useState<Boolean>(false);
 
-  const [assignmentsDisplayList, setAssignmentsDisplayList] = useState<any>();
-  const [assignmentsHeaders, setAssignmentsHeaders] = useState<any>();
   const [showAssignments, setShowAssignments] = useState<Boolean>(false);
   const [showAddModal, setShowAddModal] = useState<Boolean>(false);
 
   const [showTaxModal, setShowTaxModal] = useState<Boolean>(false);
 
-  let assignmentsList: Array<any> = [];
+  const [assignmentColDefs, setAssignmentColDefs] = useState<any>();
+
+  const [defaultColDef] = useState<any>({
+    sortable: true,
+    resizable: true,
+    filter: true,      
+  });
 
   useEffect(()=>{
     console.log(params.id);
@@ -54,45 +59,29 @@ export default function Employee({params}: {params: {id: Number}}){
   useEffect(()=>{
     if(assignmentData&&assignmentData.length){
       console.log(assignmentData);
-      assignmentData.forEach((result: any) => {
-        console.log(result);
-        let assignmentId = result.id;
-        let customerName = result.customerName;
-        let jobTitle = result.jobTitle;
-        let branch = result.branch;
-        let url = `http://localhost:3000/assignment/${assignmentId}`;
-
-        assignmentsList.push(
-          <SearchResult
-            id={assignmentId}
-            nameCol={customerName}
-            secondaryCol={jobTitle}
-            branch={branch}
-            url={url}
-          />
-        );
-      });
+      setAssignmentColDefs([
+        {field: "id",
+          cellRenderer: getIdLink,
+          headerName: "Assignment Id"
+        },
+        {field: "jobTitle"},
+        {field: "payRate"},
+        {field: "branch"},
+      ])
     }
   },[assignmentData]);
 
-  useEffect(()=>{
-    if(assignmentsList&&assignmentsList.length){
-      let headerObj = {
-        idHeader: "Assignment Id",
-        nameHeader: "Customer Name",
-        secondaryHeader: "Job Title",
-        branchHeader: "Branch"
-      }
-      setAssignmentsHeaders(headerObj);
-      setAssignmentsDisplayList(assignmentsList);
-    }
-  },[assignmentsList]);
 
   useEffect(()=>{
-    if(assignmentsDisplayList&&assignmentsDisplayList.length){
+    if(assignmentColDefs){
       setShowAssignments(true);
     }
-  },[assignmentsDisplayList]);
+  },[assignmentColDefs]);
+
+  const getIdLink = (e:any) => {
+    let id = e.data.id;
+    return <Link className="underline text-blue-700" href={`http://localhost:3000/assignment/${id}`}>{id}</Link>
+  }
 
   const hideAssignmentsModal = () => {
     setShowAddModal(false);
@@ -113,6 +102,10 @@ export default function Employee({params}: {params: {id: Number}}){
     setShowTaxModal(false);
     LoadEmployeeAssignments(params.id, setAssignmentData);
   }
+
+  const onFirstDataRendered = (params: any) => { 
+    params.api.autoSizeAllColumns();
+  };
 
   return(
     <>
@@ -141,12 +134,17 @@ export default function Employee({params}: {params: {id: Number}}){
               </button>
             </OverlayTrigger>
           </div>
-          {showAssignments&&<div>
-            <ResultsDiv searchResultList={assignmentsDisplayList} headers={assignmentsHeaders}/>
-          </div>}
         </div>}
       />
     </div>
+    {showAssignments&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+        <AgGridReact
+          rowData={assignmentData}
+          columnDefs={assignmentColDefs}
+          defaultColDef={defaultColDef}
+          onFirstDataRendered={onFirstDataRendered}
+        />  
+      </div>}
     {showAddModal&&
       <AddAssignmentModal
         fullName={fullName!}
