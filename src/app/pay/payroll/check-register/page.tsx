@@ -1,8 +1,5 @@
 'use client'
 
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-quartz.css";
-
 import { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import BlueCard from "@/app/components/cards/BlueCard";
@@ -67,7 +64,7 @@ export default function CheckRegister(){
         </form>
       </div>
     }/>
-    {showCheckPreviews&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+    {showCheckPreviews&&<div className="ag-theme-quartz m-1 p-1" style={{height: 400}}>
         <AgGridReact
           rowData={searchResults}
           columnDefs={resultsColDefs}

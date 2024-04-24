@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from "react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import LoadSearchOrders from "./LoadSearchOrders";
