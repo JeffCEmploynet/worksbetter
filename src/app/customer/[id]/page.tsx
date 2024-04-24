@@ -9,6 +9,7 @@ import Link from "next/link";
 import { AgGridReact } from "ag-grid-react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import AddOrderModal from "../orders/addOrderModal";
+import { FormatUSD } from "@/app/components/formatters/numberFormatters";
 
 export default function Customer({params}: {params: {id: Number}}){
   const [customerData, setCustomerData] = useState<any>()
@@ -62,7 +63,7 @@ export default function Customer({params}: {params: {id: Number}}){
           headerName: "Order Id"
         },
         {field: "jobTitle"},
-        {field: "payRate"},
+        {field: "payRate", valueFormatter: (data:any) => FormatUSD(data)},
         {field: "branch"},
         {field: "worksiteCity"},
         {field: "worksiteState"},

@@ -16,6 +16,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { AuthContext } from "@/app/auth";
 import ProofTimecardsModal from "../proof/proofTimecardsModal";
+import { FormatUSD } from "@/app/components/formatters/numberFormatters";
+import { FormatDate } from "@/app/components/formatters/dateFormatters";
 
 export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
@@ -74,13 +76,13 @@ export default function TimeEntry(){
         {field: "oHours", editable: (params:any) => params.data.status !== "Paid"},
         {field: "dHours", editable: (params:any) => params.data.status !== "Paid"},
         {field: "payCode", editable: (params:any) => params.data.status !== "Paid"},
-        {field: "weekEndingDate", editable: (params:any) => params.data.status !== "Paid"},
-        {field: "payRate", editable: (params:any) => params.data.status !== "Paid"},
-        {field: "otPayRate", editable: (params:any) => params.data.status !== "Paid"},
-        {field: "dtPayRate", editable: (params:any) => params.data.status !== "Paid"},
-        {field: "billRate", editable: (params:any) => params.data.status !== "Paid"},
-        {field: "otBillRate", editable: (params:any) => params.data.status !== "Paid"},
-        {field: "dtBillRate", editable: (params:any) => params.data.status !== "Paid"},
+        {field: "weekEndingDate", editable: (params:any) => params.data.status !== "Paid", valueFormatter: (data:any) => FormatDate(data)},
+        {field: "payRate", editable: (params:any) => params.data.status !== "Paid", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "otPayRate", editable: (params:any) => params.data.status !== "Paid", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "dtPayRate", editable: (params:any) => params.data.status !== "Paid", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "billRate", editable: (params:any) => params.data.status !== "Paid", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "otBillRate", editable: (params:any) => params.data.status !== "Paid", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "dtBillRate", editable: (params:any) => params.data.status !== "Paid", valueFormatter: (data:any) => FormatUSD(data)},
         {field: "sessionId"},
         {field: "status"}
       ]);

@@ -9,6 +9,7 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import LoadEmployeeAssignments from "../assignments/loadEmployeeAssignemnts";
 import AddAssignmentModal from "../assignments/addAssignmentModal";
 import AddTaxSetupModal from "../taxSetup/addTaxSetupModal";
+import { FormatUSD } from "@/app/components/formatters/numberFormatters";
 
 export default function Employee({params}: {params: {id: Number}}){
   const [employeeData, setEmployeeData] = useState<any>();
@@ -65,7 +66,7 @@ export default function Employee({params}: {params: {id: Number}}){
           headerName: "Assignment Id"
         },
         {field: "jobTitle"},
-        {field: "payRate"},
+        {field: "payRate", valueFormatter: (data:any) => FormatUSD(data)},
         {field: "branch"},
       ])
     }

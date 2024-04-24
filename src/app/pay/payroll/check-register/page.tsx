@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import FindChecks from "./findChecks";
+import { FormatUSD } from "@/app/components/formatters/numberFormatters";
+import { FormatDate } from "@/app/components/formatters/dateFormatters";
 
 export default function CheckRegister(){
   const [showCheckPreviews, setShowCheckPreviews] = useState<boolean>(false);
@@ -24,12 +26,12 @@ export default function CheckRegister(){
         {field: "checkNumber"},
         {field: "firstName"},
         {field: "lastName"},
-        {field: "grossPay"},
-        {field: "netPay"},
-        {field: "weekEndingDate"},
-        {field: "localTaxes"},
-        {field: "stateTaxes"},
-        {field: "federalTaxes"},
+        {field: "grossPay", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "netPay", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "weekEndingDate", valueFormatter: (data:any) => FormatDate(data)},
+        {field: "localTaxes", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "stateTaxes", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "federalTaxes", valueFormatter: (data:any) => FormatUSD(data)},
         {field: "rHours"},
         {field: "oHours"},
         {field: "dHours"}

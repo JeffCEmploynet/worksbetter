@@ -1,8 +1,5 @@
 'use client'
 
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
-
 import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { Modal } from "react-bootstrap";
@@ -11,6 +8,7 @@ import { FaWindowClose } from "react-icons/fa";
 import PostChecks from "./postChecks";
 import BlueCard from "@/app/components/cards/BlueCard";
 import GetTransactionData from "./getTransactionData";
+import { FormatUSD } from "@/app/components/formatters/numberFormatters";
 
 export default function PaymentModal({payTimecards, showPayModal, hidePayModal} :
   {payTimecards: any, showPayModal: any, hidePayModal: any}
@@ -39,8 +37,8 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
         {field: "firstName", checkboxSelection: true, headerCheckboxSelection: true},
         {field: "lastName"},
         {field: "customerName"},
-        {field: "grossPay"},
-        {field: "netPay"}
+        {field: "grossPay", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "netPay", valueFormatter: (data:any) => FormatUSD(data)}
       ]);
     }
   },[transactionData]);

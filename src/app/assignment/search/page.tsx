@@ -4,6 +4,7 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import FindAssignment from "./findAssignment";
 import Link from "next/link";
 import { AgGridReact } from "ag-grid-react";
+import { FormatUSD } from "@/app/components/formatters/numberFormatters";
 
 export default function AssignmentSearch(){
   const [showResults, setShowResults] = useState<Boolean>(false);
@@ -26,7 +27,7 @@ export default function AssignmentSearch(){
         {field: "firstName"},
         {field: "employeeId"},
         {field: "jobTitle"},
-        {field: "payRate"},
+        {field: "payRate", valueFormatter: (data:any) => FormatUSD(data)},
         {field: "branch"},
         {field: "customerName"}
       ])

@@ -4,6 +4,7 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import LoadSearchOrders from "./LoadSearchOrders";
 import Link from "next/link";
 import { AgGridReact } from "ag-grid-react";
+import { FormatUSD } from "@/app/components/formatters/numberFormatters";
 
 export default function OrderSearch(){
   const [orderSearchResults, setOrderSearchResults] = useState<any>([]);
@@ -23,7 +24,7 @@ export default function OrderSearch(){
           headerName: "Order Id"
         },
         {field: "jobTitle"},
-        {field: "payRate"},
+        {field: "payRate", valueFormatter: (data:any) => FormatUSD(data)},
         {field: "branch"},
         {field: "worksiteCity"},
         {field: "worksiteState"},
