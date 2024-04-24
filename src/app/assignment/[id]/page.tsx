@@ -1,7 +1,9 @@
 'use client'
 import { useEffect, useState } from "react";
 import AssignmentLoad from "./assignmentLoad";
-import BlueCard from "@/app/components/cards/BlueCard"
+import BlueCard from "@/app/components/cards/BlueCard";
+import { FormatDate } from "@/app/components/formatters/dateFormatters";
+import { FormatUSD } from "@/app/components/formatters/numberFormatters";
 
 export default function Assignment({params}: {params: {id: Number}}){
   const [foundAssignment, setFoundAssignments] = useState<any>();
@@ -68,15 +70,91 @@ export default function Assignment({params}: {params: {id: Number}}){
   return(
     <>
     {showAssignment&&<BlueCard content={
-      <div>
-        <h3 className="font-bold">{lastName}, {firstName}  Employee Id: {employeeId?.toString()}  Assignment ID:{assignmentId?.toString()}  Status:{status}</h3>
-        <p>{jobTitle} Start Date:{startDate?.toString()}  EndDate:{endDate?.toString()}  Expiry Date:{expiryDate?.toString()}</p>
-        <p>Pay:{payRate?.toString()}  Bill:{billRate?.toString()}  W2:{w2?.toString()}  Salary:{salary?.toString()}</p>
-        <p>Customer: {customerName}:{customerId?.toString()}  Branch:{branch}  Order:{orderId?.toString()}</p>
-        <p>Shift:{shift}  Start Time:{startTime}  End Time:{endTime}</p>
-        <p>Shift Notes:{shiftNotes}</p>
+      <div className="flex flex-row w-full justify-around">
+        <h3 className="font-bold m-1">{jobTitle}</h3>
+        <h3 className="font-bold m-1">Employee: {lastName}, {firstName}</h3>
+        <h3 className="font-bold m-1">Employee Id: {employeeId?.toString()}</h3>
+        <h3 className="font-bold m-1">Assignment ID: {assignmentId?.toString()}</h3> 
+        <h3 className="font-bold m-1">Status: {status}</h3>
+        <h3 className="font-bold m-1"></h3>
       </div>
     }/>}
+    {showAssignment&&<BlueCard content={
+      <form className="flex flex-row w-full h-full justify-around">
+          <div className="flex flex-col w-1/4 mr-4">
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="startDate">Start Date:</label>
+              <input className="m-1 p-1 w-1/3" id="startDate" type="date" defaultValue={FormatDate(startDate)?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="endDate">End Date:</label>
+              <input className="m-1 p-1 w-1/3" id="endDate" type="date" defaultValue={endDate ? FormatDate(endDate)?.toString() : null}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="expiryDate">Expiry Date:</label>
+              <input className="m-1 p-1 w-1/3" id="expiryDate"  type="date" defaultValue={endDate ? FormatDate(expiryDate)?.toString() : null}/>
+            </div>
+          </div>
+          
+          <div className="flex flex-col w-1/4">
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="pay">Pay:</label>
+              <input className="m-1 p-1 w-1/3" id="pay" type="text" defaultValue={FormatUSD(payRate)?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="bill">Bill:</label>
+              <input className="m-1 p-1 w-1/3" id="bill" type="text" defaultValue={FormatUSD(billRate)?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="w2">W2:</label>
+              <input className="m-1 p-1 w-1/3" id="w2" type="text" defaultValue={w2?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="salary">Salary:</label>
+              <input className="m-1 p-1 w-1/3" type="text" id="salary" defaultValue={FormatUSD(salary)?.toString()}/>
+            </div>
+          </div>
+
+          <div className="flex flex-col w-1/4">
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="customer">Customer: </label>
+              <input className="m-1 p-1 w-1/3" id="customer" type="text" defaultValue={customerName?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="customerId">Customer ID:</label>
+              <input className="m-1 p-1 w-1/3" id="customerId" type="text" defaultValue={customerId?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="branch">Branch:</label>
+              <input className="m-1 p-1 w-1/3" id="branch" type="text" defaultValue={branch?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="order">Order:</label>
+              <input className="m-1 p-1 w-1/3" id="order" type="text" defaultValue={orderId?.toString()}/>
+            </div>
+          </div>
+          
+          <div className="flex flex-col w-1/4">
+          <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="shift">Shift: </label>
+              <input className="m-1 p-1 w-1/3" id="shift" type="text" defaultValue={shift?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="startTime">Start Time:</label>
+              <input className="m-1 p-1 w-1/3" id="startTime" type="text" defaultValue={startTime?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="endTime">End Time:</label>
+              <input className="m-1 p-1 w-1/3" id="endTime" type="text" defaultValue={endTime?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="m-1 p-1 w-1/4" htmlFor="notes">Shift Notes:</label>
+              <input className="m-1 p-1 w-1/3" id="notes" type="text" defaultValue={shiftNotes?.toString()}/>
+            </div>
+          </div>
+      </form>
+    }/>}
+    
     </>
   )
 }
