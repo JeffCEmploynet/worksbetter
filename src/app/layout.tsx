@@ -4,6 +4,7 @@ import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import { AuthProvider } from "./auth";

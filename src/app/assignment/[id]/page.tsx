@@ -70,7 +70,7 @@ export default function Assignment({params}: {params: {id: Number}}){
   return(
     <>
     {showAssignment&&<BlueCard content={
-      <div className="flex flex-row w-full justify-around">
+      <div className="flex flex-row w-full justify-around flex-wrap">
         <h3 className="font-bold m-1">{jobTitle}</h3>
         <h3 className="font-bold m-1">Employee: {lastName}, {firstName}</h3>
         <h3 className="font-bold m-1">Employee Id: {employeeId?.toString()}</h3>
@@ -80,8 +80,8 @@ export default function Assignment({params}: {params: {id: Number}}){
       </div>
     }/>}
     {showAssignment&&<BlueCard content={
-      <form className="flex flex-row w-full h-full justify-around">
-          <div className="flex flex-col w-1/4 mr-4">
+      <form className="flex flex-row w-full h-full justify-around flex-wrap">
+          <div className="flex flex-col w-1/5 mr-4">
             <div className="flex flex-row w-full">
               <label className="m-1 p-1 w-1/4" htmlFor="startDate">Start Date:</label>
               <input className="m-1 p-1 w-1/3" id="startDate" type="date" defaultValue={FormatDate(startDate)?.toString()}/>
@@ -96,7 +96,7 @@ export default function Assignment({params}: {params: {id: Number}}){
             </div>
           </div>
           
-          <div className="flex flex-col w-1/4">
+          <div className="flex flex-col w-1/5">
             <div className="flex flex-row w-full">
               <label className="m-1 p-1 w-1/4" htmlFor="pay">Pay:</label>
               <input className="m-1 p-1 w-1/3" id="pay" type="text" defaultValue={FormatUSD(payRate)?.toString()}/>
@@ -115,7 +115,7 @@ export default function Assignment({params}: {params: {id: Number}}){
             </div>
           </div>
 
-          <div className="flex flex-col w-1/4">
+          <div className="flex flex-col w-1/5">
             <div className="flex flex-row w-full">
               <label className="m-1 p-1 w-1/4" htmlFor="customer">Customer: </label>
               <input className="m-1 p-1 w-1/3" id="customer" type="text" defaultValue={customerName?.toString()}/>
@@ -134,8 +134,8 @@ export default function Assignment({params}: {params: {id: Number}}){
             </div>
           </div>
           
-          <div className="flex flex-col w-1/4">
-          <div className="flex flex-row w-full">
+          <div className="flex flex-col w-1/5">
+            <div className="flex flex-row w-full">
               <label className="m-1 p-1 w-1/4" htmlFor="shift">Shift: </label>
               <input className="m-1 p-1 w-1/3" id="shift" type="text" defaultValue={shift?.toString()}/>
             </div>
