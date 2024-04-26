@@ -25,7 +25,7 @@ export default function LinkContainer(
   return (
     <>
       {isLoggedIn&&
-      <div className="flex flex-row justify-around bg-slate-200 p-1 h-fit text-sky-950 align-middle">
+      <div className="flex flex-row justify-around bg-slate-200 p-1 h-fit text-sky-950 align-middle rounded">
         {labelName&&<p className="font-bold m-1">{labelName}</p>}
         <LinkButton linkRef={linkRef1} linkName={linkName1} linkIcon={linkIcon1}/>
         {linkName2&&
