@@ -158,6 +158,12 @@ export function GetAllAssignments(){
   return CallApi(url, callType);
 }
 
+export function UpdateAssignment(assignemntId: Number, data: any){
+  const url = `https://localhost:7151/api/Assignments/${assignemntId}`;
+  const callType = 'PUT';
+  return CallApi(url, callType, data);
+}
+
 export function UpdateJobOrder(orderId: Number, data: any){
   const url = `https://localhost:7151/api/JobOrders/${orderId}`;
   const callType = 'PUT';

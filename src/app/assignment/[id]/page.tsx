@@ -88,7 +88,7 @@ export default function Assignment({params}: {params: {id: Number}}){
     }/>}
     {showAssignment&&<BlueCard content={
       <form className="flex flex-row w-full h-full justify-center flex-wrap content-center"
-        onSubmit={(e)=>AssignmentAdjust(e, foundAssignment)}
+        onSubmit={(e)=>AssignmentAdjust(e, foundAssignment, setFoundAssignments)}
       >
         <div className="flex flex-col w-fit m-2 border shadow p-3 bg-slate-50 rounded border-sky-950">
           <h4 className="text-lg font-semibold text-center pb-3">Pay Info</h4>
