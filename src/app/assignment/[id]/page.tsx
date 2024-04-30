@@ -86,11 +86,11 @@ export default function Assignment({params}: {params: {id: Number}}){
         </div>
       </div>
     }/>}
-    {showAssignment&&<BlueCard content={
-      <form className="flex flex-row w-full h-full justify-center flex-wrap content-center"
+    {showAssignment&&
+      <form className="flex flex-row w-full h-full p-3 bg-white justify-center flex-wrap content-center text-sky-950"
         onSubmit={(e)=>AssignmentAdjust(e, foundAssignment, setFoundAssignments)}
       >
-        <div className="flex flex-col w-fit m-2 border shadow p-3 bg-slate-50 rounded border-sky-950">
+        <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
           <h4 className="text-lg font-semibold text-center pb-3">Pay Info</h4>
           <div className="flex flex-row w-full">
             <label className="m-1 p-1 w-32" htmlFor="pay">Pay:</label>
@@ -110,7 +110,7 @@ export default function Assignment({params}: {params: {id: Number}}){
           </div>
         </div>
 
-        <div className="flex flex-col w-fit m-2 border shadow p-3 bg-slate-50 rounded border-sky-950">
+        <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
           <h4 className="text-lg font-semibold text-center pb-3">Date Info</h4>
           <div className="flex flex-row w-full">
             <label className="m-1 p-1 w-32" htmlFor="startDate">Start Date:</label>
@@ -126,7 +126,7 @@ export default function Assignment({params}: {params: {id: Number}}){
           </div>
         </div>
 
-        <div className="flex flex-col w-fit m-2 border shadow p-3 bg-slate-50 rounded border-sky-950">
+        <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
           <h4 className="text-lg font-semibold text-center pb-3">Shift Info</h4>
           <div className="flex flex-row">
             <div className="flex flex-col">
@@ -150,12 +150,12 @@ export default function Assignment({params}: {params: {id: Number}}){
           </div>
         </div>
         <div className="flex flex-col w-fit">
-          <button className="m-3 p-3  h-fit rounded bg-sky-950 text-white flex flex-col w-fit justify-center" type="submit">
+          <button className="m-2 p-3  h-fit rounded bg-sky-950 text-white flex flex-col w-fit justify-center" type="submit">
               <p className="text-center text-2xl"><TfiSave /></p>
           </button>
         </div>
       </form>
-    }/>}
+    }
     
     </>
   )

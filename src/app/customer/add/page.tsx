@@ -11,7 +11,7 @@ export default function CustomerAdd(){
   const [selectedBranch, setSelectedBranch] = useState<any>();
   const [branchId, setBranchId] = useState<Number>();
   const [branch, setBranch] = useState<string>();
-  const [canSubmit, setCanSubmit] = useState<Boolean>(false);
+  const [canSubmit, setCanSubmit] = useState<boolean>(false);
 
   const [newCustomerLink, setNewCustomerLink] = useState<string>();
   const [showLinks, setShowLinks] = useState<boolean>(false);
@@ -77,27 +77,26 @@ export default function CustomerAdd(){
         </>
         }
       />
-      <BlueCard content={
-      <form id="addCustomerForm" onSubmit={(e)=>AddCustomer(e, branch!, branchId!, setNewCustomerLink)}>
-        <div className="flex h-fit">
-          <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
-            <h3 className="p-1 rounded m-1 bg-white text-sky-950">Basic Info</h3>
+      <form className="w-full text-sky-950 p-3 bg-white" id="addCustomerForm" onSubmit={(e)=>AddCustomer(e, branch!, branchId!, setNewCustomerLink)}>
+        <div className="flex flex-row w-full h-fit justify-around flex-wrap">
+          <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
+            <h3 className="font-semibold text-center pb-3">Basic Info</h3>
             <input className="m-1 pl-1" type="text" name="customer" placeholder="Customer Name"/>
             <input className="m-1 pl-1" type="text" name="department" placeholder="Department"/>
             <input className="m-1 pl-1" type="text" name="contact" placeholder="Contact Person"/>
             <input className="m-1 pl-1" type="text" name="phone" placeholder="Phone"/>
             <input className="m-1 pl-1" type="text" name="email" placeholder="Email"/>
           </div>
-          <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
-            <h3 className="p-1 rounded m-1 bg-white text-sky-950">Mail</h3>
+          <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
+            <h3 className="font-semibold text-center pb-3">Mail</h3>
             <input className="m-1 pl-1" type="text" name="street" placeholder="Street"/>
             <input className="m-1 pl-1" type="text" name="streetTwo" placeholder="Street 2"/>
             <input className="m-1 pl-1" type="text" name="city" placeholder="City"/>
             <input className="m-1 pl-1" type="text" name="state" placeholder="State"/>
             <input className="m-1 pl-1" type="text" name="zip" placeholder="Zip"/>
           </div>
-          <div className="w-1/3 h-full border border-white p-1 rounded">
-            <h3 className="p-1 rounded m-1 bg-white text-sky-950">Sales Info</h3>
+          <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
+            <h3 className="font-semibold text-center pb-3">Sales Info</h3>
             <input className="m-1 pl-1" type="text" name="accManager" placeholder="Account Manager"/>
             {branchList&&branchList.length&&<BranchDropdown selectedBranch={selectedBranch} setSelectedBranch={setSelectedBranch} branchList={branchList}/>}
             <input className="m-1 pl-1" type="text" name="team" placeholder="Sales Team"/>
@@ -107,10 +106,9 @@ export default function CustomerAdd(){
           </div>
         </div>
         <div className="flex w-full justify-center">
-          {canSubmit&&<button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>}
+          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit" disabled={canSubmit}>Save</button>
         </div>
-      </form>}
-      /> 
+      </form>
     </>
   )
 }

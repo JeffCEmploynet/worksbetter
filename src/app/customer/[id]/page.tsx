@@ -10,6 +10,7 @@ import { AgGridReact } from "ag-grid-react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import AddOrderModal from "../orders/addOrderModal";
 import { FormatUSD } from "@/app/components/formatters/numberFormatters";
+import { FormatDate } from "@/app/components/formatters/dateFormatters";
 
 export default function Customer({params}: {params: {id: Number}}){
   const [customerData, setCustomerData] = useState<any>()
@@ -100,13 +101,78 @@ export default function Customer({params}: {params: {id: Number}}){
 
   return(
     <>
-    {showCustomer&&<BlueCard content={
-      <div>
-        <h2 className="font-bold">{customerName}</h2>
-        <p>Id: {cuId?.toString()}</p>
-        <p>Branch: {branch}</p>
-      </div>
-    }/>}
+    {showCustomer&&
+      <form>
+        <div className="flex flex-row w-full h-fit justify-left flex-wrap text-sky-950">
+          <div className="flex flex-col w-fit my-2 ml-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
+            <h2 className="font-bold">{customerName}</h2>
+            <p>Id: {cuId?.toString()}</p>
+            <p>Branch: {branch}</p>
+            <p>Department: {customerData.department}</p>
+          </div>
+
+          <div className="flex flex-col w-fit m-2 border shadow-sm p-2 bg-slate-50 rounded border-sky-950">
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-20 text-sm" htmlFor="bill">Contact:</label>
+              <input className="p-1 mb-1 text-sm w-52 rounded" id="bill" name="bill" type="text" defaultValue={customerData.mainContact}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-20 text-sm" htmlFor="bill">Email:</label>
+              <input className="p-1 mb-1 text-sm w-52 rounded" id="bill" name="bill" type="text" defaultValue={customerData.email}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-20 text-sm" htmlFor="bill">Phone:</label>
+              <input className="p-1 w-52 text-sm rounded" id="bill" name="bill" type="text" defaultValue={customerData.phone}/>
+            </div>
+          </div>
+          
+          <div className="flex flex-col w-fit my-2 border shadow-sm p-2 bg-slate-50 rounded border-sky-950">
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-24 text-sm" htmlFor="bill">Active Date:</label>
+              <input className="p-1 mb-1 text-sm w-28 rounded" id="bill" name="bill" type="date" defaultValue={FormatDate(customerData.activeDate)?.toString()}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-24 text-sm" htmlFor="bill">Pay Terms:</label>
+              <input className="p-1 mb-1 text-sm w-28 rounded" id="bill" name="bill" type="text" defaultValue={customerData.payTerms}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-24 text-sm" htmlFor="bill">Note:</label>
+              <input className="p-1 w-28 text-sm rounded" id="bill" name="bill" type="text" defaultValue={customerData.note}/>
+            </div>
+          </div>
+
+          <div className="flex flex-col w-fit my-2 ml-2 border shadow-sm p-2 bg-slate-50 rounded border-sky-950">
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-16 text-sm" htmlFor="bill">State:</label>
+              <input className="p-1 mb-1 text-sm w-44 rounded" id="bill" name="bill" type="text" defaultValue={customerData.state}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-16 text-sm" htmlFor="bill">City:</label>
+              <input className="p-1 mb-1 text-sm w-44 rounded" id="bill" name="bill" type="text" defaultValue={customerData.city}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-16 text-sm" htmlFor="bill">Street:</label>
+              <input className="p-1 mb-1 text-sm w-44 rounded" id="bill" name="bill" type="text" defaultValue={customerData.street}/>
+            </div>
+          </div>
+
+          <div className="flex flex-col w-fit m-2 border shadow-sm p-2 bg-slate-50 rounded border-sky-950">
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-36 text-sm" htmlFor="bill">Sales Team:</label>
+              <input className="p-1 mb-1 text-sm w-44 rounded" id="bill" name="bill" type="text" defaultValue={customerData.salesTeam}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-36 text-sm" htmlFor="bill">Account Manager:</label>
+              <input className="p-1 mb-1 text-sm w-44 rounded" id="bill" name="bill" type="text" defaultValue={customerData.accountManager}/>
+            </div>
+            <div className="flex flex-row w-full">
+              <label className="p-1 w-36 text-sm" htmlFor="bill">Status:</label>
+              <input className="p-1 mb-1 text-sm w-44 rounded" id="bill" name="bill" type="text" defaultValue={customerData.status}/>
+            </div>
+          </div>
+        </div>
+      </form>
+    }
     
     <div>
       <BlueCard content={

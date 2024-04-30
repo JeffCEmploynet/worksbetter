@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AgGridReact } from "ag-grid-react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import FindCustomer from "./findCustomer";
+import SearchButton from "@/app/components/buttons/SearchButtton";
 
 export default function CustomerSearch(){
   const [showResults, setShowResults] = useState<Boolean>(false);
@@ -49,19 +50,28 @@ export default function CustomerSearch(){
   return(
     <>
       <BlueCard content={
-        <div className="font-bold">
-          <h3>Customer Search</h3>
+        <div className="flex flex-row w-full justify-center">
+          <h3 className="text-lg font-bold">Customer Search</h3>
         </div>
       }/>
-      <BlueCard content={
-        <div>
-          <form className="flex flex-row w-full" onSubmit={(e)=>FindCustomer(e, setSearchResults)}>
-            <input className="m-1 p-1 rounded" type="text" name="customer" placeholder="Customer Name"/>
-            <input className="m-1 p-1 rounded" type="text" name="customerId" placeholder="Customer ID"/>
-            <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
-          </form>
+
+      <form className="w-full p-3 bg-white" onSubmit={(e)=>FindCustomer(e, setSearchResults)}>
+        <div className="flex flex-row w-full h-fit justify-center flex-wrap content-center items-center">
+          <div className="flex flex-col w-fit m-2 border shadow p-3 bg-slate-50 rounded border-sky-950 text-sky-950">
+            <h4 className="font-semibold text-center pb-3">Customer Info</h4>
+            <div className="flex flex-row">
+              <div className="flex flex-col">
+                <input className="m-1 p-1 rounded" type="text" name="customer" placeholder="Customer Name"/>
+              </div>
+              <div className="flex flex-col">
+                <input className="m-1 p-1 rounded" type="text" name="customerId" placeholder="Customer ID"/>
+              </div>
+            </div>
+          </div>
+          <SearchButton />
         </div>
-      }/>
+      </form>
+
       {showResults&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
         <AgGridReact
           rowData={searchResults}
