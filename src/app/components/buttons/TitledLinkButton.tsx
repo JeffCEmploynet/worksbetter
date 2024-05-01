@@ -14,7 +14,7 @@ export default function TitledLinkButton(
     <>
       {isLoggedIn&&
         <Link 
-          className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit align-middle text-white m-1" 
+          className="bg-sky-950 hover:bg-sky-600 p-2 rounded h-fit align-middle text-white m-1" 
           href={linkRef}
         >{linkIcon} {linkName}</Link>
       }
