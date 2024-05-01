@@ -1,8 +1,10 @@
-import { UpdateEmployee } from "@/app/api";
+import { UpdateItem } from "@/app/api";
 import EmployeeLoad from "./employeeLoad";
 
 export default function EmployeeAdjust(event: any, employeeData: any, setEmployeeData: any){
   event.preventDefault();
+
+  const employeeId = employeeData.id;
 
   const formData = new FormData(event.currentTarget);
   employeeData.firstName = formData.get("firstName");
@@ -19,7 +21,9 @@ export default function EmployeeAdjust(event: any, employeeData: any, setEmploye
 
   let saveObj = JSON.stringify(employeeData);
 
-  UpdateEmployee(employeeData.id, saveObj).then(()=>{
-    EmployeeLoad(employeeData.id, setEmployeeData)
+  const url = `https://localhost:7151/api/Employees/${employeeId}`;
+
+  UpdateItem(employeeId, saveObj, url).then(()=>{
+    EmployeeLoad(employeeId, setEmployeeData)
   });
 }

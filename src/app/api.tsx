@@ -77,12 +77,6 @@ export function LoadEmployee(id: number){
   return CallApi(url, callType);
 }
 
-export function UpdateEmployee(id: number, data: any){
-  const url = `https://localhost:7151/api/Employees/${id}`;
-  const callType = 'PUT';
-  return CallApi(url, callType, data);
-}
-
 export function PostCustomer(data: string){
   const url = 'https://localhost:7151/api/Customers';
   const callType = 'POST';
@@ -105,12 +99,6 @@ export function LoadCustomer(id: number){
   const url = `https://localhost:7151/api/Customers/${id}`;
   const callType = 'GET';
   return CallApi(url, callType);
-}
-
-export function UpdateCustomer(id: number, data: any){
-  const url = `https://localhost:7151/api/Customers/${id}`;
-  const callType = 'PUT';
-  return CallApi(url, callType, data);
 }
 
 export function GetOrders(customerId?: Number, customerName?: string, jobTitle?: string, orderId?: Number, branch?: string){
@@ -170,18 +158,6 @@ export function GetAllAssignments(){
   return CallApi(url, callType);
 }
 
-export function UpdateAssignment(assignemntId: Number, data: any){
-  const url = `https://localhost:7151/api/Assignments/${assignemntId}`;
-  const callType = 'PUT';
-  return CallApi(url, callType, data);
-}
-
-export function UpdateJobOrder(orderId: Number, data: any){
-  const url = `https://localhost:7151/api/JobOrders/${orderId}`;
-  const callType = 'PUT';
-  return CallApi(url, callType, data);
-}
-
 export function PostTimecard(data: any){
   const url = `https://localhost:7151/api/Timecards`;
   const callType = 'POST';
@@ -204,12 +180,6 @@ export function GetAllBranches(){
   const url = 'https://localhost:7151/api/Branches';
   const callType = 'GET';
   return CallApi(url, callType);
-}
-
-export function UpdateTimecard(id: Number, data: any){
-  const url = `https://localhost:7151/api/Timecards/${id}`;
-  const callType = 'PUT';
-  return CallApi(url, callType, data);
 }
 
 export function DeleteTimecard(id: Number){

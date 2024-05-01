@@ -1,4 +1,4 @@
-import { UpdateTimecard, DeleteTimecard, GetAllTimecards, CreateProofingSession } from "@/app/api";
+import { UpdateItem, DeleteTimecard, GetAllTimecards, CreateProofingSession } from "@/app/api";
 
 export function SaveTimecards(saveObj: any, timecardStatus: string){
   console.log(saveObj);
@@ -33,7 +33,10 @@ function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardStatus: st
     row.status = timecardStatus;
 
     let postObj = JSON.stringify(row);
-    UpdateTimecard(id, postObj).then(()=>{
+
+    const url = `https://localhost:7151/api/Timecards/${id}`;
+
+    UpdateItem(id, postObj, url).then(()=>{
       GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
     });
   });

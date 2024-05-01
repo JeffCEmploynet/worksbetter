@@ -1,8 +1,10 @@
-import { UpdateAssignment } from "@/app/api";
+import { UpdateItem } from "@/app/api";
 import AssignmentLoad from "./assignmentLoad";
 
 export default function AssignmentAdjust(event: any, assignmentData: any, setAssignmentData: any){
   event.preventDefault();
+
+  const assignmentId = assignmentData.id;
 
   const formData = new FormData(event.currentTarget);
   const endDate = formData.get("endDate") !== "" ? new Date(formData.get("endDate")!.toString()) : null;
@@ -24,9 +26,11 @@ export default function AssignmentAdjust(event: any, assignmentData: any, setAss
 
   assignmentData.status = status;
 
-  let saveObj = JSON.stringify(assignmentData);  
+  let saveObj = JSON.stringify(assignmentData);
+  
+  const url = `https://localhost:7151/api/Assignments/${assignmentId}`;
 
-  UpdateAssignment(assignmentData.id, saveObj).then(()=>{
-    AssignmentLoad(assignmentData.id, setAssignmentData)
+  UpdateItem(assignmentId, saveObj, url).then(()=>{
+    AssignmentLoad(assignmentId, setAssignmentData)
   });
 }

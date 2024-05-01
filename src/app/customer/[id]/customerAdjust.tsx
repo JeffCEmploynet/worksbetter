@@ -1,8 +1,10 @@
-import { UpdateCustomer } from "@/app/api";
+import { UpdateItem } from "@/app/api";
 import CustomerLoad from "./customerLoad";
 
 export default function CustomerAdjust(event: any, customerData: any, setCustomerData: any){
   event.preventDefault();
+
+  const customerId = customerData.id;
 
   const formData = new FormData(event.currentTarget);
   customerData.mainContact = formData.get("contact");
@@ -20,8 +22,10 @@ export default function CustomerAdjust(event: any, customerData: any, setCustome
   customerData.note = formData.get("note");
   customerData.status = formData.get("status");
 
+  const url = `https://localhost:7151/api/Customers/${customerId}`
+
   let saveObj = JSON.stringify(customerData);
-  UpdateCustomer(customerData.id, saveObj).then(()=>{
-    CustomerLoad(customerData.id, setCustomerData);
+  UpdateItem(customerId, saveObj, url).then(()=>{
+    CustomerLoad(customerId, setCustomerData);
   });
 }
