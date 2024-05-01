@@ -236,6 +236,10 @@ export function GetCheckRegister(employeeId?: Number, firstName?: string, lastNa
   return CallApi(url, callType);
 }
 
-export function UpdateItem(id: number, data: any, url: string){
+export function UpdateItem(data: any, url: string){
   return CallApi(url, 'PUT', data);
+}
+
+export function CreateItem(data: any, url: string){
+  return CallApi(url, 'POST', data);
 }

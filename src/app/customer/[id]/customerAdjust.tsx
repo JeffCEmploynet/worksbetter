@@ -25,7 +25,7 @@ export default function CustomerAdjust(event: any, customerData: any, setCustome
   const url = `https://localhost:7151/api/Customers/${customerId}`
 
   let saveObj = JSON.stringify(customerData);
-  UpdateItem(customerId, saveObj, url).then(()=>{
+  UpdateItem(saveObj, url).then(()=>{
     CustomerLoad(customerId, setCustomerData);
   });
 }

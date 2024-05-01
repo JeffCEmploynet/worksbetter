@@ -23,7 +23,7 @@ export default function EmployeeAdjust(event: any, employeeData: any, setEmploye
 
   const url = `https://localhost:7151/api/Employees/${employeeId}`;
 
-  UpdateItem(employeeId, saveObj, url).then(()=>{
+  UpdateItem(saveObj, url).then(()=>{
     EmployeeLoad(employeeId, setEmployeeData)
   });
 }

@@ -30,7 +30,7 @@ export default function AssignmentAdjust(event: any, assignmentData: any, setAss
   
   const url = `https://localhost:7151/api/Assignments/${assignmentId}`;
 
-  UpdateItem(assignmentId, saveObj, url).then(()=>{
+  UpdateItem(saveObj, url).then(()=>{
     AssignmentLoad(assignmentId, setAssignmentData)
   });
 }

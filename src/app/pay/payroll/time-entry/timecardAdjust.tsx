@@ -36,7 +36,7 @@ function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardStatus: st
 
     const url = `https://localhost:7151/api/Timecards/${id}`;
 
-    UpdateItem(id, postObj, url).then(()=>{
+    UpdateItem(postObj, url).then(()=>{
       GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
     });
   });

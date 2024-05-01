@@ -24,7 +24,7 @@ export default function OrderAdjust(event: any, orderData: any, setOrderData: an
   
   const url = `https://localhost:7151/api/JobOrders/${orderId}`
 
-  UpdateItem(orderId, saveObj, url).then(()=>{
+  UpdateItem(saveObj, url).then(()=>{
     OrderLoad(orderId, setOrderData);
   });
 }
