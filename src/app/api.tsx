@@ -59,10 +59,27 @@ export function PostLogin(userName: String, password: String){
   return CallApi(url, callType);
 }
 
-export function PostEmployee(data: string){
-  const url = 'https://localhost:7151/api/Employees';
-  const callType = 'POST';
-  return CallApi(url, callType, data);
+export function UpdateItem(data: any, url: string){
+  return CallApi(url, 'PUT', data);
+}
+
+export function DeleteTimecard(id: Number){
+  const url = `https://localhost:7151/api/Timecards/${id}`;
+  const callType = 'DELETE';
+  return CallApi(url, callType);
+}
+
+
+
+
+
+
+
+
+
+
+export function GetItems(url: string){
+  return CallApi(url, 'GET');
 }
 
 export function GetEmployee(id?: Number, firstName?: string, lastName?: string){
@@ -77,11 +94,7 @@ export function LoadEmployee(id: number){
   return CallApi(url, callType);
 }
 
-export function PostCustomer(data: string){
-  const url = 'https://localhost:7151/api/Customers';
-  const callType = 'POST';
-  return CallApi(url, callType, data);
-}
+
 
 export function GetCustomer(id?: Number, customerName?: string){
   const url = `https://localhost:7151/api/Customers/search?customerName=${customerName}&customerId=${id}`;
@@ -122,17 +135,7 @@ export function LoadOrder(id: Number){
   return CallApi(url, callType); 
 }
 
-export function PostOrder(data: string){
-  const url = 'https://localhost:7151/api/JobOrders';
-  const callType = 'POST';
-  return CallApi(url, callType, data);
-}
 
-export function PostAssignment(data: string){
-  const url = 'https://localhost:7151/api/Assignments';
-  const callType = 'POST';
-  return CallApi(url, callType, data);
-}
 
 export function GetAssignments(employeeId?: Number, assignmentId?: Number, lastName?: string, firstName?: string, customerId?: Number, customerName?: string, jobTitle?: string, orderId?: Number, branch?: string){
   const url = `https://localhost:7151/api/Assignments/search?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&assignmentId=${assignmentId}&customerName=${customerName}&customerId=${customerId}&jobTitle=${jobTitle}&orderId=${orderId}&branch=${branch}`
@@ -158,11 +161,7 @@ export function GetAllAssignments(){
   return CallApi(url, callType);
 }
 
-export function PostTimecard(data: any){
-  const url = `https://localhost:7151/api/Timecards`;
-  const callType = 'POST';
-  return CallApi(url, callType, data);
-}
+
 
 export function GetAllTimecards(){
   const url = `https://localhost:7151/api/Timecards`;
@@ -182,17 +181,8 @@ export function GetAllBranches(){
   return CallApi(url, callType);
 }
 
-export function DeleteTimecard(id: Number){
-  const url = `https://localhost:7151/api/Timecards/${id}`;
-  const callType = 'DELETE';
-  return CallApi(url, callType);
-}
 
-export function PostTaxSetup(data: any){
-  const url = `https://localhost:7151/api/TaxSetups`;
-  const callType = 'POST';
-  return CallApi(url, callType, data);
-}
+
 
 export function GetEmployeeTaxSetup(employeeId: Number){
   const url = `https://localhost:7151/api/TaxSetups/EmployeeId?employeeId=${employeeId}`;
@@ -200,9 +190,36 @@ export function GetEmployeeTaxSetup(employeeId: Number){
   return CallApi(url, callType);
 }
 
-export function EditEmployeeTaxSetup(id: Number, data: any){
-  const url = `https://localhost:7151/api/TaxSetups/${id}`;
-  const callType = 'PUT';
+
+
+export function GetCheckRegister(employeeId?: Number, firstName?: string, lastName?: string, checkId?: number, checkNumber?: number){
+  const url = `https://localhost:7151/api/CheckRegisters/search?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&checkId=${checkId}&checkNumber=${checkNumber}`;
+  const callType = 'GET';
+  return CallApi(url, callType);
+}
+
+
+
+
+
+
+
+
+
+
+export function CreateItem(data: any, url: string){
+  return CallApi(url, 'POST', data);
+}
+
+export function PostEmployee(data: string){
+  const url = 'https://localhost:7151/api/Employees';
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
+
+export function CreateCheck(data: any){
+  const url = `https://localhost:7151/api/Checks`;
+  const callType = 'POST';
   return CallApi(url, callType, data);
 }
 
@@ -224,22 +241,32 @@ export function CreateCheckRegister(data: any){
   return CallApi(url, callType, data);
 }
 
-export function CreateCheck(data: any){
-  const url = `https://localhost:7151/api/Checks`;
+export function PostTaxSetup(data: any){
+  const url = `https://localhost:7151/api/TaxSetups`;
   const callType = 'POST';
   return CallApi(url, callType, data);
 }
 
-export function GetCheckRegister(employeeId?: Number, firstName?: string, lastName?: string, checkId?: number, checkNumber?: number){
-  const url = `https://localhost:7151/api/CheckRegisters/search?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&checkId=${checkId}&checkNumber=${checkNumber}`;
-  const callType = 'GET';
-  return CallApi(url, callType);
+export function PostTimecard(data: any){
+  const url = `https://localhost:7151/api/Timecards`;
+  const callType = 'POST';
+  return CallApi(url, callType, data);
 }
 
-export function UpdateItem(data: any, url: string){
-  return CallApi(url, 'PUT', data);
+export function PostCustomer(data: string){
+  const url = 'https://localhost:7151/api/Customers';
+  const callType = 'POST';
+  return CallApi(url, callType, data);
 }
 
-export function CreateItem(data: any, url: string){
-  return CallApi(url, 'POST', data);
+export function PostOrder(data: string){
+  const url = 'https://localhost:7151/api/JobOrders';
+  const callType = 'POST';
+  return CallApi(url, callType, data);
+}
+
+export function PostAssignment(data: string){
+  const url = 'https://localhost:7151/api/Assignments';
+  const callType = 'POST';
+  return CallApi(url, callType, data);
 }

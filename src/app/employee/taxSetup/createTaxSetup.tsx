@@ -1,4 +1,4 @@
-import { PostTaxSetup, EditEmployeeTaxSetup } from "@/app/api";
+import { PostTaxSetup, UpdateItem } from "@/app/api";
 
 export default function CreateTaxSetup(event: any, employeeId: Number, onHide: any, taxSetupId: any){
   event.preventDefault();
@@ -22,7 +22,8 @@ export default function CreateTaxSetup(event: any, employeeId: Number, onHide: a
   let data = JSON.stringify(dataObj);
 
   if (taxSetupId){
-    EditEmployeeTaxSetup(taxSetupId, data).then(res=>{
+    const url = `https://localhost:7151/api/TaxSetups/${taxSetupId}`;
+    UpdateItem(data, url).then(res=>{
       console.log(res);
     });
   } else {

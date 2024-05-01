@@ -1,5 +1,5 @@
 import { PostAssignment } from "@/app/api";
-import { UpdateJobOrder } from "@/app/api";
+import { UpdateItem } from "@/app/api";
 
 export default function CreateAssignment(event: any, postAddData: any, onHide: any, orderData: any){
   event.preventDefault();
@@ -42,7 +42,9 @@ function UpdateOrder(jobOrdersId: Number, orderData: any){
 
   let updatedOrderData = JSON.stringify(updatedOrder)
 
-  UpdateJobOrder(jobOrdersId, updatedOrderData).then(res=>{
+  const ordersUrl = `https://localhost:7151/api/JobOrders/${jobOrdersId}`;
+
+  UpdateItem(updatedOrderData, ordersUrl).then(res=>{
     console.log(res);
   });
 }
