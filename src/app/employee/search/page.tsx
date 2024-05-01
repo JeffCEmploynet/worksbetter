@@ -56,7 +56,7 @@ export default function EmployeeSearch()
       <form className="w-full p-3 bg-white" onSubmit={(e)=>FindEmployee(e, setSearchResults)}>
         <div className="flex flex-row w-full h-fit justify-center flex-wrap content-center items-center">
           <div className="flex flex-col w-fit m-2 border shadow p-3 bg-slate-50 rounded border-sky-950 text-sky-950">
-          <h4 className="font-semibold text-center pb-3">Employee Search</h4>
+          <h4 className="font-semibold text-center pb-3 text-lg">Employee Search</h4>
             <div className="flex flex-row">
               <div className="flex flex-col">
                 <input className="m-1 p-1 rounded" type="text" name="firstName" placeholder="First Name"/>

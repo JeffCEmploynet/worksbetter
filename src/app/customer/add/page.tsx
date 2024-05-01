@@ -78,7 +78,7 @@ export default function CustomerAdd(){
         }
       />
       <form className="w-full text-sky-950 p-3 bg-white" id="addCustomerForm" onSubmit={(e)=>AddCustomer(e, branch!, branchId!, setNewCustomerLink)}>
-        <div className="flex flex-row w-full h-fit justify-around flex-wrap">
+        <div className="flex flex-row w-full h-fit justify-center flex-wrap">
           <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
             <h3 className="font-semibold text-center pb-3">Basic Info</h3>
             <input className="m-1 pl-1" type="text" name="customer" placeholder="Customer Name"/>
@@ -106,7 +106,7 @@ export default function CustomerAdd(){
           </div>
         </div>
         <div className="flex w-full justify-center">
-          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit" disabled={canSubmit}>Save</button>
+          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit" disabled={canSubmit}>Submit</button>
         </div>
       </form>
     </>

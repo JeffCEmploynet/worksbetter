@@ -107,6 +107,12 @@ export function LoadCustomer(id: number){
   return CallApi(url, callType);
 }
 
+export function UpdateCustomer(id: number, data: any){
+  const url = `https://localhost:7151/api/Customers/${id}`;
+  const callType = 'PUT';
+  return CallApi(url, callType, data);
+}
+
 export function GetOrders(customerId?: Number, customerName?: string, jobTitle?: string, orderId?: Number, branch?: string){
   const isOrderSearch = orderId ? true : false;
 

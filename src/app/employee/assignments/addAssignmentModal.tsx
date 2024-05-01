@@ -6,6 +6,8 @@ import CustomersDropdown from "./customersDropdown";
 import OrdersDropdown from "./ordersDropdown";
 import { GetAllCustomers, LoadOrdersByCustomer } from "@/app/api";
 import CreateAssignment from "./createAssignment";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { FaWindowClose } from "react-icons/fa";
 
 export default function AddAssignmentModal({fullName, lastName, firstName, employeeId, showAddModal, onHide}:
   {fullName: String, lastName: String, firstName: String, employeeId: Number, showAddModal: any, onHide: any}
@@ -84,9 +86,17 @@ export default function AddAssignmentModal({fullName, lastName, firstName, emplo
 
   return(
     <Modal show={showAddModal} onHide={onHide}>
-      <Modal.Header>
-        Assign Employee 
-        <p>{fullName} {employeeId?.toString()}</p>
+      <Modal.Header className="text-sky-950">
+      <div className="flex flex-row w-full justify-between align-middle">
+          <h3 className="m-1 p-1 font-bold" >Assign Employee {firstName} {lastName}</h3>
+          <OverlayTrigger overlay={<Tooltip 
+            style={{position:"fixed", color:"black"}}>Close</Tooltip>}>
+            <button 
+              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+              onClick={()=>onHide()}
+            ><FaWindowClose /></button>
+          </OverlayTrigger>
+        </div>
       </Modal.Header>
       <Modal.Body>
         <BlueCard content={

@@ -49,16 +49,10 @@ export default function CustomerSearch(){
 
   return(
     <>
-      <BlueCard content={
-        <div className="flex flex-row w-full justify-center">
-          <h3 className="text-lg font-bold">Customer Search</h3>
-        </div>
-      }/>
-
       <form className="w-full p-3 bg-white" onSubmit={(e)=>FindCustomer(e, setSearchResults)}>
         <div className="flex flex-row w-full h-fit justify-center flex-wrap content-center items-center">
           <div className="flex flex-col w-fit m-2 border shadow p-3 bg-slate-50 rounded border-sky-950 text-sky-950">
-            <h4 className="font-semibold text-center pb-3">Customer Info</h4>
+            <h4 className="font-semibold text-center pb-3 text-lg">Customer Search</h4>
             <div className="flex flex-row">
               <div className="flex flex-col">
                 <input className="m-1 p-1 rounded" type="text" name="customer" placeholder="Customer Name"/>
