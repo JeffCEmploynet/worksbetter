@@ -44,6 +44,7 @@ export default function Employee({params}: {params: {id: Number}}){
 
   useEffect(()=>{
     if(employeeData){
+      setFullName(`${employeeData.firstName} ${employeeData.lastName}`);
       setFirstName(employeeData.firstName);
       setLastName(employeeData.lastName);
       setEeId(employeeData.id);

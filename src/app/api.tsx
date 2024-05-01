@@ -265,3 +265,7 @@ export function GetCheckRegister(employeeId?: Number, firstName?: string, lastNa
   const callType = 'GET';
   return CallApi(url, callType);
 }
+
+export function UpdateItem(id: number, data: any, url: string){
+  return CallApi(url, 'PUT', data);
+}
