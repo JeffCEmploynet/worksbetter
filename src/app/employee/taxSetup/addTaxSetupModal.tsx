@@ -2,8 +2,10 @@
 import { useState, useEffect } from "react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import { Modal } from "react-bootstrap";
+import { FaWindowClose } from "react-icons/fa";
 import CreateTaxSetup from "./createTaxSetup";
 import { GetEmployeeTaxSetup } from "@/app/api";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 export default function AddTaxSetupModal({employeeId, showTaxesModal, onHide} : 
   {employeeId: Number, showTaxesModal: any, onHide: any}
@@ -37,29 +39,51 @@ export default function AddTaxSetupModal({employeeId, showTaxesModal, onHide} :
   return(
     <>
     {modalLoaded&&<Modal show={showTaxesModal} onHide={onHide}>
-      <Modal.Header>Set Taxes for employee {employeeId.toString()}</Modal.Header>
+      <Modal.Header>
+        <div className="flex flex-row w-full justify-between align-middle">
+          <h3 className="text-sky-950 font-bold m-1 p-2">Set Taxes for Employee {employeeId.toString()}</h3>
+          <OverlayTrigger overlay={<Tooltip 
+            style={{position:"fixed", color:"black"}}>Close</Tooltip>}>
+            <button 
+              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+              onClick={()=>onHide()}
+            ><FaWindowClose /></button>
+          </OverlayTrigger>
+        </div>
+      </Modal.Header>
       <Modal.Body>
         <BlueCard content={
           <form onSubmit={(e)=>CreateTaxSetup(e, employeeId, onHide, taxSetupId)}>
-            <div className="flex h-fit text-sky-950">
+            <div className="flex h-fit w-fit text-sky-950">
               <div className="w-full h-full border-white p-1 rounded mr-1">
-                <label htmlFor="zip">Zip:</label>
-                <input className="m-1 pl-1" type="text" id="zip" name="zip" defaultValue={zipCode ? zipCode : ""}/>
+                <div className="flex flex-row w-full items-center">
+                  <label className="w-44" htmlFor="state">State:</label>
+                  <input className="m-1 pl-1 w-24" type="text" id="state" name="state" defaultValue={employeeState ? employeeState : ""}/>
+                </div>
+                <div className="flex flex-row w-full items-center">
+                  <label className="w-44" htmlFor="stateTax">State Tax:</label>
+                  <input className="m-1 pl-1 w-24" type="text" id="stateTax" name="stateTax" defaultValue={stateTax ? stateTax : ""}/>
+                </div>
+
+                <div className="flex flex-row w-full items-center">
+                  <label className="w-44" htmlFor="zip">Zip:</label>
+                  <input className="m-1 pl-1 w-24" type="text" id="zip" name="zip" defaultValue={zipCode ? zipCode : ""}/>
+                </div>
+
+                <div className="flex flex-row w-full items-center">
+                  <label className="w-44" htmlFor="local">Local Tax:</label>
+                  <input className="m-1 pl-1 w-24" type="text" id="local" name="local" defaultValue={localTax ? localTax : ""}/>
+                </div>
                 
-                <label htmlFor="local">Local Tax:</label>
-                <input className="m-1 pl-1" type="text" id="local" name="local" defaultValue={localTax ? localTax : ""}/>
+                <div className="flex flex-row w-full items-center">
+                  <label className="w-44" htmlFor="federalTax">Federal Tax:</label>
+                  <input className="m-1 pl-1 w-24" type="text" id="federalTax" name="federalTax" defaultValue={federalTax ? federalTax : "0.15"}/>
+                </div>
                 
-                <label htmlFor="state">State:</label>
-                <input className="m-1 pl-1" type="text" id="state" name="state" defaultValue={employeeState ? employeeState : ""}/>
-                
-                <label htmlFor="stateTax">State Tax:</label>
-                <input className="m-1 pl-1" type="text" id="stateTax" name="stateTax" defaultValue={stateTax ? stateTax : ""}/>
-                
-                <label htmlFor="federalTax">Federal Tax:</label>
-                <input className="m-1 pl-1" type="text" id="federalTax" name="federalTax" defaultValue={federalTax ? federalTax : "0.15"}/>
-                
-                <label htmlFor="withholding">Additional Withholding</label>
-                <input className="m-1 pl-1" type="text" id="withholding" name="withholding" defaultValue={withholding ? withholding : ""}/>
+                <div className="flex flex-row w-full items-center">
+                  <label className="w-44" htmlFor="withholding">Additional Withholding:</label>
+                  <input className="m-1 pl-1 w-24" type="text" id="withholding" name="withholding" defaultValue={withholding ? withholding : ""}/>
+                </div>
               </div>
             </div>
             <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>

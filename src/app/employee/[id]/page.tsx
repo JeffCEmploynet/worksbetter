@@ -10,6 +10,8 @@ import LoadEmployeeAssignments from "../assignments/loadEmployeeAssignemnts";
 import AddAssignmentModal from "../assignments/addAssignmentModal";
 import AddTaxSetupModal from "../taxSetup/addTaxSetupModal";
 import { FormatUSD } from "@/app/components/formatters/numberFormatters";
+import SaveButton from "@/app/components/buttons/SaveButton";
+import EmployeeAdjust from "./employeeAdjust";
 
 export default function Employee({params}: {params: {id: Number}}){
   const [employeeData, setEmployeeData] = useState<any>();
@@ -42,8 +44,6 @@ export default function Employee({params}: {params: {id: Number}}){
 
   useEffect(()=>{
     if(employeeData){
-      let name = employeeData.firstName + ' ' + employeeData.lastName;
-      setFullName(name);
       setFirstName(employeeData.firstName);
       setLastName(employeeData.lastName);
       setEeId(employeeData.id);
@@ -52,10 +52,10 @@ export default function Employee({params}: {params: {id: Number}}){
   },[employeeData]);
 
   useEffect(()=>{
-    if(fullName){
+    if(lastName){
       setShowEmployee(true);
     }
-  },[fullName]);
+  },[lastName]);
 
   useEffect(()=>{
     if(assignmentData&&assignmentData.length){
@@ -66,8 +66,15 @@ export default function Employee({params}: {params: {id: Number}}){
           headerName: "Assignment Id"
         },
         {field: "jobTitle"},
+        {field: "customerName", headerName: "Customer"},
         {field: "payRate", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "billRate", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "otBillRate", valueFormatter: (data:any) => FormatUSD(data)},
+        {field: "dtBillRate", valueFormatter: (data:any) => FormatUSD(data)},
         {field: "branch"},
+        {field: "startDate"},
+        {field: "endDate"},
+        {field: "status"}
       ])
     }
   },[assignmentData]);
@@ -111,17 +118,72 @@ export default function Employee({params}: {params: {id: Number}}){
   return(
     <>
       {showEmployee&&<BlueCard content={
-        <div className="flex justify-between w-full">
-          <div>
-            <h3 className="font-bold">{fullName}</h3>
-            <p>Id: {eeId?.toString()}</p>
-            <p>Branch: {branch}</p>
+        <form className="w-full" onSubmit={(e)=>EmployeeAdjust(e, employeeData, setEmployeeData)}>
+          <div className="flex justify-between w-full flex-wrap">
+            <div className="flex flex-row flex-wrap">
+              <div>
+                <h3 className="font-bold">
+                  <input className="p-1 w-20 rounded" type="text" id="firstName" name="firstName" defaultValue={firstName?.toString()}/>
+                  <input className="p-1 w-20 rounded" type="text" id="lastName" name="lastName" defaultValue={lastName?.toString()}/>
+                </h3>
+                <p className="p-1">Id: {eeId?.toString()}</p>
+                <p className="p-1">Branch: {branch}</p>
+              </div>
+
+              <div className="mx-3">
+                <div className="flex flex-row">
+                  <label className="p-1 w-24 text-sm" htmlFor="phone">Phone:</label>
+                  <input className="mb-1 p-1 w-40 rounded text-sm" id="phone" name="phone" type="text" defaultValue={employeeData.phone?.toString()}/>
+                </div>
+                <div className="flex flex-row">
+                  <label className="p-1 w-24 text-sm" htmlFor="phone2">Phone Two:</label>
+                  <input className="mb-1 p-1 w-40 rounded text-sm" id="phone2" name="phone2" type="text" defaultValue={employeeData.phoneTwo?.toString()}/>
+                </div>
+                <div className="flex flex-row">
+                  <label className="p-1 w-24 text-sm" htmlFor="email">Email:</label>
+                  <input className="mb-1 p-1 w-40 rounded text-sm" id="email" name="email" type="text" defaultValue={employeeData.email?.toString()}/>
+                </div>
+              </div>
+
+              <div className="mx-3">
+                <div className="flex flex-row">
+                  <label className="p-1 w-20 text-sm" htmlFor="state">State:</label>
+                  <input className="mb-1 p-1 w-28 rounded text-sm" id="state" name="state" type="text" defaultValue={employeeData.state?.toString()}/>
+                </div>
+                <div className="flex flex-row">
+                  <label className="p-1 w-20 text-sm" htmlFor="City">city:</label>
+                  <input className="mb-1 p-1 w-28 rounded text-sm" id="city" name="city" type="text" defaultValue={employeeData.city?.toString()}/>
+                </div>
+                <div className="flex flex-row">
+                  <label className="p-1 w-20 text-sm" htmlFor="zip">Zip:</label>
+                  <input className="mb-1 p-1 w-28 rounded text-sm" id="zip" name="zip" type="text" defaultValue={employeeData.zip?.toString()}/>
+                </div>
+              </div>
+
+              <div className="mx-3">
+                <div className="flex flex-row">
+                  <label className="p-1 w-24 text-sm" htmlFor="street">Street:</label>
+                  <input className="mb-1 p-1 w-32 rounded text-sm" id="street" name="street" type="text" defaultValue={employeeData.street?.toString()}/>
+                </div>
+                <div className="flex flex-row">
+                  <label className="p-1 w-24 text-sm" htmlFor="streetTwo">Street Two:</label>
+                  <input className="mb-1 p-1 w-32 rounded text-sm" id="streetTwo" name="streetTwo" type="text" defaultValue={employeeData.streetTwo?.toString()}/>
+                </div>
+                <div className="flex flex-row">
+                  <label className="p-1 w-24 text-sm" htmlFor="ssn">SSN:</label>
+                  <input className="mb-1 p-1 w-32 rounded text-sm" id="ssn" name="ssn" type="text" defaultValue={employeeData.ssn?.toString()}/>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button 
+                className="m-1 p-1 rounded bg-sky-950 text-white flex align-middle w-fit h-fit"
+                onClick={()=>openTaxModal()}
+              >Tax Setup</button>
+              <SaveButton />
+            </div>
           </div>
-          <button 
-            className="m-1 p-1 rounded bg-sky-950 text-white flex align-middle w-fit h-fit"
-            onClick={()=>openTaxModal()}
-          >Tax Setup</button>
-        </div>
+        </form>
       }/>}
       <div>
       <BlueCard content={
@@ -138,7 +200,7 @@ export default function Employee({params}: {params: {id: Number}}){
         </div>}
       />
     </div>
-    {showAssignments&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+    {showAssignments&&<div className="ag-theme-quartz m-1 p-1" style={{height: 300}}>
         <AgGridReact
           rowData={assignmentData}
           columnDefs={assignmentColDefs}

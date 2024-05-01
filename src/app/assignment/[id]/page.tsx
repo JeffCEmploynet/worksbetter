@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { TfiSave } from "react-icons/tfi";
+import SaveButton from "@/app/components/buttons/SaveButton";
 import AssignmentLoad from "./assignmentLoad";
 import BlueCard from "@/app/components/cards/BlueCard";
 import { FormatDate } from "@/app/components/formatters/dateFormatters";
@@ -150,9 +150,7 @@ export default function Assignment({params}: {params: {id: Number}}){
           </div>
         </div>
         <div className="flex flex-col w-fit">
-          <button className="m-2 p-3  h-fit rounded bg-sky-950 text-white flex flex-col w-fit justify-center" type="submit">
-              <p className="text-center text-2xl"><TfiSave /></p>
-          </button>
+          <SaveButton />
         </div>
       </form>
     }

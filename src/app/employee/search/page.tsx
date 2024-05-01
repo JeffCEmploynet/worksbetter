@@ -6,8 +6,8 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AgGridReact } from "ag-grid-react";
-import BlueCard from "@/app/components/cards/BlueCard";
 import FindEmployee from "./findEmployee";
+import SearchButton from "@/app/components/buttons/SearchButtton";
 
 export default function EmployeeSearch()
 {
@@ -53,24 +53,27 @@ export default function EmployeeSearch()
 
   return(
     <>
-      <BlueCard content={
-        <div>
-          <h3 className="font-bold">Employee Search</h3>
+      <form className="w-full p-3 bg-white" onSubmit={(e)=>FindEmployee(e, setSearchResults)}>
+        <div className="flex flex-row w-full h-fit justify-center flex-wrap content-center items-center">
+          <div className="flex flex-col w-fit m-2 border shadow p-3 bg-slate-50 rounded border-sky-950 text-sky-950">
+          <h4 className="font-semibold text-center pb-3">Employee Search</h4>
+            <div className="flex flex-row">
+              <div className="flex flex-col">
+                <input className="m-1 p-1 rounded" type="text" name="firstName" placeholder="First Name"/>
+              </div>
+              <div className="flex flex-col">
+              <input className="m-1 p-1 rounded" type="text" name="lastName" placeholder="Last Name"/>
+              </div>
+              <div className="flex flex-col">
+                <input className="m-1 p-1 rounded" type="text" name="employeeId" placeholder="Employee ID"/>
+              </div>
+            </div>
+          </div>
+          <SearchButton />
         </div>
-      }/>
+      </form>
 
-      <BlueCard content={
-        <div>
-          <form onSubmit={(e)=>FindEmployee(e, setSearchResults)}>
-            <input className="m-1 p-1" type="text" name="firstName" placeholder="First Name"/>
-            <input className="m-1 p-1" type="text" name="lastName" placeholder="Last Name"/>
-            <input className="m-1 p-1" type="text" name="employeeId" placeholder="Employee ID"/>
-            {/* <input className="m-1 p-1" type="text" placeholder="Assignment ID"/> */}
-            <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
-          </form>
-        </div>
-      }/>
-      {showResults&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+      {showResults&&<div className="ag-theme-quartz m-1 p-1" style={{height: 500}}>
         <AgGridReact
           rowData={searchResults}
           columnDefs={resultsColDefs}

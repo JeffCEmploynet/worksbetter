@@ -77,6 +77,12 @@ export function LoadEmployee(id: number){
   return CallApi(url, callType);
 }
 
+export function UpdateEmployee(id: number, data: any){
+  const url = `https://localhost:7151/api/Employees/${id}`;
+  const callType = 'PUT';
+  return CallApi(url, callType, data);
+}
+
 export function PostCustomer(data: string){
   const url = 'https://localhost:7151/api/Customers';
   const callType = 'POST';
