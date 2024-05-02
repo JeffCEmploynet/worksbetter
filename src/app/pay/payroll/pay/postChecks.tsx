@@ -1,4 +1,4 @@
-import { LoadEmployee, CreateCheck, CreateCheckRegister } from "@/app/api";
+import { LoadEmployee, CreateCheck, CreateCheckRegister, UpdateItem } from "@/app/api";
 
 export default function PostChecks(gridApi: any, setSuccessMessage: any){
   const selectedChecks = gridApi.getSelectedRows();
@@ -39,7 +39,7 @@ export default function PostChecks(gridApi: any, setSuccessMessage: any){
           zip: employee.zip
         };
         let registerObj = JSON.stringify(registerData);
-        CreateCheckRegister(registerObj).then(res=>{
+        CreateCheckRegister(registerObj).then(()=>{
           setSuccessMessage("Checks Successfully Paid!");
         });
       });
