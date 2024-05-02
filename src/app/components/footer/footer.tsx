@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function Footer(){
   return(
-    <footer className="bg-sky-950 pt-2 fixed bottom-0 w-full text-sm">
+    <footer className="bg-sky-950 pt-2 bottom-0 w-full text-sm">
       <div className="flex flex-row justify-evenly">
         <div className="flex flex-col justify-center ">
           <Link href={"https://ewm.employnet.com/"}>EWM.employnet.com</Link>

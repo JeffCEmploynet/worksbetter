@@ -1,7 +1,9 @@
 import Select from "react-select";
 import { FormatDate } from "@/app/components/formatters/dateFormatters";
 
-export default function WeekEndingFilter({timecards} : {timecards: any}){
+export default function WeekEndingFilter({timecards, selectedWeek, setSelectedWeek} : 
+  {timecards: any, selectedWeek: any, setSelectedWeek: any}
+){
   const weekEndingDateDropdown: Array<any> = [];
 
   timecards.forEach((timecard: any)=>{
@@ -13,5 +15,10 @@ export default function WeekEndingFilter({timecards} : {timecards: any}){
     };
   });
 
-  return weekEndingDateDropdown;
+  return <Select
+      options={weekEndingDateDropdown}
+      value={selectedWeek}
+      placeholder='Processing Week'
+      onChange={(e)=>setSelectedWeek(e)}
+    />
 }

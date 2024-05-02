@@ -27,6 +27,7 @@ export default function TimeEntry(){
 
   const [showProofModal, setShowProofModal] = useState<Boolean>(false);
   const [showTimecards, setShowTimecards] = useState<Boolean>(false);
+  const [selectedWeek, setSelectedWeek] = useState<any>();
 
   const [defaultColDef] = useState<any>({
     sortable: true,
@@ -121,17 +122,17 @@ export default function TimeEntry(){
           >Edit Timecards</button>}
         </div>
       }/>
-      {showTimecards&&<BlueCard content={
+      <BlueCard content={
         <div className="flex flex-row justify-between w-full">
           <div className="flex flex-row align-middle">
             <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(setBlankTimecards, gridApi)}>Create Timecards</button>
-            <form className="flex flex-row align-middle justify-center" onSubmit={(e)=>LoadTimecardData(e, selectedFilter.value, setTimecardRowData)}>
+            {showTimecards&&<form className="flex flex-row align-middle justify-center" onSubmit={(e)=>LoadTimecardData(e, selectedFilter.value, setTimecardRowData)}>
               <FilterTypeDropdown selectedFilter={selectedFilter} setSeletctedFilter={setSeletctedFilter} />
               <input className="m-1 p-1" type="text" name="searchParam" placeholder={selectedFilter ? selectedFilter.label : "Search Parameter"} />
               <button className="m-1 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
-            </form>
+            </form>}
           </div>
-          <div className="flex flex-row align-middle">
+          {showTimecards&&<div className="flex flex-row align-middle">
             <OverlayTrigger overlay={<Tooltip 
               style={{position:"fixed", color:"black"}}>Save</Tooltip>}>
               <button 
@@ -146,10 +147,10 @@ export default function TimeEntry(){
                 onClick={()=>DeleteTimecards(gridApi, setTimecardRowData)}
               ><RiDeleteBin6Line /></button>
             </OverlayTrigger>
-          </div>
-          <WeekEndingFilter timecards={timecardRowData} />
+            <WeekEndingFilter timecards={timecardRowData} selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek}/>
+          </div>}
         </div>
-      }/>}
+      }/>
       {timecardRowData&&timecardRowData.length&&showTimecards&&
         <div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
           <AgGridReact
