@@ -15,6 +15,7 @@ import { AuthContext } from "@/app/auth";
 import ProofTimecardsModal from "../proof/proofTimecardsModal";
 import { FormatUSD } from "@/app/components/formatters/numberFormatters";
 import { FormatDataDate } from "@/app/components/formatters/dateFormatters";
+import WeekEndingFilter from "./weekEndingFilter";
 
 export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
@@ -25,7 +26,7 @@ export default function TimeEntry(){
   const [sessionId, setSessionId] = useState<Number>();
 
   const [showProofModal, setShowProofModal] = useState<Boolean>(false);
-  const [showTimecards, setShowTimecards] = useState<Boolean>(true);
+  const [showTimecards, setShowTimecards] = useState<Boolean>(false);
 
   const [defaultColDef] = useState<any>({
     sortable: true,
@@ -86,6 +87,12 @@ export default function TimeEntry(){
     }
   },[timecardRowData]);
 
+  useEffect(()=>{
+    if(timecardColDefs){
+      setShowTimecards(true);
+    }
+  },[timecardColDefs]);
+
   const onFirstDataRendered = (params: any) => { 
     setGridApi(params.api);
     params.api.autoSizeAllColumns();
@@ -140,6 +147,7 @@ export default function TimeEntry(){
               ><RiDeleteBin6Line /></button>
             </OverlayTrigger>
           </div>
+          <WeekEndingFilter timecards={timecardRowData} />
         </div>
       }/>}
       {timecardRowData&&timecardRowData.length&&showTimecards&&

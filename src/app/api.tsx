@@ -1,5 +1,3 @@
-import exp from "constants";
-
 var count = 0;
 
 function CallApi(
@@ -29,7 +27,7 @@ function CallApi(
       }
       else if (!result.ok) {
         result.text().then(text => {
-          if (text === "Database 'Employnet' cannot be opened. It is in the middle of a restore.") {
+          if (text === "Database cannot be opened.") {
             setTimeout(() => {
               count++
               if (count < 3)
@@ -82,26 +80,6 @@ export function GetItems(url: string){
   return CallApi(url, 'GET');
 }
 
-export function GetEmployee(id?: Number, firstName?: string, lastName?: string){
-  const url = `https://localhost:7151/api/Employees?id=${id}&firstName=${firstName}&lastName=${lastName}`;
-  const callType = 'GET';
-  return CallApi(url, callType);
-}
-
-export function LoadEmployee(id: number){
-  const url = `https://localhost:7151/api/Employees/${id}`;
-  const callType = 'GET';
-  return CallApi(url, callType);
-}
-
-
-
-export function GetCustomer(id?: Number, customerName?: string){
-  const url = `https://localhost:7151/api/Customers/search?customerName=${customerName}&customerId=${id}`;
-  const callType = 'GET';
-  return CallApi(url, callType);
-}
-
 export function GetAllCustomers(){{
   const url = 'https://localhost:7151/api/Customers';
   const callType = 'GET';
@@ -116,7 +94,7 @@ export function LoadCustomer(id: number){
 
 export function GetOrders(customerId?: Number, customerName?: string, jobTitle?: string, orderId?: Number, branch?: string){
   const isOrderSearch = orderId ? true : false;
-
+  
   const url = isOrderSearch ? `https://localhost:7151/api/JobOrders?orderId=${orderId}`
   : `https://localhost:7151/api/JobOrders?customerName=${customerName}&customerId=${customerId}&jobTitle=${jobTitle}&branch=${branch}`;
   const callType = 'GET';
@@ -134,8 +112,6 @@ export function LoadOrder(id: Number){
   const callType = 'GET';
   return CallApi(url, callType); 
 }
-
-
 
 export function GetAssignments(employeeId?: Number, assignmentId?: Number, lastName?: string, firstName?: string, customerId?: Number, customerName?: string, jobTitle?: string, orderId?: Number, branch?: string){
   const url = `https://localhost:7151/api/Assignments/search?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&assignmentId=${assignmentId}&customerName=${customerName}&customerId=${customerId}&jobTitle=${jobTitle}&orderId=${orderId}&branch=${branch}`
@@ -199,6 +175,11 @@ export function GetCheckRegister(employeeId?: Number, firstName?: string, lastNa
 }
 
 
+export function LoadEmployee(id: number){
+  const url = `https://localhost:7151/api/Employees/${id}`;
+  const callType = 'GET';
+  return CallApi(url, callType);
+}
 
 
 

@@ -1,4 +1,4 @@
-import { GetCustomer } from "@/app/api";
+import { GetItems } from "@/app/api";
 
 export default function FindCustomer(event: any, setSearchResults: any){
   event.preventDefault();
@@ -7,7 +7,9 @@ export default function FindCustomer(event: any, setSearchResults: any){
   const id = Number(formData.get("customerId"));
   const customerName = formData.get("customer")?.toString();
 
-  GetCustomer(id, customerName).then(results => {
+  const url = `https://localhost:7151/api/Customers/search?customerName=${customerName}&customerId=${id}`;
+
+  GetItems(url).then(results => {
     setSearchResults(results);
   });
 }

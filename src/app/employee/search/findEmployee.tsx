@@ -1,4 +1,4 @@
-import { GetEmployee } from "@/app/api";
+import { GetItems } from "@/app/api";
 
 export default function FindEmployee(event: any, setSearchResults: any){
   event.preventDefault();
@@ -8,7 +8,9 @@ export default function FindEmployee(event: any, setSearchResults: any){
   const firstName = formData.get("firstName")?.toString();
   const lastName = formData.get("lastName")?.toString();
 
-  GetEmployee(id, firstName, lastName).then(results => {
+  const url = `https://localhost:7151/api/Employees?id=${id}&firstName=${firstName}&lastName=${lastName}`;
+
+  GetItems(url).then(results => {
     setSearchResults(results);
   });
 }
