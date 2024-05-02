@@ -74,12 +74,13 @@ export default function OrderSearch(){
         </div>
       </form>
 
-      {showOrders&&<div className="ag-theme-quartz m-1 p-1" style={{height: 200}}>
+      {showOrders&&<div className="ag-theme-quartz m-1 p-1">
         <AgGridReact
           rowData={orderSearchResults}
           columnDefs={orderColDefs}
           defaultColDef={defaultColDef}
           onFirstDataRendered={onFirstDataRendered}
+          domLayout="autoHeight"
         />  
       </div>}
     </>

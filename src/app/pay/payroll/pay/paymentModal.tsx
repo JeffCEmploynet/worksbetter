@@ -84,13 +84,14 @@ export default function PaymentModal({payTimecards, showPayModal, hidePayModal} 
         </div>
       </Modal.Header>
       <Modal.Body>
-      {showPreview&&<div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
+      {showPreview&&<div className="ag-theme-balham m-1 p-1">
         <AgGridReact
           rowData={transactionData}
           columnDefs={previewCols}
           defaultColDef={defaultColDef}
           rowSelection="multiple"
           onFirstDataRendered={onFirstDataRendered}
+          domLayout="autoHeight"
         />
       </div>}
       </Modal.Body>

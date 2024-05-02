@@ -152,13 +152,14 @@ export default function TimeEntry(){
         </div>
       }/>
       {timecardRowData&&timecardRowData.length&&showTimecards&&
-        <div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
+        <div className="ag-theme-balham m-1 p-1">
           <AgGridReact
             rowData={timecardRowData}
             columnDefs={timecardColDefs}
             defaultColDef={defaultColDef}
             onFirstDataRendered={onFirstDataRendered}
             rowSelection="multiple"
+            domLayout="autoHeight"
           />  
       </div>}
       {showProofModal&&<ProofTimecardsModal

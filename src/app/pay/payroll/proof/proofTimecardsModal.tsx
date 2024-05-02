@@ -92,13 +92,14 @@ export default function ProofTimecardsModal({saveObj, showProof, hideProof} :
         </div>
       </Modal.Header>
       <Modal.Body>
-        {showProofingErrors&&<div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
+        {showProofingErrors&&<div className="ag-theme-balham m-1 p-1">
           <AgGridReact
             rowData={errorData}
             columnDefs={errorColDefs}
             defaultColDef={defaultColDef}
             rowSelection="multiple"
             onFirstDataRendered={onFirstDataRendered}
+            domLayout="autoHeight"
           />  
         </div>}
         {!showProofingErrors&&<BlueCard content={<p>No proofing errors found!</p>}/>}

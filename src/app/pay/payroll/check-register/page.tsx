@@ -64,12 +64,13 @@ export default function CheckRegister(){
         </form>
       </div>
     }/>
-    {showCheckPreviews&&<div className="ag-theme-quartz m-1 p-1" style={{height: 400}}>
+    {showCheckPreviews&&<div className="ag-theme-quartz m-1 p-1">
         <AgGridReact
           rowData={searchResults}
           columnDefs={resultsColDefs}
           defaultColDef={defaultColDef}
           onFirstDataRendered={onFirstDataRendered}
+          domLayout="autoHeight"
         />  
       </div>}
     </>

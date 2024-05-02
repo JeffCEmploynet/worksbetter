@@ -201,12 +201,13 @@ export default function Employee({params}: {params: {id: Number}}){
         </div>}
       />
     </div>
-    {showAssignments&&<div className="ag-theme-quartz m-1 p-1" style={{height: 300}}>
+    {showAssignments&&<div className="ag-theme-quartz m-1 p-1">
         <AgGridReact
           rowData={assignmentData}
           columnDefs={assignmentColDefs}
           defaultColDef={defaultColDef}
           onFirstDataRendered={onFirstDataRendered}
+          domLayout="autoHeight"
         />  
       </div>}
     {showAddModal&&

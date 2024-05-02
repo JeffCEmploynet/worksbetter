@@ -73,12 +73,13 @@ export default function EmployeeSearch()
         </div>
       </form>
 
-      {showResults&&<div className="ag-theme-quartz m-1 p-1" style={{height: 500}}>
+      {showResults&&<div className="ag-theme-quartz m-1 p-1">
         <AgGridReact
           rowData={searchResults}
           columnDefs={resultsColDefs}
           defaultColDef={defaultColDef}
           onFirstDataRendered={onFirstDataRendered}
+          domLayout="autoHeight"
         />  
       </div>}
     </>

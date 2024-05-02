@@ -93,13 +93,14 @@ export default function Pay(){
       </div>
     }/>}
     {showSessionTimecards&&
-      <div className="ag-theme-balham m-1 p-1" style={{height: 500}}>
+      <div className="ag-theme-balham m-1 p-1">
         <AgGridReact
           rowData={sessionTimecards}
           columnDefs={sessionGridCols}
           defaultColDef={defaultColDef}
           rowSelection="multiple"
           onFirstDataRendered={onFirstDataRendered}
+          domLayout="autoHeight"
         /> 
       </div>
     }
