@@ -1,4 +1,4 @@
-import { UpdateTimecard } from "@/app/api";
+import { UpdateItem } from "@/app/api";
 
 export default function GetProofingErrors(saveObj: any, setProofingErrors: any){
   let errorList: Array<any> = [];
@@ -50,11 +50,16 @@ export default function GetProofingErrors(saveObj: any, setProofingErrors: any){
     } else {
       timecard.status = "Proofed";
       let saveData = JSON.stringify(timecard);
-      UpdateTimecard(timecard.id, saveData).then(res => console.log(res));
+      
+      let id = timecard.id;
+      
+      const url = `https://localhost:7151/api/Timecards/${id}`
+
+      UpdateItem(saveData, url).then(res => console.log(res));
       setProofingErrors({ 
         identifier: null,
         text:["No errors found!"]
       });
     }
-  })
+  });
 }
