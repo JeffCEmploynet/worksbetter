@@ -5,6 +5,7 @@ import AddCustomer from "./addCustomer";
 import BlueCard from "@/app/components/cards/BlueCard";
 import BranchDropdown from "../../components/dropdowns/branchDropdown";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 export default function CustomerAdd(){
   const [branchList, setBranchList] = useState<any>();
@@ -15,6 +16,8 @@ export default function CustomerAdd(){
 
   const [newCustomerLink, setNewCustomerLink] = useState<string>();
   const [showLinks, setShowLinks] = useState<boolean>(false);
+
+  const router = useRouter();
 
   useEffect(()=>{
     GetAllBranches().then(branches=>{
