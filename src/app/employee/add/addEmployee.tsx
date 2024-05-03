@@ -1,8 +1,9 @@
 'use client'
 import { PostEmployee } from "@/app/api";
 
-export default function AddEmployee(event: any, state: String, branch: String, branchId: Number){
 
+export default function AddEmployee(event: any, state: String, branch: String, branchId: Number, router:any){
+  
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
@@ -29,6 +30,7 @@ export default function AddEmployee(event: any, state: String, branch: String, b
   let data = JSON.stringify(dataObj);
   
   PostEmployee(data).then(res=>{
+    router.push(`http://localhost:3000/employee/${res.id}`)
     console.log(res);
   });
 }

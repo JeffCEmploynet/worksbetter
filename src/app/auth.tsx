@@ -1,5 +1,5 @@
 'use client'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { createContext, useState } from "react";
 import { PostLogin } from "./api";
 
@@ -32,6 +32,8 @@ export function AuthProvider({children}:{children: any}){
   const [authLevel, setAuthLevel] = useState<Number | undefined>();
   const [branch, setBranch] = useState<string | undefined>();
   const [branchId, setBranchId] = useState<Number | undefined>();
+
+  const router = useRouter();
 
   const login = (event: any) => {
     event.preventDefault();
@@ -69,7 +71,7 @@ export function AuthProvider({children}:{children: any}){
     setBranch(undefined);
     setBranchId(undefined);
 
-    redirect('/');
+    router.push('/');
   }
 
   return <AuthContext.Provider value={{

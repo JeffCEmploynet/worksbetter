@@ -5,6 +5,7 @@ import BlueCard from "@/app/components/cards/BlueCard";
 import AddEmployee from "./addEmployee";
 import StatesDropdown from "@/app/components/dropdowns/statesDropdown";
 import BranchDropdown from '@/app/components/dropdowns/branchDropdown';
+import { useRouter } from 'next/navigation';
 
 export default function EmployeeAdd(){
   const [selectedState, setSelectedState] = useState<any>();
@@ -14,6 +15,8 @@ export default function EmployeeAdd(){
   const [branchId, setBranchId] = useState<Number>();
   const [branch, setBranch] = useState<String>();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
+
+  const router = useRouter();
 
   useEffect(()=>{
     GetAllBranches().then(branches=>{
@@ -55,7 +58,7 @@ export default function EmployeeAdd(){
         <h2 className="font-bold text-lg flex justify-center">Please fill out the form below to add an employee</h2>
       </div>
     }/>
-    <form className="w-full text-sky-950 p-3 bg-white" onSubmit={(e)=>AddEmployee(e, employeeState!, branch!, branchId!)}>
+    <form className="w-full text-sky-950 p-3 bg-white" onSubmit={(e)=>AddEmployee(e, employeeState!, branch!, branchId!, router)}>
       <div className="flex flex-row w-full h-fit justify-center flex-wrap">
         <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
           <h3 className="font-semibold text-center pb-3">Basic Info</h3>
@@ -87,7 +90,7 @@ export default function EmployeeAdd(){
         <input className="m-1 p-1" type="file" id="rParser"/>
       </div> */}
       <div className="flex w-full justify-center">
-          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit" disabled={canSubmit}>Submit</button>
+          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
         </div>
     </form>
     </>

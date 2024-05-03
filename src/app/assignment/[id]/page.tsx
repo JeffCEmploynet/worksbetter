@@ -87,7 +87,7 @@ export default function Assignment({params}: {params: {id: Number}}){
       </div>
     }/>}
     {showAssignment&&
-      <form className="flex flex-row w-full h-full p-3 bg-white justify-center flex-wrap content-center text-sky-950"
+      <form className="flex flex-row w-full p-3 bg-white justify-center flex-wrap text-sky-950"
         onSubmit={(e)=>AssignmentAdjust(e, foundAssignment, setFoundAssignments)}
       >
         <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
