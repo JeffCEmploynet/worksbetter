@@ -68,10 +68,6 @@ export function DeleteTimecard(id: Number){
 }
 
 
-
-
-
-
 export function GetItems(url: string){
   return CallApi(url, 'GET');
 }
@@ -141,8 +137,8 @@ export function GetAllTimecards(){
   return CallApi(url, callType);
 }
 
-export function GetTimecards(employeeId?: Number, assignmentId?: Number, lastName?: string, firstName?: string, customerId?: Number, customerName?: string){
-  const url = `https://localhost:7151/api/Timecards/search?firstName=${firstName}&lastName=${lastName}&employeeId=${employeeId}&assignmentId=${assignmentId}&customerName=${customerName}&customerId=${customerId}`
+export function GetTimecards(urlEnd: any){
+  const url = `https://localhost:7151/api/Timecards/search?${urlEnd}`
   const callType = 'GET';
   return CallApi(url, callType);
 }

@@ -9,8 +9,7 @@ export default function FilterTypeDropdown({selectedFilter, setSeletctedFilter}:
     {value: "employeeId", label: "Employee Id"},
     {value: "assignmentId", label: "Assignment Id"},
     {value: "customerName", label: "Customer Name"},
-    {value: "customerId", label: "Customer Id"},
-    {value: "branch", label: "Branch"}
+    {value: "customerId", label: "Customer Id"}
   ];
 
   return <Select

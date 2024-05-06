@@ -13,7 +13,14 @@ export default function LoadTimecardData(event: any, filterValue: any, setTimeca
 
   console.log(firstName);
 
-  GetTimecards(employeeId, assignmentId, lastName!, firstName!, customerId, customerName!).then(results => {
+  const urlEnd = firstName !== null ? `firstName=${firstName}` :
+    lastName !== null ? `lastName=${lastName}` :
+    employeeId !== 0 ? `employeeId=${employeeId}` :
+    assignmentId !== 0 ? `assignmentId=${assignmentId}` :
+    customerName !== null ? `customerName=${customerName}` :
+    customerId !== null ? `customerId=${customerId}` : ''
+
+  GetTimecards(urlEnd).then(results => {
     setTimecardRowData(results);
   });
 }
