@@ -1,8 +1,9 @@
 import { UpdateItem, DeleteTimecard, GetAllTimecards, CreateProofingSession } from "@/app/api";
+import { IoConstructOutline } from "react-icons/io5";
 
-export function SaveTimecards(saveObj: any, timecardStatus: string){
+export function SaveTimecards(saveObj: any, timecardPrevData:any){
   console.log(saveObj);
-  saveObj.gridApi.showLoadingOverlay();
+  // saveObj.gridApi.showLoadingOverlay();
   let sessionIdentifier = saveObj.timecardRowData[0].sessionId;
   
   if(sessionIdentifier === null){
@@ -13,32 +14,44 @@ export function SaveTimecards(saveObj: any, timecardStatus: string){
       status: "Open",
     }
     
-    let data = JSON.stringify(dataObj);9
+    let data = JSON.stringify(dataObj);
 
     CreateProofingSession(data).then(res => {
       let sessionId = res.id;
-      ProcessSaveTimecard(saveObj, sessionId, "Proofing");
+      ProcessSaveTimecard(saveObj, sessionId, timecardPrevData);
     });
   } else {
-    ProcessSaveTimecard(saveObj, sessionIdentifier, timecardStatus);
+    ProcessSaveTimecard(saveObj, sessionIdentifier, timecardPrevData);
   }
 }
 
-function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardStatus: string){
+function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardPrevData: any){
+  console.log(timecardPrevData);
   saveObj.timecardRowData.forEach((row: any)=>{
-    console.log(row);
-    let id = row.id;
-    row.sessionId = sessionId;
-    row.sessionUser = saveObj.auth.firstName + ' ' + saveObj.auth.lastName;
-    row.status = timecardStatus;
-
-    let postObj = JSON.stringify(row);
-
-    const url = `https://localhost:7151/api/Timecards/${id}`;
-
-    UpdateItem(postObj, url).then(()=>{
-      GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
-    });
+    //compare each row to the previous data to see what has changed, and then only push changed rows
+    let editedRow = timecardPrevData.find((prevRow: any) => 
+      prevRow.id === row.id && (
+        prevRow.rHours !== row.rHours ||
+        prevRow.oHours !== row.oHours ||
+        prevRow.dHours !== row.dHours
+      )
+  );
+    
+    if(editedRow !== undefined){
+      console.log(row);
+      let id = row.id;
+      row.sessionId = sessionId;
+      row.sessionUser = saveObj.auth.firstName + ' ' + saveObj.auth.lastName;
+      row.status = "In Proof";
+  
+      let postObj = JSON.stringify(row);
+  
+      const url = `https://localhost:7151/api/Timecards/${id}`;
+  
+      UpdateItem(postObj, url).then(()=>{
+        GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
+      });
+    }
   });
 }
 

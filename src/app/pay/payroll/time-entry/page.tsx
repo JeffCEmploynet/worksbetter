@@ -21,6 +21,7 @@ export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
   const [blankTimecards, setBlankTimecards] = useState<any>();
   const [timecardRowData, setTimecardRowData] = useState<any>();
+  const [timecardPrevData, setTimecardPrevData] = useState<any>();
   const [timecardColDefs, setTimecardColDefs] = useState<any>();
   const [gridApi, setGridApi] = useState<any>();
   const [sessionId, setSessionId] = useState<Number>();
@@ -48,6 +49,18 @@ export default function TimeEntry(){
     GetAllTimecards().then(timecards =>{
       console.log(timecards);
       setTimecardRowData(timecards);
+      let timecardCopy: Array<any> = [];
+      timecards.forEach((timecard: any) =>{
+        let copyRow = {
+          id: timecard.id,
+          rHours: timecard.rHours,
+          oHours: timecard.oHours,
+          dhours: timecard.dHours
+        }
+        timecardCopy.push(copyRow);
+      });
+
+      setTimecardPrevData(timecardCopy);
     });
   },[]);
 
@@ -94,6 +107,15 @@ export default function TimeEntry(){
     }
   },[timecardColDefs]);
 
+  useEffect(()=>{
+    if(selectedWeek){
+      GetAllTimecards().then(timecards =>{
+        let filteredTimecards = timecards.filter((timecard:any)=>timecard.weekEndingDate === selectedWeek.value);
+        setTimecardRowData(filteredTimecards);
+      })
+    }
+  }, [selectedWeek]);
+
   const onFirstDataRendered = (params: any) => { 
     setGridApi(params.api);
     params.api.autoSizeAllColumns();
@@ -137,7 +159,7 @@ export default function TimeEntry(){
               style={{position:"fixed", color:"black"}}>Save</Tooltip>}>
               <button 
                 className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
-                onClick={()=>SaveTimecards(saveObj, "In Proof")}
+                onClick={()=>SaveTimecards(saveObj, timecardPrevData)}
               ><TfiSave /></button>
             </OverlayTrigger>
             <OverlayTrigger overlay={<Tooltip 
@@ -147,7 +169,7 @@ export default function TimeEntry(){
                 onClick={()=>DeleteTimecards(gridApi, setTimecardRowData)}
               ><RiDeleteBin6Line /></button>
             </OverlayTrigger>
-            <WeekEndingFilter timecards={timecardRowData} selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek}/>
+            {/* <WeekEndingFilter timecards={timecardRowData} selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek}/> */}
           </div>}
         </div>
       }/>

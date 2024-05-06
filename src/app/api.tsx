@@ -138,7 +138,7 @@ export function GetAllTimecards(){
 }
 
 export function GetTimecards(urlEnd: any){
-  const url = `https://localhost:7151/api/Timecards/search?${urlEnd}`
+  const url = `https://localhost:7151/api/Timecards${urlEnd}`
   const callType = 'GET';
   return CallApi(url, callType);
 }
