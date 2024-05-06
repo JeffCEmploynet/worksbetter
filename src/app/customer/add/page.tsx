@@ -4,7 +4,6 @@ import { GetAllBranches } from "@/app/api";
 import AddCustomer from "./addCustomer";
 import BlueCard from "@/app/components/cards/BlueCard";
 import BranchDropdown from "../../components/dropdowns/branchDropdown";
-import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
 export default function CustomerAdd(){
@@ -14,9 +13,6 @@ export default function CustomerAdd(){
   const [branch, setBranch] = useState<string>();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
 
-  const [newCustomerLink, setNewCustomerLink] = useState<string>();
-  const [showLinks, setShowLinks] = useState<boolean>(false);
-
   const router = useRouter();
 
   useEffect(()=>{
@@ -24,8 +20,8 @@ export default function CustomerAdd(){
       let branchOptList: Array<any> = [];
       branches.forEach((branch: any)=>{
         let branchItem = {
-        value: branch.id,
-        label: branch.branchName
+          value: branch.id,
+          label: branch.branchName
         };
         branchOptList.push(branchItem);
       })
@@ -46,41 +42,15 @@ export default function CustomerAdd(){
     }
   },[branch, branchId]);
 
-  useEffect(()=>{
-    if(newCustomerLink){
-      setShowLinks(true);
-    }
-  },[newCustomerLink]);
-
-  const clearForm = () => {
-    let form = document.getElementById("addCustomerForm") as HTMLFormElement;
-    form.reset();
-    setNewCustomerLink(undefined);
-  }
-
   return(
     <>
       <BlueCard content={
-        <>
-        {showLinks&&<div>
-          <Link 
-            href={newCustomerLink!} 
-            className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit text-white m-1"
-          >Go To CustomerPage</Link>
-          <button
-            type="reset"
-            className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit text-white m-1"
-            onClick={()=>clearForm()}
-          >Add Another Customer</button>
-        </div>
-        }
-        {!showLinks&&<div className="flex justify-center w-full">
+        <div className="flex justify-center w-full">
           <h2 className="font-bold text-lg flex justify-center">Please fill out the form below to add a customer</h2>
-        </div>}
-        </>
-        }
-      />
-      <form className="w-full text-sky-950 p-3 bg-white" id="addCustomerForm" onSubmit={(e)=>AddCustomer(e, branch!, branchId!, setNewCustomerLink)}>
+        </div>
+      }/>
+
+      <form className="w-full text-sky-950 p-3 bg-white" id="addCustomerForm" onSubmit={(e)=>AddCustomer(e, branch!, branchId!, router)}>
         <div className="flex flex-row w-full h-fit justify-center flex-wrap">
           <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
             <h3 className="font-semibold text-center pb-3">Basic Info</h3>
