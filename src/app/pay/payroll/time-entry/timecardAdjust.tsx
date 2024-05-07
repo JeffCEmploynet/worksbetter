@@ -37,7 +37,7 @@ function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardPrevData: 
 
     let editedRow: boolean = rHoursEdited || oHoursEdited || dHoursEdited;
     
-    if(editedRow !== undefined){
+    if(editedRow){
       console.log(row);
       let id = row.id;
       row.sessionId = sessionId;
