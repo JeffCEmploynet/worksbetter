@@ -64,7 +64,11 @@ export default function GetTransactionData(timecard: any, setTransactionData: an
       federalTaxes: totalTaxes.federal,
       additonalWithholding: totalTaxes.withholding,
 
-      weekEndingDate: timecard.weekEndingDate
+      weekEndingDate: timecard.weekEndingDate,
+      processingWeek: timecard.processingWeek,
+      timecardId: timecard.id,
+      sessionId: timecard.sessionId,
+      sessionUser: timecard.sessionUser
     };
     console.log(transactionObj);
 
