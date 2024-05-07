@@ -29,13 +29,13 @@ function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardPrevData: 
   console.log(timecardPrevData);
   saveObj.timecardRowData.forEach((row: any)=>{
     //compare each row to the previous data to see what has changed, and then only push changed rows
-    let editedRow = timecardPrevData.find((prevRow: any) => 
-      prevRow.id === row.id && (
-        prevRow.rHours !== row.rHours ||
-        prevRow.oHours !== row.oHours ||
-        prevRow.dHours !== row.dHours
-      )
-  );
+    let matchRow = timecardPrevData.find((prevRow: any) => prevRow.id === row.id);
+
+    let rHoursEdited: boolean = matchRow.rHours !== row.rHours;
+    let oHoursEdited: boolean = matchRow.oHours !== row.oHours;
+    let dHoursEdited: boolean = matchRow.dHours!== undefined && matchRow.dHours !== row.dHours;
+
+    let editedRow: boolean = rHoursEdited || oHoursEdited || dHoursEdited;
     
     if(editedRow !== undefined){
       console.log(row);
