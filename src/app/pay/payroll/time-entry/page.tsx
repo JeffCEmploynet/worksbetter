@@ -46,22 +46,7 @@ export default function TimeEntry(){
   }
 
   useEffect(()=>{
-    GetAllTimecards().then(timecards =>{
-      console.log(timecards);
-      setTimecardRowData(timecards);
-      let timecardCopy: Array<any> = [];
-      timecards.forEach((timecard: any) =>{
-        let copyRow = {
-          id: timecard.id,
-          rHours: timecard.rHours,
-          oHours: timecard.oHours,
-          dhours: timecard.dHours
-        }
-        timecardCopy.push(copyRow);
-      });
-
-      setTimecardPrevData(timecardCopy);
-    });
+    fetchTimecards();
   },[]);
 
   useEffect(()=>{
@@ -126,7 +111,27 @@ export default function TimeEntry(){
   }
 
   const hideProof = () => {
+    fetchTimecards();
     setShowProofModal(false);
+  }
+
+  const fetchTimecards = () => {
+    GetAllTimecards().then(timecards =>{
+      console.log(timecards);
+      setTimecardRowData(timecards);
+      let timecardCopy: Array<any> = [];
+      timecards.forEach((timecard: any) =>{
+        let copyRow = {
+          id: timecard.id,
+          rHours: timecard.rHours,
+          oHours: timecard.oHours,
+          dhours: timecard.dHours
+        }
+        timecardCopy.push(copyRow);
+      });
+
+      setTimecardPrevData(timecardCopy);
+    });
   }
 
   return(
