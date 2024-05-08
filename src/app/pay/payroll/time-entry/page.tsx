@@ -152,7 +152,7 @@ export default function TimeEntry(){
       <BlueCard content={
         <div className="flex flex-row justify-between w-full">
           <div className="flex flex-row align-middle">
-            <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(setBlankTimecards, gridApi)}>Create Timecards</button>
+            <button className="bg-sky-950 hover:bg-sky-600 p-1 rounded h-fit m-1 text-white" onClick={()=>CreateTimecards(fetchTimecards, gridApi)}>Create Timecards</button>
             {showTimecards&&<form className="flex flex-row align-middle justify-center" onSubmit={(e)=>LoadTimecardData(e, selectedFilter.value, setTimecardRowData)}>
               <FilterTypeDropdown selectedFilter={selectedFilter} setSeletctedFilter={setSeletctedFilter} />
               <input className="m-1 p-1" type="text" name="searchParam" placeholder={selectedFilter ? selectedFilter.label : "Search Parameter"} />
@@ -164,14 +164,14 @@ export default function TimeEntry(){
               style={{position:"fixed", color:"black"}}>Save</Tooltip>}>
               <button 
                 className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
-                onClick={()=>SaveTimecards(saveObj, timecardPrevData)}
+                onClick={()=>SaveTimecards(saveObj, timecardPrevData, fetchTimecards)}
               ><TfiSave /></button>
             </OverlayTrigger>
             <OverlayTrigger overlay={<Tooltip 
               style={{position:"fixed", color:"black"}}>Delete</Tooltip>}>
               <button 
                 className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
-                onClick={()=>DeleteTimecards(gridApi, setTimecardRowData)}
+                onClick={()=>DeleteTimecards(gridApi, fetchTimecards)}
               ><RiDeleteBin6Line /></button>
             </OverlayTrigger>
             {/* <WeekEndingFilter timecards={timecardRowData} selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek}/> */}

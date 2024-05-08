@@ -1,6 +1,6 @@
 import { GetAllAssignments, PostTimecard } from "@/app/api";
 
-export default function CreateTimecards(setBlankTimecards: any, gridApi: any){
+export default function CreateTimecards(fetchTimecards: any, gridApi: any){
   let weekEndingDate: Date = new Date(GetSundayDate());
   let processingWeek: Date = new Date(GetSundayDate());
 
@@ -34,8 +34,8 @@ export default function CreateTimecards(setBlankTimecards: any, gridApi: any){
       console.log(timecard);
       let toPost = JSON.stringify(timecard);
       console.log(toPost);
-      PostTimecard(toPost).then(res=>{
-        setBlankTimecards(res);
+      PostTimecard(toPost).then(()=>{
+        fetchTimecards();
       });
     });
   });

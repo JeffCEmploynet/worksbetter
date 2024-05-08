@@ -1,7 +1,7 @@
 import { UpdateItem, DeleteTimecard, GetAllTimecards, CreateProofingSession } from "@/app/api";
 import { IoConstructOutline } from "react-icons/io5";
 
-export function SaveTimecards(saveObj: any, timecardPrevData:any){
+export function SaveTimecards(saveObj: any, timecardPrevData:any, fetchTimecards: any){
   console.log(saveObj);
   // saveObj.gridApi.showLoadingOverlay();
   let sessionIdentifier = saveObj.timecardRowData[0].sessionId;
@@ -18,14 +18,14 @@ export function SaveTimecards(saveObj: any, timecardPrevData:any){
 
     CreateProofingSession(data).then(res => {
       let sessionId = res.id;
-      ProcessSaveTimecard(saveObj, sessionId, timecardPrevData);
+      ProcessSaveTimecard(saveObj, sessionId, timecardPrevData, fetchTimecards);
     });
   } else {
-    ProcessSaveTimecard(saveObj, sessionIdentifier, timecardPrevData);
+    ProcessSaveTimecard(saveObj, sessionIdentifier, timecardPrevData, fetchTimecards);
   }
 }
 
-function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardPrevData: any){
+function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardPrevData: any, fetchTimecards: any){
   console.log(timecardPrevData);
   saveObj.timecardRowData.forEach((row: any)=>{
     //compare each row to the previous data to see what has changed, and then only push changed rows
@@ -49,21 +49,21 @@ function ProcessSaveTimecard(saveObj: any, sessionId: number, timecardPrevData: 
       const url = `https://localhost:7151/api/Timecards/${id}`;
   
       UpdateItem(postObj, url).then(()=>{
-        GetAllTimecards().then(timecards => saveObj.setTimecardRowData(timecards));
+        fetchTimecards();
       });
     }
   });
 }
 
 
-export function DeleteTimecards(gridApi: any, setTimecardRowData: any){
+export function DeleteTimecards(gridApi: any, fetchTimecards: any){
   gridApi.showLoadingOverlay();
   const toDelete = gridApi.getSelectedRows();
   console.log(toDelete);
   toDelete.forEach((row: any)=>{
     let id = row.id;
     DeleteTimecard(id).then(() => {
-      GetAllTimecards().then(timecards => setTimecardRowData(timecards));
+      fetchTimecards();
     });
   });
 }
