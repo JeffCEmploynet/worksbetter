@@ -5,7 +5,12 @@ export default function CreateTimecards(fetchTimecards: any, gridApi: any){
   let processingWeek: Date = new Date(GetSundayDate());
 
   GetAllAssignments().then(assignments => {
-    let timecards = assignments.map((assignment:any) => ({
+    let activeAssignments: Array<any> = [];
+    assignments.forEach((asn: any)=>{
+      if(asn.status !== "Closed - Ended"){activeAssignments.push(asn);}
+    })
+
+    let timecards = activeAssignments.map((assignment:any) => ({
       lastName: assignment.lastName,
       firstName: assignment.firstName,
       assignmentId: assignment.id,
