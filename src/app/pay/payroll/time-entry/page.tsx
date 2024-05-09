@@ -19,7 +19,6 @@ import WeekEndingFilter from "./weekEndingFilter";
 
 export default function TimeEntry(){
   const [selectedFilter, setSeletctedFilter] = useState<any>();
-  // const [blankTimecards, setBlankTimecards] = useState<any>();
   const [timecardRowData, setTimecardRowData] = useState<any>();
   const [timecardPrevData, setTimecardPrevData] = useState<any>();
   const [timecardColDefs, setTimecardColDefs] = useState<any>();
@@ -48,16 +47,6 @@ export default function TimeEntry(){
   useEffect(()=>{
     fetchTimecards();
   },[]);
-
-  // useEffect(()=>{
-  //   if(blankTimecards){
-  //     let updatedTimecards = [
-  //       ...timecardRowData,
-  //       blankTimecards
-  //     ];
-  //     setTimecardRowData(updatedTimecards);
-  //   }
-  // },[blankTimecards]);
 
   useEffect(()=>{
     if(timecardRowData&&timecardRowData.length){
