@@ -2,18 +2,18 @@
 
 import { PostOrder } from "@/app/api";
 
-export default function AddOrder(event: any, customerName: String, customerId: Number, branch: String, branchId: Number, onHide: any){
+export default function AddOrder(event: any, addedData: any, onHide: any){
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
   
   let dataObj = {
-    customerName,
-    customerId,
+    customerName: addedData.customerName,
+    customerId: addedData.customerId,
     jobTitle: formData.get("job"),
     jobDescription: formData.get("description"),
     worksiteCity: formData.get("city"),
-    worksiteState: formData.get("state"),
+    worksiteState: addedData.worksiteState,
     worksiteZip: formData.get("zip"),
     payRate: formData.get("pay"),
     billRate: formData.get("bill"),
@@ -22,8 +22,8 @@ export default function AddOrder(event: any, customerName: String, customerId: N
     dtBillCalc: formData.get("dtBillCalc"),
     countNeed: formData.get("need"),
     countFilled: 0,
-    branch,
-    branchId,
+    branch: addedData.branch,
+    branchId: addedData.branchId,
     openDate: formData.get("openDate"),
     status: "Active - Need Fills"
   };
