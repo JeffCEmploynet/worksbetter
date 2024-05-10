@@ -57,7 +57,12 @@ export default function CustomerAdd(){
             <input className="m-1 pl-1" type="text" name="customer" placeholder="Customer Name"/>
             <input className="m-1 pl-1" type="text" name="department" placeholder="Department"/>
             <input className="m-1 pl-1" type="text" name="contact" placeholder="Contact Person"/>
-            <input className="m-1 pl-1" type="text" name="phone" placeholder="Phone"/>
+            <div className='flex flex-row items-center'>
+              <label>Phone:</label>
+              <input className="m-1 p-1 w-10 rounded" type="text" name="phoneArea" placeholder="555"/><p>-</p>
+              <input className="m-1 p-1 w-10 rounded" type="text" name="phonelocal" placeholder="555"/><p>-</p>
+              <input className="m-1 p-1 w-12 rounded" type="text" name="phone" placeholder="5555"/>
+            </div>
             <input className="m-1 pl-1" type="text" name="email" placeholder="Email"/>
           </div>
           <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">

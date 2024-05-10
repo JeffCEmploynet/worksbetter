@@ -86,7 +86,6 @@ export default function EmployeeAdd(){
           <div className='flex flex-row items-center'>
             <label>Phone 1:</label>
             <input className="m-1 p-1 w-10 rounded" type="text" name="phoneArea" placeholder="555"/><p>-</p>
-            
             <input className="m-1 p-1 w-10 rounded" type="text" name="phonelocal" placeholder="555"/><p>-</p>
             <input className="m-1 p-1 w-12 rounded" type="text" name="phone" placeholder="5555"/>
           </div>

@@ -6,11 +6,12 @@ export default function AddCustomer(event: any, branch: String, branchId: Number
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
+  const phone = "(" + formData.get('phoneArea') + ") " + formData.get('phonelocal') + "-" + formData.get('phone');
 
   let dataObj = {
     customerName: formData.get('customer'),
     department: formData.get('department'),
-    phone: formData.get('phone'),
+    phone: phone,
     email: formData.get('email'),
 
     mainContact: formData.get('contact'),
