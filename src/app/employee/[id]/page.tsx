@@ -178,7 +178,7 @@ export default function Employee({params}: {params: {id: Number}}){
             </div>
             <div>
               <button 
-                className="m-1 p-1 rounded bg-sky-950 text-white flex align-middle w-fit h-fit"
+                className="m-1 p-1 rounded bg-sky-950 text-white flex align-middle w-fit h-fit hover:bg-sky-600"
                 onClick={()=>openTaxModal()}
               >Tax Setup</button>
               <SaveButton />
@@ -193,7 +193,7 @@ export default function Employee({params}: {params: {id: Number}}){
             <h3 className="font-bold mx-2">Assignments</h3>
             <OverlayTrigger overlay={<Tooltip
             style={{position:"fixed", color:"black"}}>Add Assignment</Tooltip>}>
-              <button onClick={()=>{openModal()}}>
+              <button className="hover:text-sky-600" onClick={()=>{openModal()}}>
                 <MdAssignmentAdd />
               </button>
             </OverlayTrigger>
