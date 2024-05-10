@@ -1,5 +1,6 @@
 'use client'
 
+import LoadCustomerOrders from "../orders/loadCustomerOrders";
 import { PostOrder } from "@/app/api";
 
 export default function AddOrder(event: any, addedData: any, onHide: any){
@@ -13,7 +14,7 @@ export default function AddOrder(event: any, addedData: any, onHide: any){
     jobTitle: formData.get("job"),
     jobDescription: formData.get("description"),
     worksiteCity: formData.get("city"),
-    worksiteState: addedData.worksiteState,
+    worksiteState: addedData.selectedState.label,
     worksiteZip: formData.get("zip"),
     payRate: formData.get("pay"),
     billRate: formData.get("bill"),
@@ -32,6 +33,8 @@ export default function AddOrder(event: any, addedData: any, onHide: any){
 
   let data = JSON.stringify(dataObj);
 
-  PostOrder(data);
+  PostOrder(data).then(()=>{
+    LoadCustomerOrders(addedData.customerId, addedData.setOrderData);
+  });
   onHide();
 }

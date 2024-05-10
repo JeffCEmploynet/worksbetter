@@ -1,5 +1,6 @@
 'use client'
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import BlueCard from "@/app/components/cards/BlueCard";
 import { Modal } from "react-bootstrap";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
@@ -7,17 +8,24 @@ import { FaWindowClose } from "react-icons/fa";
 import AddOrder from "./addOrder";
 import StatesDropdown from "@/app/components/dropdowns/statesDropdown";
 
-export default function AddOrderModal({customerId, customerName, branch, branchId, showModal, onHide}:
-  {customerId: Number, customerName: String, branch: String, branchId: Number, showModal: any, onHide: any}
+export default function AddOrderModal({customerId, customerName, branch, branchId, showModal, onHide, setOrderData}:
+  {customerId: Number, customerName: String, branch: String, branchId: Number, showModal: any, onHide: any, setOrderData: any}
 ){
-  const [worksiteState, setWorksiteState] = useState<any>();
-  const addedData = {
-    customerId,
-    customerName,
-    branch,
-    branchId,
-    worksiteState
-  };
+  const [selectedState, setSelectedState] = useState<any>();
+  const [addedData, setAddedData] = useState<any>();
+
+  useEffect(()=>{
+    if(selectedState){
+      setAddedData({
+        customerId,
+        customerName,
+        branch,
+        branchId,
+        selectedState,
+        setOrderData
+      });
+    }
+  },[selectedState]);
 
   return(
     <Modal show={showModal} onHide={onHide} size="lg">
@@ -38,15 +46,15 @@ export default function AddOrderModal({customerId, customerName, branch, branchI
         <BlueCard content={
           <form className="w-full" onSubmit={(e)=>AddOrder(e, addedData, onHide)}>
             <div className="flex h-fit">
-            <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
+            <div className="flex flex-col h-full border border-white p-1 rounded mr-1">
               <h3 className="p-1 rounded m-1 bg-white text-sky-950">Basic Info</h3>
               
               <input className="m-1 pl-1 mb-1" type="text" name="job" placeholder="Job Title"/>
-              <StatesDropdown selectedState={worksiteState} setSelectedState={setWorksiteState} />
+              <StatesDropdown selectedState={selectedState} setSelectedState={setSelectedState} />
               <input className="m-1 pl-1" type="text" name="city" placeholder="Worksite City"/>
               <input className="m-1 pl-1" type="text" name="zip" placeholder="Worksite Zip"/>
             </div>
-            <div className="w-1/3 h-full border border-white p-1 rounded mr-1">
+            <div className="flex flex-col h-full border border-white p-1 rounded mr-1">
               <h3 className="p-1 rounded m-1 bg-white text-sky-950">Pay and Billing</h3>
               <input className="m-1 pl-1" type="text" name="pay" placeholder="Pay Rate"/>
               <input className="m-1 pl-1" type="text" name="bill" placeholder="Bill Rate"/>
@@ -54,7 +62,7 @@ export default function AddOrderModal({customerId, customerName, branch, branchI
               <input className="m-1 pl-1" type="text" name="otBillCalc" placeholder="Bill OT Multiplier"/>
               <input className="m-1 pl-1" type="text" name="dtBillCalc" placeholder="Bill DT Multiplier"/>
             </div>
-            <div className="w-1/3 h-full border border-white p-1 rounded">
+            <div className="flex flex-col h-full border border-white p-1 rounded">
               <h3 className="p-1 rounded m-1 bg-white text-sky-950">Description</h3>
               <div className="flex flex-row w-full">
                 <label>Open Date:</label>

@@ -36,9 +36,8 @@ export default function Customer({params}: {params: {id: Number}}){
 
   useEffect(()=>{
     CustomerLoad(params.id, setCustomerData);
-    LoadCustomerOrders(params.id, setOrderData)
+    LoadCustomerOrders(params.id, setOrderData);
   },[]);
-
   
   useEffect(()=>{
     if(customerData){
@@ -218,6 +217,7 @@ export default function Customer({params}: {params: {id: Number}}){
         branchId={branchId!}
         showModal={showAddModal}
         onHide={hideOrderModal}
+        setOrderData={setOrderData}
     />}
     </>
   )
