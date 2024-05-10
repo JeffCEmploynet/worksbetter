@@ -84,7 +84,7 @@ export default function CustomerAdd(){
           </div>
         </div>
         <div className="flex w-full justify-center">
-          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit" disabled={canSubmit}>Submit</button>
+          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex hover:bg-sky-600" type="submit" disabled={canSubmit}>Submit</button>
         </div>
       </form>
     </>

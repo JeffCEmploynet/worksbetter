@@ -45,7 +45,7 @@ export default function AddTaxSetupModal({employeeId, showTaxesModal, onHide} :
           <OverlayTrigger overlay={<Tooltip 
             style={{position:"fixed", color:"black"}}>Close</Tooltip>}>
             <button 
-              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle hover:bg-sky-600" 
               onClick={()=>onHide()}
             ><FaWindowClose /></button>
           </OverlayTrigger>
@@ -54,7 +54,7 @@ export default function AddTaxSetupModal({employeeId, showTaxesModal, onHide} :
       <Modal.Body>
         <BlueCard content={
           <form onSubmit={(e)=>CreateTaxSetup(e, employeeId, onHide, taxSetupId)}>
-            <div className="flex h-fit w-fit text-sky-950">
+            <div className="flex h-fit w-full text-sky-950 justify-center">
               <div className="w-full h-full border-white p-1 rounded mr-1">
                 <div className="flex flex-row w-full items-center">
                   <label className="w-44" htmlFor="state">State:</label>
@@ -82,11 +82,13 @@ export default function AddTaxSetupModal({employeeId, showTaxesModal, onHide} :
                 
                 <div className="flex flex-row w-full items-center">
                   <label className="w-44" htmlFor="withholding">Additional Withholding:</label>
-                  <input className="m-1 pl-1 w-24" type="text" id="withholding" name="withholding" defaultValue={withholding ? withholding : ""}/>
+                  <input className="m-1 pl-1 w-24" type="text" id="withholding" name="withholding" defaultValue={withholding ? withholding : "0"}/>
                 </div>
               </div>
             </div>
-            <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
+            <div className="flex w-full justify-center">
+              <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex hover:bg-sky-600 justify-center" type="submit">Submit</button>
+            </div>
           </form>
         }/>
       </Modal.Body>

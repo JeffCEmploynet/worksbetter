@@ -107,7 +107,7 @@ export default function EmployeeAdd(){
         <input className="m-1 p-1" type="file" id="rParser"/>
       </div> */}
       <div className="flex w-full justify-center">
-          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
+          <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex hover:bg-sky-600" type="submit">Submit</button>
         </div>
     </form>
     </>
