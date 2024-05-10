@@ -36,7 +36,7 @@ export default function AddOrderModal({customerId, customerName, branch, branchI
           <OverlayTrigger overlay={<Tooltip 
             style={{position:"fixed", color:"black"}}>Close</Tooltip>}>
             <button 
-              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle" 
+              className="m-1 p-2 rounded bg-sky-950 text-white flex align-middle hover:bg-sky-600" 
               onClick={()=>onHide()}
             ><FaWindowClose /></button>
           </OverlayTrigger>
@@ -76,7 +76,7 @@ export default function AddOrderModal({customerId, customerName, branch, branchI
             </div>
           </div>
           <div className="flex w-full justify-center">
-            <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex" type="submit">Submit</button>
+            <button className="m-2 mt-8 p-1 pl-3 pr-3 rounded bg-sky-950 text-white flex hover:bg-sky-600" type="submit">Submit</button>
           </div>
           </form>
         }/>
