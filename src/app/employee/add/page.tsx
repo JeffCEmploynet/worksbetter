@@ -63,9 +63,15 @@ export default function EmployeeAdd(){
         <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
           <h3 className="font-semibold text-center pb-3">Basic Info</h3>
           <input className="m-1 p-1" type="text" name="firstName" placeholder="First Name"/>
-          <input className="m-1 p-1" type="text" name="initial" placeholder="Initial"/>
+          <input className="m-1 p-1" type="text" name="initial" placeholder="Middle Initial"/>
           <input className="m-1 p-1" type="text" name="lastName" placeholder="Last Name"/>
-          <input className="m-1 p-1" type="text" name="ssn" placeholder="SSN"/>
+          <div className='flex flex-row items-center justify-center'>
+            <label>SSN:</label>
+            <input className="m-1 p-1 w-10 rounded" type="text" name="ssn1" placeholder="555"/><p>-</p>
+            
+            <input className="m-1 p-1 w-8 rounded" type="text" name="ssn2" placeholder="55"/><p>-</p>
+            <input className="m-1 p-1 w-12 rounded" type="text" name="ssn3" placeholder="5555"/>
+          </div>
         </div>
         <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
           <h3 className="font-semibold text-center pb-3">Address</h3>
@@ -77,8 +83,20 @@ export default function EmployeeAdd(){
         </div>
         <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
           <h3 className="font-semibold text-center pb-3">Contact Info</h3>
-          <input className="m-1 p-1" type="text" name="phone" placeholder="Phone 1"/>
-          <input className="m-1 p-1" type="text" name="phoneTwo" placeholder="Phone 2"/>
+          <div className='flex flex-row items-center'>
+            <label>Phone 1:</label>
+            <input className="m-1 p-1 w-10 rounded" type="text" name="phoneArea" placeholder="555"/><p>-</p>
+            
+            <input className="m-1 p-1 w-10 rounded" type="text" name="phonelocal" placeholder="555"/><p>-</p>
+            <input className="m-1 p-1 w-12 rounded" type="text" name="phone" placeholder="5555"/>
+          </div>
+          <div className='flex flex-row items-center'>
+            <label>Phone 2:</label>
+            <input className="m-1 p-1 w-10 rounded" type="text" name="phoneArea2" placeholder="555"/><p>-</p>
+            
+            <input className="m-1 p-1 w-10 rounded" type="text" name="phonelocal2" placeholder="555"/><p>-</p>
+            <input className="m-1 p-1 w-12 rounded" type="text" name="phone2" placeholder="5555"/>
+          </div>
           <input className="m-1 p-1" type="text" name="email" placeholder="Email"/>
           <BranchDropdown selectedBranch={selectedBranch} setSelectedBranch={setSelectedBranch} branchList={branchList} />
         </div>

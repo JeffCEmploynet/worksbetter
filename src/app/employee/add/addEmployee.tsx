@@ -7,6 +7,8 @@ export default function AddEmployee(event: any, state: String, branch: String, b
   event.preventDefault();
 
   const formData = new FormData(event.currentTarget);
+  const phoneOne = "(" + formData.get('phoneArea') + ") " + formData.get('phonelocal') + "-" + formData.get('phone');
+  const phoneTwo = "(" + formData.get('phoneArea2') + ") " + formData.get('phonelocal2') + "-" + formData.get('phone2');
 
   let dataObj = {
     firstName: formData.get('firstName'),
@@ -20,8 +22,8 @@ export default function AddEmployee(event: any, state: String, branch: String, b
     state,
     zip: formData.get('zip'),
 
-    phone: formData.get('phone'),
-    phoneTwo: formData.get('phoneTwo'),
+    phone: phoneOne,
+    phoneTwo: phoneTwo,
     email: formData.get('email'),
     branch,
     branchId
