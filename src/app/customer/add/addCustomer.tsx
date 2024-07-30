@@ -10,7 +10,8 @@ export default function AddCustomer(event: any, branch: String, branchId: Number
 
   let dataObj = {
     customerName: formData.get('customer'),
-    department: formData.get('department'),
+    department: "Primary",
+    heirarchy: 1,
     phone: phone,
     email: formData.get('email'),
 

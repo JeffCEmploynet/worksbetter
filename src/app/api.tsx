@@ -177,11 +177,6 @@ export function LoadEmployee(id: number){
 
 
 
-
-
-
-
-
 export function CreateItem(data: any, url: string){
   return CallApi(url, 'POST', data);
 }

@@ -55,7 +55,6 @@ export default function CustomerAdd(){
           <div className="flex flex-col w-fit m-2 border shadow-sm p-3 bg-slate-50 rounded border-sky-950">
             <h3 className="font-semibold text-center pb-3">Basic Info</h3>
             <input className="m-1 pl-1" type="text" name="customer" placeholder="Customer Name"/>
-            <input className="m-1 pl-1" type="text" name="department" placeholder="Department"/>
             <input className="m-1 pl-1" type="text" name="contact" placeholder="Contact Person"/>
             <div className='flex flex-row items-center justify-center'>
               <label>Phone:</label>
